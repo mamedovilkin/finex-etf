@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#007EBF</color>
+    <color name="colorIndicator">#1A007EBF</color>
+    <color name="colorBottomNavigationBackground">#E9EDF8</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorSecondaryBackground">#EEEEEE</color>
+    <color name="colorText">#000000</color>
+    <color name="colorTextSecondary">#909090</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorDivider">#D7D7D7</color>
+    <color name="colorPurchase">#00A36C</color>
+    <color name="colorSell">#F01E2C</color>
+</resources>

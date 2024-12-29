@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/my_assets">
+
+    <fragment
+        android:id="@+id/my_assets"
+        android:name="io.github.mamedovilkin.finexetf.view.fragment.MyAssetsFragment"
+        android:label="@string/my_assets">
+
+        <action
+            android:id="@+id/action_my_assets_fragment_to_add_purchase_fragment"
+            app:destination="@id/add_purchase" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/history"
+        android:name="io.github.mamedovilkin.finexetf.view.fragment.HistoryFragment"
+        android:label="@string/history" />
+
+    <fragment
+        android:id="@+id/add_purchase"
+        android:name="io.github.mamedovilkin.finexetf.view.fragment.AddPurchaseFragment"
+        android:label="@string/add_purchase" />
+
+</navigation>
