@@ -6,5 +6,7 @@
         <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:windowSplashScreenBackground">@color/colorBackground</item>
         <item name="android:windowSplashScreenAnimatedIcon">@drawable/logo_splash_screen</item>
+        <item name="android:fontFamily">@font/nunito</item>
+        <item name="fontFamily">@font/nunito</item>
     </style>
 </resources>

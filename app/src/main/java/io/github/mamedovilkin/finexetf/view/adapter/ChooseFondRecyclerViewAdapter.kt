@@ -8,19 +8,19 @@ import coil3.load
 import coil3.svg.SvgDecoder
 import com.bumptech.glide.Glide
 import io.github.mamedovilkin.finexetf.R
-import io.github.mamedovilkin.finexetf.databinding.FondRecyclerViewItemBinding
+import io.github.mamedovilkin.finexetf.databinding.ChooseFondRecyclerViewItemBinding
 import io.github.mamedovilkin.finexetf.model.Fond
 import io.github.mamedovilkin.finexetf.model.Fonds
 
-class FondRecyclerViewAdapter(private val fonds: Fonds) : RecyclerView.Adapter<FondRecyclerViewAdapter.FondRecyclerViewViewHolder>() {
+class ChooseFondRecyclerViewAdapter(var fonds: Fonds) : RecyclerView.Adapter<ChooseFondRecyclerViewAdapter.FondRecyclerViewViewHolder>() {
 
     var onItemClickListener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FondRecyclerViewViewHolder {
-        val binding: FondRecyclerViewItemBinding = DataBindingUtil
+        val binding: ChooseFondRecyclerViewItemBinding = DataBindingUtil
             .inflate(
                 LayoutInflater.from(parent.context),
-                R.layout.fond_recycler_view_item,
+                R.layout.choose_fond_recycler_view_item,
                 parent,
                 false
             )
@@ -35,11 +35,11 @@ class FondRecyclerViewAdapter(private val fonds: Fonds) : RecyclerView.Adapter<F
     override fun onBindViewHolder(holder: FondRecyclerViewViewHolder, position: Int) {
         holder.setFond(fonds[position])
         holder.itemView.setOnClickListener {
-            onItemClickListener?.onItemClickListener(position)
+            onItemClickListener?.onItemClickListener(fonds[position])
         }
     }
 
-    inner class FondRecyclerViewViewHolder(private val binding: FondRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class FondRecyclerViewViewHolder(private val binding: ChooseFondRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun setFond(fond: Fond) {
             binding.apply {

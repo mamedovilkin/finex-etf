@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         binding.apply {
-            setSupportActionBar(toolbar)
+            setSupportActionBar(materialToolbar)
 
             navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
             val navController = navHostFragment.navController
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
                 setOf(R.id.my_assets, R.id.history)
             )
 
-            toolbar.setupWithNavController(navController, appBarConfiguration)
+            materialToolbar.setupWithNavController(navController, appBarConfiguration)
             setupActionBarWithNavController(navController, appBarConfiguration)
             bottomNavigationView.setupWithNavController(navController)
 
