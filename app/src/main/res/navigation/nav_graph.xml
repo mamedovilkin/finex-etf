@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/my_assets"
-        android:name="io.github.mamedovilkin.finexetf.view.fragment.MyAssetsFragment"
+        android:name="io.github.mamedovilkin.finexetf.view.fragment.main.MyAssetsFragment"
         android:label="@string/my_assets">
 
         <action
@@ -18,12 +18,17 @@
 
     <fragment
         android:id="@+id/history"
-        android:name="io.github.mamedovilkin.finexetf.view.fragment.HistoryFragment"
+        android:name="io.github.mamedovilkin.finexetf.view.fragment.main.HistoryFragment"
         android:label="@string/history" />
 
     <fragment
+        android:id="@+id/settings"
+        android:name="io.github.mamedovilkin.finexetf.view.fragment.main.SettingsFragment"
+        android:label="@string/settings" />
+
+    <fragment
         android:id="@+id/add_purchase"
-        android:name="io.github.mamedovilkin.finexetf.view.fragment.AddPurchaseFragment"
+        android:name="io.github.mamedovilkin.finexetf.view.fragment.add.AddPurchaseFragment"
         android:label="@string/add_purchase" />
 
 </navigation>

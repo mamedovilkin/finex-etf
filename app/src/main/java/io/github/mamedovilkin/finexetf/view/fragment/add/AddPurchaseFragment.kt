@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.finexetf.view.fragment
+package io.github.mamedovilkin.finexetf.view.fragment.add
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

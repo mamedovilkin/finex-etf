@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.fragment.HistoryFragment">
+        tools:context=".view.fragment.main.HistoryFragment">
 
         <LinearLayout
             android:layout_width="wrap_content"

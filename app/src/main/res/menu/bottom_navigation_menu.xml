@@ -13,4 +13,10 @@
         android:title="@string/history"
         android:icon="@drawable/baseline_history_24" />
 
+    <item
+        android:id="@+id/settings"
+        android:enabled="true"
+        android:title="@string/settings"
+        android:icon="@drawable/baseline_settings_24" />
+
 </menu>

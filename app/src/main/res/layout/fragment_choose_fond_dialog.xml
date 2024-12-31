@@ -18,7 +18,7 @@
             android:textStyle="bold"
             android:textAlignment="center"
             android:textColor="@color/colorText"
-            android:text="@string/choose_fond_to_add_purchase" />
+            android:text="@string/choose_fond" />
 
         <SearchView
             android:id="@+id/search_view"
