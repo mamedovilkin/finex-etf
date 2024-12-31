@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.databinding.FragmentMyAssetsBinding
 import io.github.mamedovilkin.finexetf.model.Fonds
 import io.github.mamedovilkin.finexetf.room.Fond
+import io.github.mamedovilkin.finexetf.view.adapter.CardFragmentStateAdapter
 import io.github.mamedovilkin.finexetf.view.fragment.dialog.ChooseFondDialogFragment
 import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
 
@@ -35,6 +36,8 @@ class MyAssetsFragment : Fragment() {
         viewModel.localFonds.observe(viewLifecycleOwner) {
             localFonds = it
             if (localFonds.isNotEmpty()) {
+                binding.assetsRecyclerView.visibility = View.VISIBLE
+                binding.placeholderLinearLayout.visibility = View.GONE
                 binding.addSell.visibility = View.VISIBLE
             }
         }
@@ -46,6 +49,8 @@ class MyAssetsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+            viewPager2.adapter = CardFragmentStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
+
             addPurchase.setOnClickListener {
                 if (!remoteFonds.isEmpty()) {
                     ChooseFondDialogFragment(remoteFonds).show(parentFragmentManager, "FondListDialogFragment")

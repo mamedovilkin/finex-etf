@@ -9,9 +9,16 @@
     <string name="search">Search</string>
     <string name="quantity">Quantity</string>
     <string name="datetime_purchase">Datetime purchase</string>
+    <string name="price_purchase">Price purchase</string>
     <string name="example_quantity">Example: 25 pcs.</string>
     <string name="example_datetime_purchase">Example: 18/10/2013 10:41</string>
+    <string name="example_price_purchase">Example: 68.35₽</string>
     <string name="fields_is_empty">Fields is empty</string>
     <string name="datetime_type_invalid">Datetime type is invalid</string>
     <string name="purchase_has_been_added">Purchase has been added</string>
+    <string name="zero_dollars">0$</string>
+    <string name="zero_rubles">0₽</string>
+    <string name="zero_change_dollars">0$ (0%)</string>
+    <string name="zero_change_rubles">0₽ (0%)</string>
+    <string name="nothing_in_assets">Nothing in Assets</string>
 </resources>

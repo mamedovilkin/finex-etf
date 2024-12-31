@@ -70,16 +70,18 @@ class AddPurchaseFragment : Fragment() {
                 addPurchaseButton.setOnClickListener {
                     val quantityInt = quantityTextInputLayoutEditText.text.toString().toIntOrNull()
                     val datetimePurchaseString = datetimePurchaseTextInputLayoutEditText.text.toString()
+                    val pricePurchaseDouble = pricePurchaseTextInputLayoutEditText.text.toString().toDouble()
 
                     if (
                         quantityInt != null &&
                         quantityInt != 0 &&
-                        datetimePurchaseString.isNotEmpty()
+                        datetimePurchaseString.isNotEmpty() &&
+                        pricePurchaseDouble != 0.0
                     ) {
                         val quantity = quantityInt.toInt()
                         try {
                             val datetimePurchase = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT).parse(datetimePurchaseString).time
-                            viewModel.insert(Fond(fond!!.ticker, fond!!.icon, fond!!.name, fond!!.originalName, quantity, datetimePurchase))
+                            viewModel.insert(Fond(fond!!.ticker, fond!!.icon, fond!!.name, fond!!.originalName, quantity, datetimePurchase, pricePurchaseDouble))
                             findNavController().popBackStack()
                             Toast.makeText(context,  resources.getText(R.string.purchase_has_been_added), Toast.LENGTH_LONG).show()
                         } catch (e: ParseException) {

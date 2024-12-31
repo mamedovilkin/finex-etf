@@ -12,5 +12,6 @@ data class Fond(
     val originalName: String,
     val quantity: Int,
     val datetimePurchase: Long,
+    val pricePurchase: Double,
     val type: String = Converter.fromType(Type.PURCHASE),
 )

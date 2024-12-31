@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentHistoryBinding
 import io.github.mamedovilkin.finexetf.view.adapter.TransactionRecyclerViewAdapter
 import io.github.mamedovilkin.finexetf.viewmodel.HistoryViewModel
-import okhttp3.internal.filterList
 
 @AndroidEntryPoint
 class HistoryFragment : Fragment() {
@@ -23,11 +23,25 @@ class HistoryFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHistoryBinding.inflate(inflater)
 
+        fetchFonds()
+
+        binding.apply {
+            swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.colorPrimary, null))
+            swipeRefreshLayout.setOnRefreshListener {
+                swipeRefreshLayout.isRefreshing = true
+                fetchFonds()
+            }
+        }
+
+        return binding.root
+    }
+
+    private fun fetchFonds() {
         val viewModel = ViewModelProvider(requireActivity())[HistoryViewModel::class]
 
         viewModel.fonds.observe(viewLifecycleOwner) { fonds ->
-            if (fonds.isNotEmpty()) {
-                binding.apply {
+            binding.apply {
+                if (fonds.isNotEmpty()) {
                     val sortedFonds = fonds.sortedByDescending { it.datetimePurchase }
                     transactionsRecyclerView.setHasFixedSize(true)
                     transactionsRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -35,10 +49,8 @@ class HistoryFragment : Fragment() {
                     transactionsRecyclerView.visibility = View.VISIBLE
                     placeholderLinearLayout.visibility = View.GONE
                 }
+                swipeRefreshLayout.isRefreshing = false
             }
-
         }
-
-        return binding.root
     }
 }

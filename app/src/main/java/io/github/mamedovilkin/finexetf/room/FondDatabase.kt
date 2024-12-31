@@ -21,11 +21,10 @@ abstract class FondDatabase : RoomDatabase() {
                     context,
                     FondDatabase::class.java,
                     "assets"
-                ).allowMainThreadQueries().build().also {
+                ).fallbackToDestructiveMigration().allowMainThreadQueries().build().also {
                     instance = it
                 }
             }
         }
     }
-
 }

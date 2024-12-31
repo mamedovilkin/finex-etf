@@ -70,6 +70,7 @@ class TransactionRecyclerViewAdapter(var fonds: List<Fond>) : RecyclerView.Adapt
                 datetimeTextView.text = SimpleDateFormat("MMMM dd, yyyy 'at' HH:mm", Locale.US).format(Date(fond.datetimePurchase))
                 nameTextView.text = fond.originalName.trim()
                 tickerTextView.text = fond.ticker
+                pricePurchaseTextView.text = "${fond.pricePurchase}₽"
 
                 if (fond.type == Converter.fromType(Type.PURCHASE)) {
                     quantityTextView.setTextColor(root.context.resources.getColor(R.color.colorPurchase, null))

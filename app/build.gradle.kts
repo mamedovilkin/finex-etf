@@ -65,6 +65,10 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
 
+    // ViewPager2
+    implementation(libs.androidx.viewpager2)
+    implementation(libs.androidx.viewpager2)
+
     // Glide
     implementation(libs.glide)
 
