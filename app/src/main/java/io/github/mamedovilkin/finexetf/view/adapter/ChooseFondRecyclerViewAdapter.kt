@@ -28,15 +28,15 @@ class ChooseFondRecyclerViewAdapter(var fonds: Fonds) : RecyclerView.Adapter<Cho
         return FondRecyclerViewViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return fonds.size
-    }
-
     override fun onBindViewHolder(holder: FondRecyclerViewViewHolder, position: Int) {
         holder.setFond(fonds[position])
         holder.itemView.setOnClickListener {
             onItemClickListener?.onItemClickListener(fonds[position])
         }
+    }
+
+    override fun getItemCount(): Int {
+        return fonds.size
     }
 
     inner class FondRecyclerViewViewHolder(private val binding: ChooseFondRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root) {

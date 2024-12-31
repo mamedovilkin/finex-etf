@@ -46,7 +46,7 @@ class ChooseFondDialogFragment(private val fonds: Fonds) :
 
     override fun onItemClickListener(fond: Fond) {
         dismiss()
-        findNavController().navigate(R.id.action_my_assets_fragment_to_add_purchase_fragment, bundleOf("ticker" to fond.ticker) )
+        findNavController().navigate(R.id.action_my_assets_fragment_to_add_purchase_fragment, bundleOf("fond" to fond) )
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {

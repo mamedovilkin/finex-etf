@@ -7,6 +7,10 @@ import androidx.room.PrimaryKey
 data class Fond(
     @PrimaryKey(autoGenerate = false)
     val ticker: String,
+    val icon: String,
+    val name: String,
+    val originalName: String,
     val quantity: Int,
     val datetimePurchase: Long,
+    val type: String = Converter.fromType(Type.PURCHASE),
 )
