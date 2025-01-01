@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.parcelize)
 }
 
 android {
@@ -43,6 +44,9 @@ android {
 
 dependencies {
 
+    // CircleIndicator
+    implementation(libs.circleindicator)
+
     // SplashScreen
     implementation(libs.androidx.core.splashscreen)
 
@@ -63,6 +67,10 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
+
+    // ViewPager2
+    implementation(libs.androidx.viewpager2)
+    implementation(libs.androidx.viewpager2)
 
     // Glide
     implementation(libs.glide)

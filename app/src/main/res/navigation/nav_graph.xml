@@ -7,23 +7,28 @@
 
     <fragment
         android:id="@+id/my_assets"
-        android:name="io.github.mamedovilkin.finexetf.view.fragment.MyAssetsFragment"
+        android:name="io.github.mamedovilkin.finexetf.view.fragment.main.MyAssetsFragment"
         android:label="@string/my_assets">
 
         <action
-            android:id="@+id/action_my_assets_fragment_to_add_purchase_fragment"
-            app:destination="@id/add_purchase" />
+            android:id="@+id/action_my_assets_fragment_to_add_fragment"
+            app:destination="@id/add" />
 
     </fragment>
 
     <fragment
         android:id="@+id/history"
-        android:name="io.github.mamedovilkin.finexetf.view.fragment.HistoryFragment"
+        android:name="io.github.mamedovilkin.finexetf.view.fragment.main.HistoryFragment"
         android:label="@string/history" />
 
     <fragment
-        android:id="@+id/add_purchase"
-        android:name="io.github.mamedovilkin.finexetf.view.fragment.AddPurchaseFragment"
-        android:label="@string/add_purchase" />
+        android:id="@+id/settings"
+        android:name="io.github.mamedovilkin.finexetf.view.fragment.main.SettingsFragment"
+        android:label="@string/settings" />
+
+    <fragment
+        android:id="@+id/add"
+        android:name="io.github.mamedovilkin.finexetf.view.fragment.add.AddFragment"
+        android:label="" />
 
 </navigation>

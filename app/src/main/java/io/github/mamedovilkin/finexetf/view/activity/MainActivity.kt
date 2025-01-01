@@ -3,7 +3,6 @@ package io.github.mamedovilkin.finexetf.view.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -32,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
             val navController = navHostFragment.navController
             val appBarConfiguration = AppBarConfiguration(
-                setOf(R.id.my_assets, R.id.history)
+                setOf(R.id.my_assets, R.id.history, R.id.settings)
             )
 
             materialToolbar.setupWithNavController(navController, appBarConfiguration)

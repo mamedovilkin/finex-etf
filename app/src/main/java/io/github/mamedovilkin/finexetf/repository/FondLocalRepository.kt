@@ -2,7 +2,6 @@ package io.github.mamedovilkin.finexetf.repository
 
 import androidx.lifecycle.LiveData
 import io.github.mamedovilkin.finexetf.room.Fond
-import io.github.mamedovilkin.finexetf.room.FondDao
 import io.github.mamedovilkin.finexetf.room.FondDatabase
 import javax.inject.Inject
 
@@ -14,8 +13,8 @@ class FondLocalRepository @Inject constructor(database: FondDatabase) {
         dao.insert(fond)
     }
 
-    suspend fun delete(fond: Fond) {
-        dao.delete(fond)
+    suspend fun deleteAll() {
+        dao.deleteAll()
     }
 
     fun getLocalFonds(): LiveData<List<Fond>> {

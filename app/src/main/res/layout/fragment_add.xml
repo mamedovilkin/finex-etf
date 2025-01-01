@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:padding="16dp"
         android:background="@color/colorBackground"
-        tools:context=".view.fragment.AddPurchaseFragment">
+        tools:context=".view.fragment.add.AddFragment">
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -94,32 +94,51 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/datetime_purchase_text_input_layout"
+                android:id="@+id/date_time_text_input_layout"
                 style="?attr/textInputFilledStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="@string/datetime_purchase"
+                android:hint="@string/date_time_purchase"
                 app:boxBackgroundColor="@color/colorSecondaryBackground"
-                app:helperText="@string/example_datetime_purchase"
+                app:helperText="@string/example_date_time"
                 app:startIconDrawable="@drawable/baseline_date_purchase_24">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/datetime_purchase_text_input_layout_edit_text"
+                    android:id="@+id/date_time_text_input_layout_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="datetime" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/price_text_input_layout"
+                style="?attr/textInputFilledStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/price_purchase"
+                app:boxBackgroundColor="@color/colorSecondaryBackground"
+                app:helperText="@string/example_price"
+                app:startIconDrawable="@drawable/baseline_price_purchase_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/price_text_input_layout_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
-                android:id="@+id/add_purchase_button"
+                android:id="@+id/add_button"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/add_purchase"
                 android:textColor="@color/colorWhite"
-                android:background="@drawable/shape_add_purchase_button"/>
+                android:background="@drawable/shape_add_button"/>
 
         </LinearLayout>
 

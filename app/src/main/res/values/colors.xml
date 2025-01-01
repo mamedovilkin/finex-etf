@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#007EBF</color>
+    <color name="colorPrimarySecondary">#006397</color>
     <color name="colorIndicator">#1A007EBF</color>
     <color name="colorBottomNavigationBackground">#E9EDF8</color>
     <color name="colorBackground">#FFFFFF</color>

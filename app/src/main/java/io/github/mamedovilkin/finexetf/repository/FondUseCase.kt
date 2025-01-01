@@ -14,8 +14,8 @@ class FondUseCase @Inject constructor(
         repository.insert(fond)
     }
 
-    suspend fun delete(fond: io.github.mamedovilkin.finexetf.room.Fond) {
-        repository.delete(fond)
+    suspend fun deleteAll() {
+        repository.deleteAll()
     }
 
     fun getLocalFonds(): LiveData<List<io.github.mamedovilkin.finexetf.room.Fond>> {
