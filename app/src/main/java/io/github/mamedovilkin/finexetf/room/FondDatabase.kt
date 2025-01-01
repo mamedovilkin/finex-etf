@@ -21,7 +21,7 @@ abstract class FondDatabase : RoomDatabase() {
                     context,
                     FondDatabase::class.java,
                     "assets"
-                ).fallbackToDestructiveMigration().allowMainThreadQueries().build().also {
+                ).allowMainThreadQueries().build().also {
                     instance = it
                 }
             }

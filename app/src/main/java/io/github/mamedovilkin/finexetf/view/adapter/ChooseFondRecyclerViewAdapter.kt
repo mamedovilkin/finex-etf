@@ -12,7 +12,7 @@ import io.github.mamedovilkin.finexetf.databinding.ChooseFondRecyclerViewItemBin
 import io.github.mamedovilkin.finexetf.model.Fond
 import io.github.mamedovilkin.finexetf.model.Fonds
 
-class ChooseFondRecyclerViewAdapter(var fonds: Fonds) : RecyclerView.Adapter<ChooseFondRecyclerViewAdapter.FondRecyclerViewViewHolder>() {
+class ChooseFondRecyclerViewAdapter(var fonds: ArrayList<Fond>) : RecyclerView.Adapter<ChooseFondRecyclerViewAdapter.FondRecyclerViewViewHolder>() {
 
     var onItemClickListener: OnItemClickListener? = null
 

@@ -19,12 +19,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <me.relex.circleindicator.CircleIndicator3
+            android:id="@+id/circle_indicator_3"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            app:ci_drawable="@drawable/shape_circle_indicator"
+            app:layout_constraintTop_toBottomOf="@id/view_pager2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/assets_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/view_pager2"
+            app:layout_constraintTop_toBottomOf="@id/circle_indicator_3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />

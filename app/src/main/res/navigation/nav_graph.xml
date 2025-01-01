@@ -11,8 +11,8 @@
         android:label="@string/my_assets">
 
         <action
-            android:id="@+id/action_my_assets_fragment_to_add_purchase_fragment"
-            app:destination="@id/add_purchase" />
+            android:id="@+id/action_my_assets_fragment_to_add_fragment"
+            app:destination="@id/add" />
 
     </fragment>
 
@@ -27,8 +27,8 @@
         android:label="@string/settings" />
 
     <fragment
-        android:id="@+id/add_purchase"
-        android:name="io.github.mamedovilkin.finexetf.view.fragment.add.AddPurchaseFragment"
-        android:label="@string/add_purchase" />
+        android:id="@+id/add"
+        android:name="io.github.mamedovilkin.finexetf.view.fragment.add.AddFragment"
+        android:label="" />
 
 </navigation>

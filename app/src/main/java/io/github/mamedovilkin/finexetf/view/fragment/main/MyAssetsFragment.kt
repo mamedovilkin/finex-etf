@@ -10,7 +10,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.databinding.FragmentMyAssetsBinding
 import io.github.mamedovilkin.finexetf.model.Fonds
 import io.github.mamedovilkin.finexetf.room.Fond
-import io.github.mamedovilkin.finexetf.view.adapter.CardFragmentStateAdapter
+import io.github.mamedovilkin.finexetf.room.Type
+import io.github.mamedovilkin.finexetf.view.adapter.CardViewPagerFragmentStateAdapter
+import io.github.mamedovilkin.finexetf.view.fragment.card.DollarCardFragment
+import io.github.mamedovilkin.finexetf.view.fragment.card.RubleCardFragment
 import io.github.mamedovilkin.finexetf.view.fragment.dialog.ChooseFondDialogFragment
 import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
 
@@ -49,16 +52,19 @@ class MyAssetsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            viewPager2.adapter = CardFragmentStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
+            viewPager2.adapter = CardViewPagerFragmentStateAdapter(listOf(RubleCardFragment(), DollarCardFragment()), childFragmentManager, viewLifecycleOwner.lifecycle)
+            circleIndicator3.setViewPager(viewPager2)
 
             addPurchase.setOnClickListener {
                 if (!remoteFonds.isEmpty()) {
-                    ChooseFondDialogFragment(remoteFonds).show(parentFragmentManager, "FondListDialogFragment")
+                    ChooseFondDialogFragment(remoteFonds, Type.PURCHASE).show(parentFragmentManager, "FondListDialogFragment")
                 }
             }
 
             addSell.setOnClickListener {
-                // TODO
+                if (localFonds.isNotEmpty()) {
+                    ChooseFondDialogFragment(arrayListOf(io.github.mamedovilkin.finexetf.model.Fond(localFonds[0].ticker, localFonds[0].icon, localFonds[0].name, localFonds[0].originalName)), Type.SELL).show(parentFragmentManager, "FondListDialogFragment")
+                }
             }
         }
     }

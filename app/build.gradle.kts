@@ -44,6 +44,9 @@ android {
 
 dependencies {
 
+    // CircleIndicator
+    implementation(libs.circleindicator)
+
     // SplashScreen
     implementation(libs.androidx.core.splashscreen)
 

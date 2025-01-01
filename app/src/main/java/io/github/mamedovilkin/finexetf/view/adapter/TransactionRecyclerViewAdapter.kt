@@ -33,7 +33,7 @@ class TransactionRecyclerViewAdapter(var fonds: List<Fond>) : RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: TransactionRecyclerViewAdapter.TransactionRecyclerViewViewHolder, position: Int) {
         val fond = fonds[position]
-        if (position == 0 || fond.datetimePurchase != fonds[position - 1].datetimePurchase) {
+        if (position == 0 || fond.datetime != fonds[position - 1].datetime) {
             holder.binding.datetimeTextView.visibility = View.VISIBLE
         } else {
             holder.binding.datetimeTextView.visibility = View.GONE
@@ -67,10 +67,10 @@ class TransactionRecyclerViewAdapter(var fonds: List<Fond>) : RecyclerView.Adapt
                     }
                 }
 
-                datetimeTextView.text = SimpleDateFormat("MMMM dd, yyyy 'at' HH:mm", Locale.US).format(Date(fond.datetimePurchase))
+                datetimeTextView.text = SimpleDateFormat("MMMM dd, yyyy 'at' HH:mm", Locale.US).format(Date(fond.datetime))
                 nameTextView.text = fond.originalName.trim()
                 tickerTextView.text = fond.ticker
-                pricePurchaseTextView.text = "${fond.pricePurchase}₽"
+                pricePurchaseTextView.text = "${fond.price}₽"
 
                 if (fond.type == Converter.fromType(Type.PURCHASE)) {
                     quantityTextView.setTextColor(root.context.resources.getColor(R.color.colorPurchase, null))

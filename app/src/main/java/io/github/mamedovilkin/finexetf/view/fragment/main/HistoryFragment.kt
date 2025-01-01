@@ -42,7 +42,7 @@ class HistoryFragment : Fragment() {
         viewModel.fonds.observe(viewLifecycleOwner) { fonds ->
             binding.apply {
                 if (fonds.isNotEmpty()) {
-                    val sortedFonds = fonds.sortedByDescending { it.datetimePurchase }
+                    val sortedFonds = fonds.sortedByDescending { it.datetime }
                     transactionsRecyclerView.setHasFixedSize(true)
                     transactionsRecyclerView.layoutManager = LinearLayoutManager(context)
                     transactionsRecyclerView.adapter = TransactionRecyclerViewAdapter(sortedFonds)
