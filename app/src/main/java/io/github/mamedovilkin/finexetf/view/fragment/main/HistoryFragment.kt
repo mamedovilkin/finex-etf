@@ -23,31 +23,34 @@ class HistoryFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHistoryBinding.inflate(inflater)
 
-        fetchFonds()
+        fetchFunds()
 
         binding.apply {
             swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.colorPrimary, null))
             swipeRefreshLayout.setOnRefreshListener {
                 swipeRefreshLayout.isRefreshing = true
-                fetchFonds()
+                fetchFunds()
             }
         }
 
         return binding.root
     }
 
-    private fun fetchFonds() {
+    private fun fetchFunds() {
         val viewModel = ViewModelProvider(requireActivity())[HistoryViewModel::class]
 
-        viewModel.fonds.observe(viewLifecycleOwner) { fonds ->
+        viewModel.funds.observe(viewLifecycleOwner) { funds ->
             binding.apply {
-                if (fonds.isNotEmpty()) {
-                    val sortedFonds = fonds.sortedByDescending { it.datetime }
+                if (funds.isNotEmpty()) {
+                    val sortedFunds = funds.sortedByDescending { it.datetime }
                     transactionsRecyclerView.setHasFixedSize(true)
                     transactionsRecyclerView.layoutManager = LinearLayoutManager(context)
-                    transactionsRecyclerView.adapter = TransactionRecyclerViewAdapter(sortedFonds)
+                    transactionsRecyclerView.adapter = TransactionRecyclerViewAdapter(sortedFunds)
                     transactionsRecyclerView.visibility = View.VISIBLE
                     placeholderLinearLayout.visibility = View.GONE
+                } else {
+                    transactionsRecyclerView.visibility = View.GONE
+                    placeholderLinearLayout.visibility = View.VISIBLE
                 }
                 swipeRefreshLayout.isRefreshing = false
             }

@@ -6,7 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.github.mamedovilkin.finexetf.room.FondDatabase
+import io.github.mamedovilkin.finexetf.room.FundDatabase
 import javax.inject.Singleton
 
 @Module
@@ -15,7 +15,7 @@ object RoomModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): FondDatabase {
-        return FondDatabase.getDatabase(context)
+    fun provideDatabase(@ApplicationContext context: Context): FundDatabase {
+        return FundDatabase.getDatabase(context)
     }
 }

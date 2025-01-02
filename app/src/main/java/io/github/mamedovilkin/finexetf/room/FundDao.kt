@@ -6,14 +6,14 @@ import androidx.room.Insert
 import androidx.room.Query
 
 @Dao
-interface FondDao {
+interface FundDao {
 
     @Insert
-    suspend fun insert(fond: Fond)
+    suspend fun insert(fund: Fund)
 
     @Query("DELETE FROM assets")
     suspend fun deleteAll()
 
     @Query("SELECT * FROM assets ORDER BY ticker DESC")
-    fun getLocalFonds(): LiveData<List<Fond>>
+    fun getLocalFunds(): LiveData<List<Fund>>
 }

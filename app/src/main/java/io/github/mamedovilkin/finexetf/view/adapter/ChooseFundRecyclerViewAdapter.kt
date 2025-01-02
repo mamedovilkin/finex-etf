@@ -8,46 +8,46 @@ import coil3.load
 import coil3.svg.SvgDecoder
 import com.bumptech.glide.Glide
 import io.github.mamedovilkin.finexetf.R
-import io.github.mamedovilkin.finexetf.databinding.ChooseFondRecyclerViewItemBinding
-import io.github.mamedovilkin.finexetf.model.Fond
-import io.github.mamedovilkin.finexetf.model.Fonds
+import io.github.mamedovilkin.finexetf.databinding.ChooseFundRecyclerViewItemBinding
+import io.github.mamedovilkin.finexetf.model.Funds
+import io.github.mamedovilkin.finexetf.model.ListFund
 
-class ChooseFondRecyclerViewAdapter(var fonds: ArrayList<Fond>) : RecyclerView.Adapter<ChooseFondRecyclerViewAdapter.FondRecyclerViewViewHolder>() {
+class ChooseFundRecyclerViewAdapter(var funds: Funds) : RecyclerView.Adapter<ChooseFundRecyclerViewAdapter.FundRecyclerViewViewHolder>() {
 
     var onItemClickListener: OnItemClickListener? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FondRecyclerViewViewHolder {
-        val binding: ChooseFondRecyclerViewItemBinding = DataBindingUtil
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FundRecyclerViewViewHolder {
+        val binding: ChooseFundRecyclerViewItemBinding = DataBindingUtil
             .inflate(
                 LayoutInflater.from(parent.context),
-                R.layout.choose_fond_recycler_view_item,
+                R.layout.choose_fund_recycler_view_item,
                 parent,
                 false
             )
 
-        return FondRecyclerViewViewHolder(binding)
+        return FundRecyclerViewViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: FondRecyclerViewViewHolder, position: Int) {
-        holder.setFond(fonds[position])
+    override fun onBindViewHolder(holder: FundRecyclerViewViewHolder, position: Int) {
+        holder.setFund(funds[position])
         holder.itemView.setOnClickListener {
-            onItemClickListener?.onItemClickListener(fonds[position])
+            onItemClickListener?.onItemClickListener(funds[position].ticker)
         }
     }
 
     override fun getItemCount(): Int {
-        return fonds.size
+        return funds.size
     }
 
-    inner class FondRecyclerViewViewHolder(private val binding: ChooseFondRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class FundRecyclerViewViewHolder(private val binding: ChooseFundRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun setFond(fond: Fond) {
+        fun setFund(fund: ListFund) {
             binding.apply {
-                when (fond.ticker) {
+                when (fund.ticker) {
                     "FXTP" -> {
                         Glide
                             .with(root.context)
-                            .load(fond.icon)
+                            .load(fund.icon)
                             .fitCenter()
                             .into(imageView)
                     }
@@ -55,14 +55,14 @@ class ChooseFondRecyclerViewAdapter(var fonds: ArrayList<Fond>) : RecyclerView.A
                         imageView.setImageDrawable(root.context.resources.getDrawable(R.drawable.fxre, null))
                     }
                     else -> {
-                        imageView.load(fond.icon) {
+                        imageView.load(fund.icon) {
                             decoderFactory { result, options, _ -> SvgDecoder(result.source, options) }
                         }
                     }
                 }
 
-                nameTextView.text = fond.originalName.trim()
-                tickerTextView.text = fond.ticker
+                nameTextView.text = fund.originalName.trim()
+                tickerTextView.text = fund.ticker
             }
         }
     }

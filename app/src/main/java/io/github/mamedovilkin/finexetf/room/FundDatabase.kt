@@ -5,23 +5,23 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Fond::class], version = 1)
-abstract class FondDatabase : RoomDatabase() {
+@Database(entities = [Fund::class], version = 2)
+abstract class FundDatabase : RoomDatabase() {
 
-    abstract fun getDao(): FondDao
+    abstract fun getDao(): FundDao
 
     companion object {
 
         @Volatile
-        private var instance: FondDatabase? = null
+        private var instance: FundDatabase? = null
 
-        fun getDatabase(context: Context): FondDatabase {
+        fun getDatabase(context: Context): FundDatabase {
             return instance ?: synchronized(this) {
                 Room.databaseBuilder(
                     context,
-                    FondDatabase::class.java,
+                    FundDatabase::class.java,
                     "assets"
-                ).allowMainThreadQueries().build().also {
+                ).fallbackToDestructiveMigration().allowMainThreadQueries().build().also {
                     instance = it
                 }
             }

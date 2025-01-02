@@ -102,7 +102,7 @@
                 android:hint="@string/date_time_purchase"
                 app:boxBackgroundColor="@color/colorSecondaryBackground"
                 app:helperText="@string/example_date_time"
-                app:startIconDrawable="@drawable/baseline_date_purchase_24">
+                app:startIconDrawable="@drawable/baseline_date_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/date_time_text_input_layout_edit_text"
@@ -121,7 +121,7 @@
                 android:hint="@string/price_purchase"
                 app:boxBackgroundColor="@color/colorSecondaryBackground"
                 app:helperText="@string/example_price"
-                app:startIconDrawable="@drawable/baseline_price_purchase_24">
+                app:startIconDrawable="@drawable/baseline_price_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/price_text_input_layout_edit_text"
@@ -139,6 +139,35 @@
                 android:text="@string/add_purchase"
                 android:textColor="@color/colorWhite"
                 android:background="@drawable/shape_add_button"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/split_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/linear_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/split_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextSecondary"
+                android:text="@string/split" />
+
+            <Button
+                android:id="@+id/split_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/what_is_split"
+                android:background="@android:color/transparent" />
 
         </LinearLayout>
 

@@ -6,15 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.databinding.FragmentMyAssetsBinding
-import io.github.mamedovilkin.finexetf.model.Fonds
-import io.github.mamedovilkin.finexetf.room.Fond
+import io.github.mamedovilkin.finexetf.model.Asset
+import io.github.mamedovilkin.finexetf.model.Funds
 import io.github.mamedovilkin.finexetf.room.Type
-import io.github.mamedovilkin.finexetf.view.adapter.CardViewPagerFragmentStateAdapter
-import io.github.mamedovilkin.finexetf.view.fragment.card.DollarCardFragment
-import io.github.mamedovilkin.finexetf.view.fragment.card.RubleCardFragment
-import io.github.mamedovilkin.finexetf.view.fragment.dialog.ChooseFondDialogFragment
+import io.github.mamedovilkin.finexetf.view.adapter.AssetRecyclerViewAdapter
+import io.github.mamedovilkin.finexetf.view.fragment.dialog.ChooseFundDialogFragment
 import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
 
 @AndroidEntryPoint
@@ -23,26 +22,36 @@ class MyAssetsFragment : Fragment() {
     private var _binding: FragmentMyAssetsBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentMyAssetsBinding must not be null")
-    private lateinit var remoteFonds: Fonds
-    private lateinit var localFonds: List<Fond>
+    private lateinit var remoteFunds: Funds
+    private lateinit var assets: List<Asset>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentMyAssetsBinding.inflate(inflater)
 
         val viewModel = ViewModelProvider(requireActivity())[MyAssetsViewModel::class]
 
-        viewModel.remoteFonds.observe(viewLifecycleOwner) {
-            remoteFonds = it
+        viewModel.remoteFunds.observe(viewLifecycleOwner) {
+            remoteFunds = it
             binding.addPurchase.visibility = View.VISIBLE
         }
 
-        viewModel.localFonds.observe(viewLifecycleOwner) {
-            localFonds = it
-            if (localFonds.isNotEmpty()) {
-                binding.assetsRecyclerView.visibility = View.VISIBLE
-                binding.placeholderLinearLayout.visibility = View.GONE
-                binding.addSell.visibility = View.VISIBLE
+        viewModel.getAssets().observe(viewLifecycleOwner) {
+            assets = it
+            binding.apply {
+                if (assets.isNotEmpty()) {
+                    assetsRecyclerView.setHasFixedSize(true)
+                    assetsRecyclerView.layoutManager = LinearLayoutManager(context)
+                    assetsRecyclerView.adapter = AssetRecyclerViewAdapter(assets, childFragmentManager, viewLifecycleOwner.lifecycle)
+                    assetsRecyclerView.visibility = View.VISIBLE
+                    placeholderLinearLayout.visibility = View.GONE
+                    addSell.visibility = View.VISIBLE
+                } else {
+                    assetsRecyclerView.visibility = View.GONE
+                    placeholderLinearLayout.visibility = View.VISIBLE
+                    addSell.visibility = View.GONE
+                }
             }
+
         }
 
         return binding.root
@@ -52,18 +61,19 @@ class MyAssetsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            viewPager2.adapter = CardViewPagerFragmentStateAdapter(listOf(RubleCardFragment(), DollarCardFragment()), childFragmentManager, viewLifecycleOwner.lifecycle)
-            circleIndicator3.setViewPager(viewPager2)
-
             addPurchase.setOnClickListener {
-                if (!remoteFonds.isEmpty()) {
-                    ChooseFondDialogFragment(remoteFonds, Type.PURCHASE).show(parentFragmentManager, "FondListDialogFragment")
+                if (!remoteFunds.isEmpty()) {
+                    ChooseFundDialogFragment(remoteFunds, Type.PURCHASE).show(parentFragmentManager, "ChooseFundDialogFragment")
                 }
             }
 
             addSell.setOnClickListener {
-                if (localFonds.isNotEmpty()) {
-                    ChooseFondDialogFragment(arrayListOf(io.github.mamedovilkin.finexetf.model.Fond(localFonds[0].ticker, localFonds[0].icon, localFonds[0].name, localFonds[0].originalName)), Type.SELL).show(parentFragmentManager, "FondListDialogFragment")
+                if (assets.isNotEmpty()) {
+                    val availableListFunds = Funds()
+                    assets.forEach {
+                        availableListFunds.add(io.github.mamedovilkin.finexetf.model.ListFund(it.ticker, it.icon, it.name, it.originalName))
+                    }
+                    ChooseFundDialogFragment(availableListFunds, Type.SELL).show(parentFragmentManager, "ChooseFundDialogFragment")
                 }
             }
         }

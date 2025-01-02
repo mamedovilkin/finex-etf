@@ -3,14 +3,14 @@ package io.github.mamedovilkin.finexetf.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.mamedovilkin.finexetf.repository.FondUseCase
-import io.github.mamedovilkin.finexetf.room.Fond
+import io.github.mamedovilkin.finexetf.repository.UseCase
+import io.github.mamedovilkin.finexetf.room.Fund
 import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    useCase: FondUseCase
+    useCase: UseCase
 ) : ViewModel() {
 
-    val fonds: LiveData<List<Fond>> = useCase.getLocalFonds()
+    val funds: LiveData<List<Fund>> = useCase.getLocalFunds()
 }

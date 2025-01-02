@@ -5,12 +5,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import javax.inject.Singleton
 import dagger.hilt.components.SingletonComponent
-import io.github.mamedovilkin.finexetf.repository.FondLocalRepository
-import io.github.mamedovilkin.finexetf.repository.FondRemoteRepository
-import io.github.mamedovilkin.finexetf.repository.FondRepository
-import io.github.mamedovilkin.finexetf.repository.FondUseCase
+import io.github.mamedovilkin.finexetf.repository.LocalRepository
+import io.github.mamedovilkin.finexetf.repository.RemoteRepository
+import io.github.mamedovilkin.finexetf.repository.Repository
+import io.github.mamedovilkin.finexetf.repository.UseCase
 import io.github.mamedovilkin.finexetf.retrofit.Service
-import io.github.mamedovilkin.finexetf.room.FondDatabase
+import io.github.mamedovilkin.finexetf.room.FundDatabase
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -18,28 +18,28 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideFondRemoteRepository(service: Service): FondRemoteRepository {
-        return FondRemoteRepository(service)
+    fun provideRemoteRepository(service: Service): RemoteRepository {
+        return RemoteRepository(service)
     }
 
     @Provides
     @Singleton
-    fun provideFondLocalRepository(database: FondDatabase): FondLocalRepository {
-        return FondLocalRepository(database)
+    fun provideLocalRepository(database: FundDatabase): LocalRepository {
+        return LocalRepository(database)
     }
 
     @Provides
     @Singleton
-    fun provideFondRepository(
-        remoteRepository: FondRemoteRepository,
-        localRepository: FondLocalRepository,
-    ): FondRepository {
-        return FondRepository(remoteRepository, localRepository)
+    fun provideRepository(
+        remoteRepository: RemoteRepository,
+        localRepository: LocalRepository,
+    ): Repository {
+        return Repository(remoteRepository, localRepository)
     }
 
     @Provides
     @Singleton
-    fun provideFondUseCase(repository: FondRepository): FondUseCase {
-        return FondUseCase(repository)
+    fun provideUseCase(repository: Repository): UseCase {
+        return UseCase(repository)
     }
 }

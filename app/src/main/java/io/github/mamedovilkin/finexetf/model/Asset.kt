@@ -5,6 +5,8 @@ data class Asset(
     val icon: String,
     val name: String,
     val originalName: String,
+    val navPrice: Double,
     val totalQuantity: Int,
     val totalPrice: Double,
+    val totalNavPrice: Double,
 )

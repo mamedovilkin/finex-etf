@@ -6,7 +6,7 @@
     <string name="nothing_in_history">Nothing in History</string>
     <string name="add_purchase">Add Purchase</string>
     <string name="add_sell">Add Sell</string>
-    <string name="choose_fond">Choose Fond</string>
+    <string name="choose_fund">Choose Fund</string>
     <string name="search">Search</string>
     <string name="quantity">Quantity</string>
     <string name="date_time_purchase">Date and time purchase</string>
@@ -25,4 +25,7 @@
     <string name="zero_change_dollars">0$ (0%)</string>
     <string name="zero_change_rubles">0₽ (0%)</string>
     <string name="nothing_in_assets">Nothing in Assets</string>
+    <string name="split">Funds that had a split will be automatically split.</string>
+    <string name="what_is_split">What is split?</string>
+    <string name="you_don_t_have_enough_fonds">You don\'t have enough fonds</string>
 </resources>

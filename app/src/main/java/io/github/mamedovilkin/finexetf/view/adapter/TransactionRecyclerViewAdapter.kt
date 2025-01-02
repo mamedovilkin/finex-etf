@@ -11,13 +11,13 @@ import com.bumptech.glide.Glide
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.TransactionRecyclerViewItemBinding
 import io.github.mamedovilkin.finexetf.room.Converter
-import io.github.mamedovilkin.finexetf.room.Fond
+import io.github.mamedovilkin.finexetf.room.Fund
 import io.github.mamedovilkin.finexetf.room.Type
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class TransactionRecyclerViewAdapter(var fonds: List<Fond>) : RecyclerView.Adapter<TransactionRecyclerViewAdapter.TransactionRecyclerViewViewHolder>() {
+class TransactionRecyclerViewAdapter(var funds: List<Fund>) : RecyclerView.Adapter<TransactionRecyclerViewAdapter.TransactionRecyclerViewViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionRecyclerViewAdapter.TransactionRecyclerViewViewHolder {
         val binding: TransactionRecyclerViewItemBinding = DataBindingUtil
@@ -32,28 +32,28 @@ class TransactionRecyclerViewAdapter(var fonds: List<Fond>) : RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: TransactionRecyclerViewAdapter.TransactionRecyclerViewViewHolder, position: Int) {
-        val fond = fonds[position]
-        if (position == 0 || fond.datetime != fonds[position - 1].datetime) {
-            holder.binding.datetimeTextView.visibility = View.VISIBLE
+        val fund = funds[position]
+        if (position == 0 || fund.datetime != funds[position - 1].datetime) {
+            holder.binding.dateTimeTextView.visibility = View.VISIBLE
         } else {
-            holder.binding.datetimeTextView.visibility = View.GONE
+            holder.binding.dateTimeTextView.visibility = View.GONE
         }
-        holder.setFond(fond)
+        holder.setFund(fund)
     }
 
     override fun getItemCount(): Int {
-        return fonds.size
+        return funds.size
     }
 
     inner class TransactionRecyclerViewViewHolder(val binding: TransactionRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun setFond(fond: Fond) {
+        fun setFund(fund: Fund) {
             binding.apply {
-                when (fond.ticker) {
+                when (fund.ticker) {
                     "FXTP" -> {
                         Glide
                             .with(root.context)
-                            .load(fond.icon)
+                            .load(fund.icon)
                             .fitCenter()
                             .into(imageView)
                     }
@@ -61,25 +61,25 @@ class TransactionRecyclerViewAdapter(var fonds: List<Fond>) : RecyclerView.Adapt
                         imageView.setImageDrawable(root.context.resources.getDrawable(R.drawable.fxre, null))
                     }
                     else -> {
-                        imageView.load(fond.icon) {
+                        imageView.load(fund.icon) {
                             decoderFactory { result, options, _ -> SvgDecoder(result.source, options) }
                         }
                     }
                 }
 
-                datetimeTextView.text = SimpleDateFormat("MMMM dd, yyyy 'at' HH:mm", Locale.US).format(Date(fond.datetime))
-                nameTextView.text = fond.originalName.trim()
-                tickerTextView.text = fond.ticker
-                pricePurchaseTextView.text = "${fond.price}₽"
+                dateTimeTextView.text = SimpleDateFormat("MMMM dd, yyyy 'at' HH:mm", Locale.US).format(Date(fund.datetime))
+                nameTextView.text = fund.originalName.trim()
+                tickerTextView.text = fund.ticker
+                priceTextView.text = "${String.format("%.2f", fund.price)}₽"
 
-                if (fond.type == Converter.fromType(Type.PURCHASE)) {
+                if (fund.type == Converter.fromType(Type.PURCHASE)) {
                     quantityTextView.setTextColor(root.context.resources.getColor(R.color.colorPurchase, null))
-                    quantityTextView.text = "+${fond.quantity} pcs."
+                    quantityTextView.text = "+${fund.quantity} pcs."
                 }
 
-                if (fond.type == Converter.fromType(Type.SELL)) {
+                if (fund.type == Converter.fromType(Type.SELL)) {
                     quantityTextView.setTextColor(root.context.resources.getColor(R.color.colorSell, null))
-                    quantityTextView.text = "-${fond.quantity} pcs."
+                    quantityTextView.text = "-${fund.quantity} pcs."
                 }
             }
         }
