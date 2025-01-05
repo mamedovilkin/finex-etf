@@ -22,8 +22,8 @@ class SettingsFragment : Fragment() {
 
         val viewModel = ViewModelProvider(requireActivity())[SettingsViewModel::class]
 
-        binding.deleteDataButton.setOnClickListener {
-            viewModel.deleteAll()
+        binding.deleteAllDataButton.setOnClickListener {
+            viewModel.deleteAllAssets()
         }
 
         return binding.root

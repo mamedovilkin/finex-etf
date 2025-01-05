@@ -27,5 +27,5 @@
     <string name="nothing_in_assets">Nothing in Assets</string>
     <string name="split">Funds that had a split will be automatically split.</string>
     <string name="what_is_split">What is split?</string>
-    <string name="you_don_t_have_enough_fonds">You don\'t have enough fonds</string>
+    <string name="you_don_t_have_enough_funds">You don\'t have enough funds</string>
 </resources>

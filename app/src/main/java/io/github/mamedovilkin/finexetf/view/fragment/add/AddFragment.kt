@@ -16,9 +16,11 @@ import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentAddBinding
-import io.github.mamedovilkin.finexetf.room.Converter
-import io.github.mamedovilkin.finexetf.room.Fund
-import io.github.mamedovilkin.finexetf.room.Type
+import io.github.mamedovilkin.finexetf.database.Converter
+import io.github.mamedovilkin.finexetf.model.database.Asset
+import io.github.mamedovilkin.finexetf.model.database.Type
+import io.github.mamedovilkin.finexetf.util.hide
+import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.viewmodel.AddViewModel
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -78,14 +80,18 @@ class AddFragment : Fragment() {
                         dateTimeTextInputLayout.hint = resources.getString(R.string.date_time_purchase)
                         priceTextInputLayout.hint = resources.getString(R.string.price_purchase)
                         addButton.text = resources.getString(R.string.add_purchase)
+                        addButton.setBackgroundResource(R.drawable.shape_add_purchase_button)
+                        splitLinearLayout.show()
                     } else {
-                        viewModel.getFundQuantityByTicker(ticker).observe(viewLifecycleOwner) {
+                        viewModel.getFundQuantity(ticker).observe(viewLifecycleOwner) {
                             totalQuantity = it
                             quantityTextInputLayout.helperText = "You have $it funds"
                         }
                         dateTimeTextInputLayout.hint = resources.getString(R.string.date_time_sell)
                         priceTextInputLayout.hint = resources.getString(R.string.price_sell)
                         addButton.text = resources.getString(R.string.add_sell)
+                        addButton.setBackgroundResource(R.drawable.shape_add_sell_button)
+                        splitLinearLayout.hide()
                     }
 
                     addButton.setOnClickListener {
@@ -98,33 +104,14 @@ class AddFragment : Fragment() {
                             datetimeString.toString() != "" &&
                             priceDouble.toString().toDoubleOrNull() != null
                         ) {
-                            var quantity = quantityInt.toString().toInt()
-                            var price = priceDouble.toString().toDouble()
+                            val quantity = quantityInt.toString().toInt()
+                            val price = priceDouble.toString().toDouble()
                             try {
                                 val datetime = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT).parse(datetimeString.toString()).time
-
-                                if (Converter.toType(type) == Type.PURCHASE) {
-                                    if (ticker == "FXGD" || ticker == "FXTB" ||
-                                        ticker == "FXRU" && datetime >= 1643846400) { // February 3, 2022
-                                        quantity *= 10
-                                        price /= 10
-                                    } else if (ticker == "FXUS" || ticker == "FXRL" ||
-                                        ticker == "FXRB" && datetime >= 1633564800) { // October 7, 2021
-                                        quantity *= 100
-                                        price /= 100
-                                    } else if (ticker == "FXDE" && datetime >= 1631145600) { // September 9, 2021
-                                        quantity *= 100
-                                        price /= 100
-                                    } else if (ticker == "FXRU" && datetime >= 1544140800) { // December 7, 2018
-                                        quantity *= 10
-                                        price /= 10
-                                    }
-                                }
-
                                 if (Converter.toType(type) == Type.SELL && quantity > totalQuantity) {
-                                    Toast.makeText(context, resources.getString(R.string.you_don_t_have_enough_fonds), Toast.LENGTH_LONG).show()
+                                    Toast.makeText(context, resources.getString(R.string.you_don_t_have_enough_funds), Toast.LENGTH_LONG).show()
                                 } else {
-                                    viewModel.insert(Fund(0, fund.ticker, fund.icon, fund.name, fund.originalName, fund.nav.navPerShare, quantity, datetime, price, type))
+                                    viewModel.insert(Asset(0, fund.ticker, fund.icon, fund.name, fund.originalName, fund.nav.navPerShare, quantity, datetime, price, type))
                                     findNavController().popBackStack()
 
                                     if (Converter.toType(type) == Type.PURCHASE) {
@@ -134,19 +121,12 @@ class AddFragment : Fragment() {
                                     }
                                 }
 
-
                             } catch (e: ParseException) {
                                 Toast.makeText(context, resources.getText(R.string.date_time_type_invalid), Toast.LENGTH_LONG).show()
                             }
                         } else {
                             Toast.makeText(context, resources.getText(R.string.fields_is_empty), Toast.LENGTH_LONG).show()
                         }
-                    }
-
-                    if (Converter.toType(type) == Type.PURCHASE) {
-                        splitLinearLayout.visibility = View.VISIBLE
-                    } else {
-                        splitLinearLayout.visibility = View.GONE
                     }
 
                     splitButton.setOnClickListener {

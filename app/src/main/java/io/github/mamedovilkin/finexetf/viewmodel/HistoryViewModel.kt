@@ -2,15 +2,24 @@ package io.github.mamedovilkin.finexetf.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.mamedovilkin.finexetf.repository.UseCase
-import io.github.mamedovilkin.finexetf.room.Fund
+import io.github.mamedovilkin.finexetf.model.database.Asset
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    useCase: UseCase
+    private val useCase: UseCase
 ) : ViewModel() {
 
-    val funds: LiveData<List<Fund>> = useCase.getLocalFunds()
+    val assets: LiveData<List<Asset>> = useCase.getAssets()
+
+    fun delete(asset: Asset) {
+        viewModelScope.launch {
+            useCase.delete(asset)
+        }
+    }
 }

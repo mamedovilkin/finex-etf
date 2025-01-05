@@ -50,7 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -58,7 +58,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:textSize="24sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorText"
                         tools:text="Name" />
 
@@ -131,14 +131,15 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/add_button"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/add_purchase"
+                android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
-                android:background="@drawable/shape_add_button"/>
+                android:background="@drawable/shape_add_purchase_button" />
 
         </LinearLayout>
 

@@ -1,7 +1,6 @@
 package io.github.mamedovilkin.finexetf.view.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,14 +9,18 @@ import coil3.svg.SvgDecoder
 import com.bumptech.glide.Glide
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.TransactionRecyclerViewItemBinding
-import io.github.mamedovilkin.finexetf.room.Converter
-import io.github.mamedovilkin.finexetf.room.Fund
-import io.github.mamedovilkin.finexetf.room.Type
+import io.github.mamedovilkin.finexetf.database.Converter
+import io.github.mamedovilkin.finexetf.model.database.Asset
+import io.github.mamedovilkin.finexetf.model.database.Type
+import io.github.mamedovilkin.finexetf.util.hide
+import io.github.mamedovilkin.finexetf.util.show
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class TransactionRecyclerViewAdapter(var funds: List<Fund>) : RecyclerView.Adapter<TransactionRecyclerViewAdapter.TransactionRecyclerViewViewHolder>() {
+class TransactionRecyclerViewAdapter(var assets: List<Asset>) : RecyclerView.Adapter<TransactionRecyclerViewAdapter.TransactionRecyclerViewViewHolder>() {
+
+    var onClickListener: OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionRecyclerViewAdapter.TransactionRecyclerViewViewHolder {
         val binding: TransactionRecyclerViewItemBinding = DataBindingUtil
@@ -32,28 +35,30 @@ class TransactionRecyclerViewAdapter(var funds: List<Fund>) : RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: TransactionRecyclerViewAdapter.TransactionRecyclerViewViewHolder, position: Int) {
-        val fund = funds[position]
-        if (position == 0 || fund.datetime != funds[position - 1].datetime) {
-            holder.binding.dateTimeTextView.visibility = View.VISIBLE
+        val asset = assets[position]
+        if (position == 0 || asset.datetime != assets[position - 1].datetime) {
+            holder.binding.dateTimeTextView.show()
         } else {
-            holder.binding.dateTimeTextView.visibility = View.GONE
+            holder.binding.dateTimeTextView.hide()
         }
-        holder.setFund(fund)
+        holder.bind(asset)
+        holder.itemView.setOnLongClickListener {
+            onClickListener?.onTransactionClickListener(asset)
+            true
+        }
     }
 
-    override fun getItemCount(): Int {
-        return funds.size
-    }
+    override fun getItemCount(): Int = assets.size
 
     inner class TransactionRecyclerViewViewHolder(val binding: TransactionRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun setFund(fund: Fund) {
+        fun bind(asset: Asset) {
             binding.apply {
-                when (fund.ticker) {
+                when (asset.ticker) {
                     "FXTP" -> {
                         Glide
                             .with(root.context)
-                            .load(fund.icon)
+                            .load(asset.icon)
                             .fitCenter()
                             .into(imageView)
                     }
@@ -61,25 +66,25 @@ class TransactionRecyclerViewAdapter(var funds: List<Fund>) : RecyclerView.Adapt
                         imageView.setImageDrawable(root.context.resources.getDrawable(R.drawable.fxre, null))
                     }
                     else -> {
-                        imageView.load(fund.icon) {
+                        imageView.load(asset.icon) {
                             decoderFactory { result, options, _ -> SvgDecoder(result.source, options) }
                         }
                     }
                 }
 
-                dateTimeTextView.text = SimpleDateFormat("MMMM dd, yyyy 'at' HH:mm", Locale.US).format(Date(fund.datetime))
-                nameTextView.text = fund.originalName.trim()
-                tickerTextView.text = fund.ticker
-                priceTextView.text = "${String.format("%.2f", fund.price)}₽"
+                dateTimeTextView.text = SimpleDateFormat("MMMM dd, yyyy 'at' HH:mm", Locale.US).format(Date(asset.datetime))
+                nameTextView.text = asset.originalName.trim()
+                tickerTextView.text = asset.ticker
+                priceTextView.text = "${String.format("%.2f", asset.price)}₽"
 
-                if (fund.type == Converter.fromType(Type.PURCHASE)) {
+                if (asset.type == Converter.fromType(Type.PURCHASE)) {
                     quantityTextView.setTextColor(root.context.resources.getColor(R.color.colorPurchase, null))
-                    quantityTextView.text = "+${fund.quantity} pcs."
+                    quantityTextView.text = "+${asset.quantity} pcs."
                 }
 
-                if (fund.type == Converter.fromType(Type.SELL)) {
+                if (asset.type == Converter.fromType(Type.SELL)) {
                     quantityTextView.setTextColor(root.context.resources.getColor(R.color.colorSell, null))
-                    quantityTextView.text = "-${fund.quantity} pcs."
+                    quantityTextView.text = "-${asset.quantity} pcs."
                 }
             }
         }

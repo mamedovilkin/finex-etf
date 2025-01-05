@@ -9,12 +9,11 @@ import coil3.svg.SvgDecoder
 import com.bumptech.glide.Glide
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.ChooseFundRecyclerViewItemBinding
-import io.github.mamedovilkin.finexetf.model.Funds
-import io.github.mamedovilkin.finexetf.model.ListFund
+import io.github.mamedovilkin.finexetf.model.network.ListFund
 
-class ChooseFundRecyclerViewAdapter(var funds: Funds) : RecyclerView.Adapter<ChooseFundRecyclerViewAdapter.FundRecyclerViewViewHolder>() {
+class ChooseFundRecyclerViewAdapter(var funds: List<ListFund>) : RecyclerView.Adapter<ChooseFundRecyclerViewAdapter.FundRecyclerViewViewHolder>() {
 
-    var onItemClickListener: OnItemClickListener? = null
+    var onClickListener: OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FundRecyclerViewViewHolder {
         val binding: ChooseFundRecyclerViewItemBinding = DataBindingUtil
@@ -29,9 +28,9 @@ class ChooseFundRecyclerViewAdapter(var funds: Funds) : RecyclerView.Adapter<Cho
     }
 
     override fun onBindViewHolder(holder: FundRecyclerViewViewHolder, position: Int) {
-        holder.setFund(funds[position])
+        holder.bind(funds[position])
         holder.itemView.setOnClickListener {
-            onItemClickListener?.onItemClickListener(funds[position].ticker)
+            onClickListener?.onFundClickListener(funds[position].ticker)
         }
     }
 
@@ -41,7 +40,7 @@ class ChooseFundRecyclerViewAdapter(var funds: Funds) : RecyclerView.Adapter<Cho
 
     inner class FundRecyclerViewViewHolder(private val binding: ChooseFundRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun setFund(fund: ListFund) {
+        fun bind(fund: ListFund) {
             binding.apply {
                 when (fund.ticker) {
                     "FXTP" -> {

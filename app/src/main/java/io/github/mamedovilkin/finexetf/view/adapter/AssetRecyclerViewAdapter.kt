@@ -12,12 +12,14 @@ import com.bumptech.glide.Glide
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.AssetRecyclerViewItemBinding
 import io.github.mamedovilkin.finexetf.databinding.NetWorthRecyclerViewHeaderBinding
-import io.github.mamedovilkin.finexetf.model.Asset
-import io.github.mamedovilkin.finexetf.view.fragment.card.NetWorthRUBCardFragment
-import io.github.mamedovilkin.finexetf.view.fragment.card.NetWorthUSDCardFragment
+import io.github.mamedovilkin.finexetf.model.view.Asset
+import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthRUBFragment
+import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthUSDFragment
+import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
 
 class AssetRecyclerViewAdapter(
     private val assets: List<Asset>,
+    private val viewModel: MyAssetsViewModel,
     private val fragmentManager: FragmentManager,
     private val lifecycle: Lifecycle,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -57,23 +59,23 @@ class AssetRecyclerViewAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        return assets.size + 1
-    }
+    override fun getItemCount(): Int = assets.size + 1
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is AssetRecyclerViewViewHolder) {
-            holder.setAsset(assets[position - 1])
+            holder.bind(assets[position - 1])
         }
     }
 
-    inner class NetWorthRecyclerViewViewHolder(private val binding: NetWorthRecyclerViewHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class NetWorthRecyclerViewViewHolder(binding: NetWorthRecyclerViewHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.apply {
-                viewPager2.adapter = NetWorthViewPagerFragmentStateAdapter(listOf(
-                    NetWorthRUBCardFragment(), NetWorthUSDCardFragment()
-                ), fragmentManager, lifecycle)
+                viewPager2.adapter = NetWorthFragmentStateAdapter(
+                    listOf(NetWorthRUBFragment(viewModel), NetWorthUSDFragment(viewModel)),
+                    fragmentManager,
+                    lifecycle
+                )
                 circleIndicator3.setViewPager(viewPager2)
             }
         }
@@ -81,18 +83,18 @@ class AssetRecyclerViewAdapter(
 
     inner class AssetRecyclerViewViewHolder(private val binding: AssetRecyclerViewItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun setAsset(asset: Asset) {
+        fun bind(asset: Asset) {
             binding.apply {
                 when (asset.ticker) {
                     "FXTP" -> {
                         Glide
-                            .with(binding.root.context)
+                            .with(root.context)
                             .load(asset.icon)
                             .fitCenter()
                             .into(imageView)
                     }
                     "FXRE" -> {
-                        imageView.setImageDrawable(binding.root.context.resources.getDrawable(R.drawable.fxre, null))
+                        imageView.setImageDrawable(root.context.resources.getDrawable(R.drawable.fxre, null))
                     }
                     else -> {
                         imageView.load(asset.icon) {

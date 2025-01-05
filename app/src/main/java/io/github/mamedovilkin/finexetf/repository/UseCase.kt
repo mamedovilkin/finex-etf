@@ -1,8 +1,10 @@
 package io.github.mamedovilkin.finexetf.repository
 
 import androidx.lifecycle.LiveData
-import io.github.mamedovilkin.finexetf.model.Fund
-import io.github.mamedovilkin.finexetf.model.Funds
+import io.github.mamedovilkin.finexetf.model.database.Asset
+import io.github.mamedovilkin.finexetf.model.network.Fund
+import io.github.mamedovilkin.finexetf.model.network.ListFund
+import io.github.mamedovilkin.finexetf.model.network.ValCurs
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -10,24 +12,31 @@ class UseCase @Inject constructor(
     private val repository: Repository,
 ) {
 
-    suspend fun insert(fund: io.github.mamedovilkin.finexetf.room.Fund) {
-        repository.insert(fund)
+    suspend fun insert(asset: Asset) {
+        repository.insert(asset)
     }
 
-    suspend fun deleteAll() {
-        repository.deleteAll()
+    suspend fun delete(asset: Asset) {
+        repository.delete(asset)
     }
 
-    fun getLocalFunds(): LiveData<List<io.github.mamedovilkin.finexetf.room.Fund>> {
-        return repository.getLocalFunds()
+    suspend fun deleteAllAssets() {
+        repository.deleteAllAssets()
     }
 
-    suspend fun getFunds(): Response<Funds> {
+    fun getAssets(): LiveData<List<Asset>> {
+        return repository.getAssets()
+    }
+
+    suspend fun getFunds(): Response<List<ListFund>> {
         return repository.getFunds()
     }
 
-    suspend fun getFundByTicker(ticker: String): Response<Fund> {
-        return repository.getFundByTicker(ticker)
+    suspend fun getFund(ticker: String): Response<Fund> {
+        return repository.getFund(ticker)
     }
 
+    suspend fun getCurrencies(dateReq: String): Response<ValCurs> {
+        return repository.getCurrencies(dateReq)
+    }
 }

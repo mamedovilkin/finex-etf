@@ -1,34 +1,43 @@
 package io.github.mamedovilkin.finexetf.repository
 
 import androidx.lifecycle.LiveData
-import io.github.mamedovilkin.finexetf.model.Fund
-import io.github.mamedovilkin.finexetf.model.Funds
+import io.github.mamedovilkin.finexetf.model.database.Asset
+import io.github.mamedovilkin.finexetf.model.network.Fund
+import io.github.mamedovilkin.finexetf.model.network.ListFund
+import io.github.mamedovilkin.finexetf.model.network.ValCurs
 import retrofit2.Response
 import javax.inject.Inject
 
 class Repository @Inject constructor(
-    private val remoteRepository: RemoteRepository,
-    private val localRepository: LocalRepository,
+    private val networkRepository: NetworkRepository,
+    private val databaseRepository: DatabaseRepository,
 ) {
 
-    suspend fun insert(fund: io.github.mamedovilkin.finexetf.room.Fund) {
-        localRepository.insert(fund)
+    suspend fun insert(asset: Asset) {
+        databaseRepository.insert(asset)
     }
 
-    suspend fun deleteAll() {
-        localRepository.deleteAll()
+    suspend fun delete(asset: Asset) {
+        databaseRepository.delete(asset)
     }
 
-    fun getLocalFunds(): LiveData<List<io.github.mamedovilkin.finexetf.room.Fund>> {
-        return localRepository.getLocalFunds()
+    suspend fun deleteAllAssets() {
+        databaseRepository.deleteAllAssets()
     }
 
-    suspend fun getFunds(): Response<Funds> {
-        return remoteRepository.getFunds()
+    fun getAssets(): LiveData<List<Asset>> {
+        return databaseRepository.getAssets()
     }
 
-    suspend fun getFundByTicker(ticker: String): Response<Fund> {
-        return remoteRepository.getFundByTicker(ticker)
+    suspend fun getFunds(): Response<List<ListFund>> {
+        return networkRepository.getFunds()
     }
 
+    suspend fun getFund(ticker: String): Response<Fund> {
+        return networkRepository.getFund(ticker)
+    }
+
+    suspend fun getCurrencies(dateReq: String): Response<ValCurs> {
+        return networkRepository.getCurrencies(dateReq)
+    }
 }
