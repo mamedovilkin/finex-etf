@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.finexetf.view.adapter
+package io.github.mamedovilkin.finexetf.view.adapter.myassets
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,6 +13,7 @@ import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.AssetRecyclerViewItemBinding
 import io.github.mamedovilkin.finexetf.databinding.NetWorthRecyclerViewHeaderBinding
 import io.github.mamedovilkin.finexetf.model.view.Asset
+import io.github.mamedovilkin.finexetf.view.adapter.fund.OnClickListener
 import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthRUBFragment
 import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthUSDFragment
 import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
@@ -26,6 +27,7 @@ class AssetRecyclerViewAdapter(
 
     private val HEADER: Int = 0
     private val LIST: Int = 1
+    var onClickListener: OnClickListener? = null
     var rate: String = ""
     var dateFrom: String = ""
 
@@ -65,7 +67,11 @@ class AssetRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is AssetRecyclerViewViewHolder) {
-            holder.bind(assets[position - 1])
+            val asset = assets[position - 1]
+            holder.bind(asset)
+            holder.itemView.setOnClickListener {
+                onClickListener?.onFundClickListener(asset.ticker)
+            }
         }
     }
 

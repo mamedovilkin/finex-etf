@@ -12,11 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentChooseFundDialogBinding
 import io.github.mamedovilkin.finexetf.database.Converter
-import io.github.mamedovilkin.finexetf.model.database.Asset
 import io.github.mamedovilkin.finexetf.model.database.Type
 import io.github.mamedovilkin.finexetf.model.network.ListFund
-import io.github.mamedovilkin.finexetf.view.adapter.ChooseFundRecyclerViewAdapter
-import io.github.mamedovilkin.finexetf.view.adapter.OnClickListener
+import io.github.mamedovilkin.finexetf.view.adapter.fund.ChooseFundRecyclerViewAdapter
+import io.github.mamedovilkin.finexetf.view.adapter.fund.OnClickListener
 
 class ChooseFundDialogFragment(private val funds: List<ListFund>, private val type: Type) :
     BottomSheetDialogFragment(),
@@ -47,11 +46,9 @@ class ChooseFundDialogFragment(private val funds: List<ListFund>, private val ty
     }
 
     override fun onFundClickListener(ticker: String) {
-        findNavController().navigate(R.id.action_my_assets_fragment_to_add_fragment, bundleOf("ticker" to ticker, "type" to Converter.fromType(type)))
+        findNavController().navigate(R.id.action_my_assets_to_add, bundleOf("ticker" to ticker, "type" to Converter.fromType(type)))
         dismiss()
     }
-
-    override fun onTransactionClickListener(asset: Asset) {}
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         return false

@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.finexetf.view.adapter
+package io.github.mamedovilkin.finexetf.view.adapter.fund
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

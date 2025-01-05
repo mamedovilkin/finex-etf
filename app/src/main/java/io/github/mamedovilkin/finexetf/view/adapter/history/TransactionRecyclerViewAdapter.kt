@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.finexetf.view.adapter
+package io.github.mamedovilkin.finexetf.view.adapter.history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,6 +14,7 @@ import io.github.mamedovilkin.finexetf.model.database.Asset
 import io.github.mamedovilkin.finexetf.model.database.Type
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
+import io.github.mamedovilkin.finexetf.view.adapter.history.OnClickListener
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -22,7 +23,7 @@ class TransactionRecyclerViewAdapter(var assets: List<Asset>) : RecyclerView.Ada
 
     var onClickListener: OnClickListener? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionRecyclerViewAdapter.TransactionRecyclerViewViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionRecyclerViewViewHolder {
         val binding: TransactionRecyclerViewItemBinding = DataBindingUtil
             .inflate(
                 LayoutInflater.from(parent.context),
@@ -34,7 +35,7 @@ class TransactionRecyclerViewAdapter(var assets: List<Asset>) : RecyclerView.Ada
         return TransactionRecyclerViewViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: TransactionRecyclerViewAdapter.TransactionRecyclerViewViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TransactionRecyclerViewViewHolder, position: Int) {
         val asset = assets[position]
         if (position == 0 || asset.datetime != assets[position - 1].datetime) {
             holder.binding.dateTimeTextView.show()

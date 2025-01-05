@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.finexetf.view.fragment.add
+package io.github.mamedovilkin.finexetf.view.fragment.fund
 
 import android.content.Intent
 import android.net.Uri
@@ -50,7 +50,7 @@ class AddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getFundByTicker(ticker).observe(viewLifecycleOwner) { fund ->
+        viewModel.getFund(ticker).observe(viewLifecycleOwner) { fund ->
             if (fund != null) {
                 binding.apply {
                     when (fund.ticker) {

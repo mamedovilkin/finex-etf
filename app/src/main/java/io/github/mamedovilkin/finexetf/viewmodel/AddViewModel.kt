@@ -72,7 +72,7 @@ class AddViewModel @Inject constructor(
         }
     }
 
-    fun getFundByTicker(ticker: String): LiveData<Fund> {
+    fun getFund(ticker: String): LiveData<Fund> {
         return liveData {
             useCase.getFund(ticker).body()?.let { emit(it) }
         }

@@ -57,7 +57,7 @@
                     android:maxLines="1"
                     android:textSize="18sp"
                     android:textColor="@color/colorText"
-                    tools:text="Name" />
+                    tools:text="FinEx US REIT UCITS ETF" />
 
                 <TextView
                     android:id="@+id/ticker_text_view"
@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textColor="@color/colorTextSecondary"
-                    tools:text="Ticker" />
+                    tools:text="FXRE" />
 
             </LinearLayout>
 

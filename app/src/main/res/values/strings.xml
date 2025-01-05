@@ -17,7 +17,7 @@
     <string name="example_date_time">Example: 18/10/2013 10:41</string>
     <string name="example_price">Example: 68.35₽</string>
     <string name="fields_is_empty">Fields is empty</string>
-    <string name="date_time_type_invalid">Datetime type is invalid</string>
+    <string name="date_time_type_invalid">Date and time type is invalid</string>
     <string name="purchase_has_been_added">Purchase has been added</string>
     <string name="sell_has_been_added">Sell has been added</string>
     <string name="zero_dollars">0$</string>
