@@ -5,12 +5,14 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import javax.inject.Singleton
 import dagger.hilt.components.SingletonComponent
-import io.github.mamedovilkin.finexetf.repository.FondLocalRepository
-import io.github.mamedovilkin.finexetf.repository.FondRemoteRepository
-import io.github.mamedovilkin.finexetf.repository.FondRepository
-import io.github.mamedovilkin.finexetf.repository.FondUseCase
-import io.github.mamedovilkin.finexetf.retrofit.Service
-import io.github.mamedovilkin.finexetf.room.FondDatabase
+import io.github.mamedovilkin.finexetf.repository.DatabaseRepository
+import io.github.mamedovilkin.finexetf.repository.NetworkRepository
+import io.github.mamedovilkin.finexetf.repository.Repository
+import io.github.mamedovilkin.finexetf.repository.UseCase
+import io.github.mamedovilkin.finexetf.network.CBRService
+import io.github.mamedovilkin.finexetf.network.FinExService
+import io.github.mamedovilkin.finexetf.database.AssetDatabase
+import javax.inject.Named
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -18,28 +20,31 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideFondRemoteRepository(service: Service): FondRemoteRepository {
-        return FondRemoteRepository(service)
+    fun provideRemoteRepository(
+        @Named("FinEx") finExService: FinExService,
+        @Named("CBR") cbrService: CBRService,
+    ): NetworkRepository {
+        return NetworkRepository(finExService, cbrService)
     }
 
     @Provides
     @Singleton
-    fun provideFondLocalRepository(database: FondDatabase): FondLocalRepository {
-        return FondLocalRepository(database)
+    fun provideLocalRepository(database: AssetDatabase): DatabaseRepository {
+        return DatabaseRepository(database)
     }
 
     @Provides
     @Singleton
-    fun provideFondRepository(
-        remoteRepository: FondRemoteRepository,
-        localRepository: FondLocalRepository,
-    ): FondRepository {
-        return FondRepository(remoteRepository, localRepository)
+    fun provideRepository(
+        networkRepository: NetworkRepository,
+        databaseRepository: DatabaseRepository,
+    ): Repository {
+        return Repository(networkRepository, databaseRepository)
     }
 
     @Provides
     @Singleton
-    fun provideFondUseCase(repository: FondRepository): FondUseCase {
-        return FondUseCase(repository)
+    fun provideUseCase(repository: Repository): UseCase {
+        return UseCase(repository)
     }
 }

@@ -9,11 +9,11 @@
         tools:context=".view.fragment.main.SettingsFragment">
 
         <Button
-            android:id="@+id/delete_data_button"
+            android:id="@+id/delete_all_data_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorWhite"
-            android:text="Delete data"
+            android:text="Delete all data"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

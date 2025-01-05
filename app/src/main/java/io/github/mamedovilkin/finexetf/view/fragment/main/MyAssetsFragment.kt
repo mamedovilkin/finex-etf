@@ -1,21 +1,25 @@
 package io.github.mamedovilkin.finexetf.view.fragment.main
 
 import android.os.Bundle
+import android.text.format.DateFormat
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.databinding.FragmentMyAssetsBinding
-import io.github.mamedovilkin.finexetf.model.Fonds
-import io.github.mamedovilkin.finexetf.room.Fond
-import io.github.mamedovilkin.finexetf.room.Type
-import io.github.mamedovilkin.finexetf.view.adapter.CardViewPagerFragmentStateAdapter
-import io.github.mamedovilkin.finexetf.view.fragment.card.DollarCardFragment
-import io.github.mamedovilkin.finexetf.view.fragment.card.RubleCardFragment
-import io.github.mamedovilkin.finexetf.view.fragment.dialog.ChooseFondDialogFragment
+import io.github.mamedovilkin.finexetf.model.view.Asset
+import io.github.mamedovilkin.finexetf.model.network.ListFund
+import io.github.mamedovilkin.finexetf.model.database.Type
+import io.github.mamedovilkin.finexetf.model.view.ExchangeRate
+import io.github.mamedovilkin.finexetf.util.hide
+import io.github.mamedovilkin.finexetf.util.show
+import io.github.mamedovilkin.finexetf.view.adapter.AssetRecyclerViewAdapter
+import io.github.mamedovilkin.finexetf.view.fragment.dialog.ChooseFundDialogFragment
 import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
+import java.util.Date
 
 @AndroidEntryPoint
 class MyAssetsFragment : Fragment() {
@@ -23,26 +27,48 @@ class MyAssetsFragment : Fragment() {
     private var _binding: FragmentMyAssetsBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentMyAssetsBinding must not be null")
-    private lateinit var remoteFonds: Fonds
-    private lateinit var localFonds: List<Fond>
+    private lateinit var viewModel: MyAssetsViewModel
+    private lateinit var exchangeRate: ExchangeRate
+    private lateinit var funds: List<ListFund>
+    private lateinit var assets: List<Asset>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentMyAssetsBinding.inflate(inflater)
 
-        val viewModel = ViewModelProvider(requireActivity())[MyAssetsViewModel::class]
+        viewModel = ViewModelProvider(requireActivity())[MyAssetsViewModel::class]
 
-        viewModel.remoteFonds.observe(viewLifecycleOwner) {
-            remoteFonds = it
-            binding.addPurchase.visibility = View.VISIBLE
+        val dateReq = DateFormat.format("dd/MM/yyyy", Date()).toString()
+
+        viewModel.getExchangeRate(dateReq).observe(viewLifecycleOwner) {
+            exchangeRate = it
         }
 
-        viewModel.localFonds.observe(viewLifecycleOwner) {
-            localFonds = it
-            if (localFonds.isNotEmpty()) {
-                binding.assetsRecyclerView.visibility = View.VISIBLE
-                binding.placeholderLinearLayout.visibility = View.GONE
-                binding.addSell.visibility = View.VISIBLE
+        viewModel.getAssets().observe(viewLifecycleOwner) {
+            assets = it
+            binding.apply {
+                progressBar.hide()
+                if (assets.isNotEmpty()) {
+                    assetsRecyclerView.apply {
+                        setHasFixedSize(true)
+                        layoutManager = LinearLayoutManager(context)
+                        val assetRecyclerViewAdapter = AssetRecyclerViewAdapter(assets, viewModel, childFragmentManager, viewLifecycleOwner.lifecycle)
+                        assetRecyclerViewAdapter.rate = exchangeRate.rate
+                        assetRecyclerViewAdapter.dateFrom = exchangeRate.dateFrom
+                        adapter = assetRecyclerViewAdapter
+                        show()
+                    }
+                    placeholderLinearLayout.hide()
+                    addSell.show()
+                } else {
+                    assetsRecyclerView.hide()
+                    placeholderLinearLayout.show()
+                    addSell.hide()
+                }
             }
+        }
+
+        viewModel.funds.observe(viewLifecycleOwner) {
+            funds = it
         }
 
         return binding.root
@@ -52,18 +78,19 @@ class MyAssetsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            viewPager2.adapter = CardViewPagerFragmentStateAdapter(listOf(RubleCardFragment(), DollarCardFragment()), childFragmentManager, viewLifecycleOwner.lifecycle)
-            circleIndicator3.setViewPager(viewPager2)
-
             addPurchase.setOnClickListener {
-                if (!remoteFonds.isEmpty()) {
-                    ChooseFondDialogFragment(remoteFonds, Type.PURCHASE).show(parentFragmentManager, "FondListDialogFragment")
+                if (funds.isNotEmpty()) {
+                    ChooseFundDialogFragment(funds, Type.PURCHASE).show(parentFragmentManager, "ChooseFundDialogFragment")
                 }
             }
 
             addSell.setOnClickListener {
-                if (localFonds.isNotEmpty()) {
-                    ChooseFondDialogFragment(arrayListOf(io.github.mamedovilkin.finexetf.model.Fond(localFonds[0].ticker, localFonds[0].icon, localFonds[0].name, localFonds[0].originalName)), Type.SELL).show(parentFragmentManager, "FondListDialogFragment")
+                if (assets.isNotEmpty()) {
+                    val availableListFunds = mutableListOf<ListFund>()
+                    assets.forEach {
+                        availableListFunds.add(ListFund(it.ticker, it.icon, it.name, it.originalName))
+                    }
+                    ChooseFundDialogFragment(availableListFunds, Type.SELL).show(parentFragmentManager, "ChooseFundDialogFragment")
                 }
             }
         }

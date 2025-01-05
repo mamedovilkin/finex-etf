@@ -56,6 +56,7 @@ dependencies {
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.converter.simplexml)
 
     // ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)

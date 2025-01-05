@@ -2,6 +2,7 @@
 agp = "8.7.3"
 circleindicator = "2.1.6"
 coil = "3.0.4"
+converterSimplexml = "2.3.0"
 coreSplashscreen = "1.0.1"
 glide = "4.16.0"
 hiltAndroid = "2.54"
@@ -39,6 +40,7 @@ coil = { module = "io.coil-kt.coil3:coil", version.ref = "coil" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 coil-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coil" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+converter-simplexml = { module = "com.squareup.retrofit2:converter-simplexml", version.ref = "converterSimplexml" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
