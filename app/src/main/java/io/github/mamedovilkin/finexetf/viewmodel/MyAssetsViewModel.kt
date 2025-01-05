@@ -11,6 +11,7 @@ import io.github.mamedovilkin.finexetf.repository.UseCase
 import io.github.mamedovilkin.finexetf.database.Converter
 import io.github.mamedovilkin.finexetf.model.database.Type
 import io.github.mamedovilkin.finexetf.model.network.ListFund
+import io.github.mamedovilkin.finexetf.model.view.ExchangeRate
 import java.util.ArrayList
 import java.util.Date
 import javax.inject.Inject
@@ -21,6 +22,16 @@ class MyAssetsViewModel @Inject constructor(
 ) : ViewModel() {
 
     val funds: LiveData<List<ListFund>> = liveData { useCase.getFunds().body()?.let { emit(it) } }
+
+    fun getExchangeRate(dateReq: String): LiveData<ExchangeRate> {
+        return liveData {
+            useCase.getCurrencies(dateReq).body()?.let {
+                val rate = String.format("%.2f", it.Valute[13].Value.replace(",", ".").toDouble())
+                val dateFrom = it.Date
+                emit(ExchangeRate(rate, dateFrom))
+            }
+        }
+    }
 
     fun getNetWorthRUB(): LiveData<List<Double>> {
         return liveData {
@@ -118,7 +129,9 @@ class MyAssetsViewModel @Inject constructor(
                     assets.add(Asset(ticker, icon, name, originalName, navPrice, totalQuantity, totalPrice, totalNavPrice))
                 }
 
-                emit(assets)
+                emit(assets.filterIndexed { _, asset ->
+                    asset.totalQuantity != 0
+                })
             }
         }
     }

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentHistoryBinding
 import io.github.mamedovilkin.finexetf.model.database.Asset
 import io.github.mamedovilkin.finexetf.util.hide
@@ -17,7 +16,6 @@ import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.view.adapter.OnClickListener
 import io.github.mamedovilkin.finexetf.view.adapter.TransactionRecyclerViewAdapter
 import io.github.mamedovilkin.finexetf.viewmodel.HistoryViewModel
-
 
 @AndroidEntryPoint
 class HistoryFragment : Fragment(), OnClickListener {
@@ -33,22 +31,9 @@ class HistoryFragment : Fragment(), OnClickListener {
 
         viewModel = ViewModelProvider(requireActivity())[HistoryViewModel::class]
 
-        fetchFunds()
-
-        binding.apply {
-            swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.colorPrimary, null))
-            swipeRefreshLayout.setOnRefreshListener {
-                swipeRefreshLayout.isRefreshing = true
-                fetchFunds()
-            }
-        }
-
-        return binding.root
-    }
-
-    private fun fetchFunds() {
         viewModel.assets.observe(viewLifecycleOwner) { assets ->
             binding.apply {
+                progressBar.hide()
                 if (assets.isNotEmpty()) {
                     val sortedAssets = assets.sortedByDescending { it.datetime }
                     transactionsRecyclerView.setHasFixedSize(true)
@@ -62,9 +47,10 @@ class HistoryFragment : Fragment(), OnClickListener {
                     transactionsRecyclerView.hide()
                     placeholderLinearLayout.show()
                 }
-                swipeRefreshLayout.isRefreshing = false
             }
         }
+
+        return binding.root
     }
 
     override fun onFundClickListener(ticker: String) {}

@@ -18,10 +18,21 @@
             android:backgroundTint="@color/colorPrimary"
             tools:context=".view.fragment.viewpager.NetWorthUSDFragment">
 
-            <LinearLayout
+            <ProgressBar
+                android:id="@+id/progress_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:indeterminate="true"
+                android:indeterminateTintMode="src_atop"
+                android:indeterminateTint="@color/colorWhite" />
+
+            <LinearLayout
+                android:id="@+id/linear_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView

@@ -8,6 +8,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentNetWorthUsdBinding
+import io.github.mamedovilkin.finexetf.util.hide
+import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
 
 class NetWorthUSDFragment(private val viewModel: MyAssetsViewModel) : Fragment() {
@@ -41,6 +43,8 @@ class NetWorthUSDFragment(private val viewModel: MyAssetsViewModel) : Fragment()
                     changeTextView.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_change_text_view_normal, null)
                     changeTextView.text = "${String.format("%.2f", change)}$ (${String.format("%.2f", percentChange)}%)"
                 }
+                progressBar.hide()
+                linearLayout.show()
             }
         }
     }

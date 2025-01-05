@@ -26,6 +26,8 @@ class AssetRecyclerViewAdapter(
 
     private val HEADER: Int = 0
     private val LIST: Int = 1
+    var rate: String = ""
+    var dateFrom: String = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == HEADER) {
@@ -71,6 +73,7 @@ class AssetRecyclerViewAdapter(
 
         init {
             binding.apply {
+                exchangeRateTextView.text = "1$ = $rate₽ (Bank of Russia from $dateFrom)"
                 viewPager2.adapter = NetWorthFragmentStateAdapter(
                     listOf(NetWorthRUBFragment(viewModel), NetWorthUSDFragment(viewModel)),
                     fragmentManager,
