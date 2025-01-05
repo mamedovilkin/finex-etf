@@ -7,4 +7,6 @@ import org.simpleframework.xml.Root
 data class Valute @JvmOverloads constructor(
     @field: Element(data = true, required = false)
     var Value: String = "",
+    @field: Element(data = true, required = false)
+    var VunitRate: String = "",
 )

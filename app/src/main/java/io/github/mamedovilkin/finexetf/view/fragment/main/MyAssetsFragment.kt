@@ -15,7 +15,6 @@ import io.github.mamedovilkin.finexetf.databinding.FragmentMyAssetsBinding
 import io.github.mamedovilkin.finexetf.model.view.Asset
 import io.github.mamedovilkin.finexetf.model.network.ListFund
 import io.github.mamedovilkin.finexetf.model.database.Type
-import io.github.mamedovilkin.finexetf.model.view.ExchangeRate
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.view.adapter.myassets.AssetRecyclerViewAdapter
@@ -30,7 +29,7 @@ class MyAssetsFragment : Fragment(), OnClickListener {
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentMyAssetsBinding must not be null")
     private lateinit var viewModel: MyAssetsViewModel
-    private var exchangeRate: ExchangeRate? = null
+    private var rates: List<Double> = mutableListOf()
     private lateinit var funds: List<ListFund>
     private lateinit var assets: List<Asset>
 
@@ -40,7 +39,7 @@ class MyAssetsFragment : Fragment(), OnClickListener {
         viewModel = ViewModelProvider(requireActivity())[MyAssetsViewModel::class]
 
         viewModel.getExchangeRate().observe(viewLifecycleOwner) {
-            exchangeRate = it
+            rates = it
         }
 
         viewModel.getAssets().observe(viewLifecycleOwner) {
@@ -53,8 +52,7 @@ class MyAssetsFragment : Fragment(), OnClickListener {
                         layoutManager = LinearLayoutManager(context)
                         val assetRecyclerViewAdapter = AssetRecyclerViewAdapter(assets, viewModel, childFragmentManager, viewLifecycleOwner.lifecycle)
                         assetRecyclerViewAdapter.onClickListener = this@MyAssetsFragment
-                        assetRecyclerViewAdapter.rate = exchangeRate?.rate ?: "0"
-                        assetRecyclerViewAdapter.dateFrom = exchangeRate?.dateFrom ?: "00.00.0000"
+                        assetRecyclerViewAdapter.rates = rates
                         adapter = assetRecyclerViewAdapter
                         show()
                     }

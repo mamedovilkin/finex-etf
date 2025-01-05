@@ -28,4 +28,7 @@
     <string name="split">Funds that had a split will be automatically split.</string>
     <string name="what_is_split">What is split?</string>
     <string name="you_don_t_have_enough_funds">You don\'t have enough funds</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="deleted">Deleted</string>
 </resources>

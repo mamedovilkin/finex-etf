@@ -1,11 +1,13 @@
 package io.github.mamedovilkin.finexetf.viewmodel
 
+import android.text.format.DateFormat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.mamedovilkin.finexetf.model.network.Fund
 import io.github.mamedovilkin.finexetf.repository.UseCase
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,12 +21,28 @@ class FundViewModel @Inject constructor(
         }
     }
 
-    fun getExchangeRate(dateReq: String): LiveData<Double> {
+    fun getExchangeRate(): LiveData<List<Double>> {
         return liveData {
-            useCase.getCurrencies(dateReq).body()?.let {
-                val rate = it.Valute[13].Value.replace(",", ".").toDouble()
-                emit(rate)
+            val formattedDate = DateFormat.format("dd/MM/yyyy", Date()).toString()
+            val currencyResponse = useCase.getCurrencies(formattedDate).body()
+
+            if (currencyResponse == null) {
+                emit(emptyList())
+                return@liveData
             }
+
+            val exchangeRateUSD = currencyResponse.Valute.getOrNull(13)?.Value?.replace(",", ".")?.toDoubleOrNull()
+            val exchangeRateEUR = currencyResponse.Valute.getOrNull(14)?.Value?.replace(",", ".")?.toDoubleOrNull()
+            val exchangeRateKZT = currencyResponse.Valute.getOrNull(18)?.VunitRate?.replace(",", ".")?.toDoubleOrNull()
+
+            if (exchangeRateUSD == null ||
+                exchangeRateEUR == null ||
+                exchangeRateKZT == null) {
+                emit(listOf(0.0, 0.0, 0.0))
+                return@liveData
+            }
+
+            emit(listOf(exchangeRateUSD, exchangeRateEUR, exchangeRateKZT))
         }
     }
 }

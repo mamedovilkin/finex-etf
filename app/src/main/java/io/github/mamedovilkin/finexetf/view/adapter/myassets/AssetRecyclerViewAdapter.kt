@@ -17,6 +17,7 @@ import io.github.mamedovilkin.finexetf.view.adapter.fund.OnClickListener
 import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthRUBFragment
 import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthUSDFragment
 import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
+import java.util.Locale
 
 class AssetRecyclerViewAdapter(
     private val assets: List<Asset>,
@@ -28,8 +29,7 @@ class AssetRecyclerViewAdapter(
     private val HEADER: Int = 0
     private val LIST: Int = 1
     var onClickListener: OnClickListener? = null
-    var rate: String = ""
-    var dateFrom: String = ""
+    var rates: List<Double> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == HEADER) {
@@ -79,7 +79,10 @@ class AssetRecyclerViewAdapter(
 
         init {
             binding.apply {
-                exchangeRateTextView.text = "1$ = $rate₽ (Bank of Russia from $dateFrom)"
+                val usdRate = String.format(Locale.ROOT, "%.2f", rates[0])
+                val eurRate = String.format(Locale.ROOT, "%.2f", rates[1])
+                val kztRate = String.format(Locale.ROOT, "%.2f", rates[2])
+                exchangeRateTextView.text = "1$ = $usdRate₽ / 1€ = $eurRate₽ / 1₸ = $kztRate₽"
                 viewPager2.adapter = NetWorthFragmentStateAdapter(
                     listOf(NetWorthRUBFragment(viewModel), NetWorthUSDFragment(viewModel)),
                     fragmentManager,
