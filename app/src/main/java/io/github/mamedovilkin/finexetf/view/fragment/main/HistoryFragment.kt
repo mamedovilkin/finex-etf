@@ -13,8 +13,8 @@ import io.github.mamedovilkin.finexetf.databinding.FragmentHistoryBinding
 import io.github.mamedovilkin.finexetf.model.database.Asset
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
-import io.github.mamedovilkin.finexetf.view.adapter.OnClickListener
-import io.github.mamedovilkin.finexetf.view.adapter.TransactionRecyclerViewAdapter
+import io.github.mamedovilkin.finexetf.view.adapter.history.OnClickListener
+import io.github.mamedovilkin.finexetf.view.adapter.history.TransactionRecyclerViewAdapter
 import io.github.mamedovilkin.finexetf.viewmodel.HistoryViewModel
 
 @AndroidEntryPoint
@@ -52,8 +52,6 @@ class HistoryFragment : Fragment(), OnClickListener {
 
         return binding.root
     }
-
-    override fun onFundClickListener(ticker: String) {}
 
     override fun onTransactionClickListener(asset: Asset) {
         val alertDialog = AlertDialog.Builder(binding.root.context).create()

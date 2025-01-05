@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:padding="16dp"
         android:background="@color/colorBackground"
-        tools:context=".view.fragment.add.AddFragment">
+        tools:context=".view.fragment.fund.AddFragment">
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -44,7 +44,8 @@
                     android:id="@+id/image_view"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:scaleType="centerInside" />
+                    android:scaleType="centerInside"
+                    tools:src="@drawable/fxre" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -60,7 +61,7 @@
                         android:maxLines="1"
                         android:textSize="18sp"
                         android:textColor="@color/colorText"
-                        tools:text="Name" />
+                        tools:text="FinEx US REIT UCITS ETF" />
 
                     <TextView
                         android:id="@+id/ticker_text_view"
@@ -68,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
                         android:textColor="@color/colorTextSecondary"
-                        tools:text="Ticker" />
+                        tools:text="FXRE" />
 
                 </LinearLayout>
 

@@ -11,8 +11,11 @@
         android:label="@string/my_assets">
 
         <action
-            android:id="@+id/action_my_assets_fragment_to_add_fragment"
+            android:id="@+id/action_my_assets_to_add"
             app:destination="@id/add" />
+        <action
+            android:id="@+id/action_my_assets_to_fund"
+            app:destination="@id/fund" />
 
     </fragment>
 
@@ -28,7 +31,12 @@
 
     <fragment
         android:id="@+id/add"
-        android:name="io.github.mamedovilkin.finexetf.view.fragment.add.AddFragment"
+        android:name="io.github.mamedovilkin.finexetf.view.fragment.fund.AddFragment"
+        android:label="" />
+
+    <fragment
+        android:id="@+id/fund"
+        android:name="io.github.mamedovilkin.finexetf.view.fragment.fund.FundFragment"
         android:label="" />
 
 </navigation>

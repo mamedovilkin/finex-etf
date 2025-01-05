@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.finexetf.view.adapter
+package io.github.mamedovilkin.finexetf.view.adapter.myassets
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
