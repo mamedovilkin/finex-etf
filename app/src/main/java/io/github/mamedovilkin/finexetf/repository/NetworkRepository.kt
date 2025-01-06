@@ -32,8 +32,4 @@ class NetworkRepository @Inject constructor(
     suspend fun getPosts(): Response<Posts> {
         return blogService.getPosts(BuildConfig.BLOG_API_KEY)
     }
-
-    suspend fun getPost(id: String): Response<Posts> {
-        return blogService.getPost(id, BuildConfig.BLOG_API_KEY)
-    }
 }

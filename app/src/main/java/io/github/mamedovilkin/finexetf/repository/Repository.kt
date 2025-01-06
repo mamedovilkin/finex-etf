@@ -45,8 +45,4 @@ class Repository @Inject constructor(
     suspend fun getPosts(): Response<Posts> {
         return networkRepository.getPosts()
     }
-
-    suspend fun getPost(id: String): Response<Posts> {
-        return networkRepository.getPost(id)
-    }
 }

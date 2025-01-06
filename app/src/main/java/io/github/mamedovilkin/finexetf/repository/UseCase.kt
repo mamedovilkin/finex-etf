@@ -44,8 +44,4 @@ class UseCase @Inject constructor(
     suspend fun getPosts(): Response<Posts> {
         return repository.getPosts()
     }
-
-    suspend fun getPost(id: String): Response<Posts> {
-        return repository.getPost(id)
-    }
 }

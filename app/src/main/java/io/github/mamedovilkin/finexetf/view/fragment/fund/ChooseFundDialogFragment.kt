@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.finexetf.view.fragment.dialog
+package io.github.mamedovilkin.finexetf.view.fragment.fund
 
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

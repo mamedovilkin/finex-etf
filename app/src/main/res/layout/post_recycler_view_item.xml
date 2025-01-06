@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:background="@color/colorBackground"
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp">
@@ -26,7 +27,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    tools:src="@mipmap/ic_launcher"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +69,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:textStyle="italic"
                 android:textSize="18sp"
                 android:textColor="@color/colorTextSecondary"
                 tools:text="0 minutes ago" />

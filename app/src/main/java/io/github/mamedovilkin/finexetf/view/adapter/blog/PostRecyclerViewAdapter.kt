@@ -15,6 +15,8 @@ import java.util.Locale
 
 class PostRecyclerViewAdapter(private val posts: List<Post>) : RecyclerView.Adapter<PostRecyclerViewAdapter.PostRecyclerViewViewHolder>() {
 
+    var onClickListener: OnClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostRecyclerViewViewHolder {
         val binding: PostRecyclerViewItemBinding = DataBindingUtil
             .inflate(
@@ -30,14 +32,18 @@ class PostRecyclerViewAdapter(private val posts: List<Post>) : RecyclerView.Adap
     override fun getItemCount(): Int = posts.size
 
     override fun onBindViewHolder(holder: PostRecyclerViewViewHolder, position: Int) {
-        holder.bind(posts[position])
+        val post = posts[position]
+        holder.bind(post)
+        holder.itemView.setOnClickListener {
+            onClickListener?.onPostClickListener(post.url)
+        }
     }
 
     inner class PostRecyclerViewViewHolder(private val binding: PostRecyclerViewItemBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(post: Post) {
             binding.apply {
-                Glide.with(binding.root.context).load(post.featureImage).fitCenter().into(imageView)
+                Glide.with(root.context).load(post.featureImage).fitCenter().into(imageView)
 
                 titleTextView.text = post.title
                 excerptTextView.text = post.excerpt

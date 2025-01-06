@@ -27,7 +27,13 @@
     <fragment
         android:id="@+id/blog"
         android:name="io.github.mamedovilkin.finexetf.view.fragment.main.BlogFragment"
-        android:label="@string/blog" />
+        android:label="@string/blog" >
+
+        <action
+            android:id="@+id/action_blog_to_post"
+            app:destination="@id/post" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/settings"
@@ -42,6 +48,11 @@
     <fragment
         android:id="@+id/fund"
         android:name="io.github.mamedovilkin.finexetf.view.fragment.fund.FundFragment"
+        android:label="" />
+
+    <fragment
+        android:id="@+id/post"
+        android:name="io.github.mamedovilkin.finexetf.view.fragment.post.PostFragment"
         android:label="" />
 
 </navigation>

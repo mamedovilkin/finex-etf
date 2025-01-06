@@ -19,7 +19,7 @@ import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.view.adapter.myassets.AssetRecyclerViewAdapter
 import io.github.mamedovilkin.finexetf.view.adapter.fund.OnClickListener
-import io.github.mamedovilkin.finexetf.view.fragment.dialog.ChooseFundDialogFragment
+import io.github.mamedovilkin.finexetf.view.fragment.fund.ChooseFundDialogFragment
 import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
 
 @AndroidEntryPoint
