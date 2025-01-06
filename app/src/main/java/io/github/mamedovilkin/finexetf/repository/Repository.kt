@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import io.github.mamedovilkin.finexetf.model.database.Asset
 import io.github.mamedovilkin.finexetf.model.network.Fund
 import io.github.mamedovilkin.finexetf.model.network.ListFund
+import io.github.mamedovilkin.finexetf.model.network.Posts
 import io.github.mamedovilkin.finexetf.model.network.ValCurs
 import retrofit2.Response
 import javax.inject.Inject
@@ -39,5 +40,13 @@ class Repository @Inject constructor(
 
     suspend fun getCurrencies(dateReq: String): Response<ValCurs> {
         return networkRepository.getCurrencies(dateReq)
+    }
+
+    suspend fun getPosts(): Response<Posts> {
+        return networkRepository.getPosts()
+    }
+
+    suspend fun getPost(id: String): Response<Posts> {
+        return networkRepository.getPost(id)
     }
 }

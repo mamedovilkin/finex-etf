@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
             val navController = navHostFragment.navController
             val appBarConfiguration = AppBarConfiguration(
-                setOf(R.id.my_assets, R.id.history, R.id.settings)
+                setOf(R.id.my_assets, R.id.history, R.id.blog, R.id.settings)
             )
 
             materialToolbar.setupWithNavController(navController, appBarConfiguration)

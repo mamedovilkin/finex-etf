@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import io.github.mamedovilkin.finexetf.model.database.Asset
 import io.github.mamedovilkin.finexetf.model.network.Fund
 import io.github.mamedovilkin.finexetf.model.network.ListFund
+import io.github.mamedovilkin.finexetf.model.network.Posts
 import io.github.mamedovilkin.finexetf.model.network.ValCurs
 import retrofit2.Response
 import javax.inject.Inject
@@ -38,5 +39,13 @@ class UseCase @Inject constructor(
 
     suspend fun getCurrencies(dateReq: String): Response<ValCurs> {
         return repository.getCurrencies(dateReq)
+    }
+
+    suspend fun getPosts(): Response<Posts> {
+        return repository.getPosts()
+    }
+
+    suspend fun getPost(id: String): Response<Posts> {
+        return repository.getPost(id)
     }
 }

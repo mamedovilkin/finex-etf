@@ -5,6 +5,8 @@
         <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:fontFamily">@font/nunito</item>
         <item name="fontFamily">@font/nunito</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.Material3.MaterialAlertDialog</item>
+        <item name="dialogCornerRadius">28dp</item>
     </style>
 
     <style name="Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">

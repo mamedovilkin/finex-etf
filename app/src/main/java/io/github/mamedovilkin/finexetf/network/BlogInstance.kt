@@ -1,19 +1,20 @@
 package io.github.mamedovilkin.finexetf.network
 
 import retrofit2.Retrofit
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import io.github.mamedovilkin.finexetf.BuildConfig
 
-class CBRInstance {
+class BlogInstance {
 
     companion object {
 
         fun getInstance(): Retrofit {
             return Retrofit
                 .Builder()
-                .baseUrl(BuildConfig.CBR_BASE_URL)
-                .addConverterFactory(SimpleXmlConverterFactory.create())
+                .baseUrl(BuildConfig.BLOG_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
     }
+
 }

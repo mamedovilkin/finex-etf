@@ -29,7 +29,6 @@ class MyAssetsFragment : Fragment(), OnClickListener {
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentMyAssetsBinding must not be null")
     private lateinit var viewModel: MyAssetsViewModel
-    private var rates: List<Double> = mutableListOf()
     private lateinit var funds: List<ListFund>
     private lateinit var assets: List<Asset>
 
@@ -38,30 +37,28 @@ class MyAssetsFragment : Fragment(), OnClickListener {
 
         viewModel = ViewModelProvider(requireActivity())[MyAssetsViewModel::class]
 
-        viewModel.getExchangeRate().observe(viewLifecycleOwner) {
-            rates = it
-        }
-
-        viewModel.getAssets().observe(viewLifecycleOwner) {
-            assets = it
-            binding.apply {
-                progressBar.hide()
-                if (assets.isNotEmpty()) {
-                    assetsRecyclerView.apply {
-                        setHasFixedSize(true)
-                        layoutManager = LinearLayoutManager(context)
-                        val assetRecyclerViewAdapter = AssetRecyclerViewAdapter(assets, viewModel, childFragmentManager, viewLifecycleOwner.lifecycle)
-                        assetRecyclerViewAdapter.onClickListener = this@MyAssetsFragment
-                        assetRecyclerViewAdapter.rates = rates
-                        adapter = assetRecyclerViewAdapter
-                        show()
+        viewModel.getExchangeRate().observe(viewLifecycleOwner) { rates ->
+            viewModel.getAssets().observe(viewLifecycleOwner) {
+                assets = it
+                binding.apply {
+                    progressBar.hide()
+                    if (assets.isNotEmpty()) {
+                        assetsRecyclerView.apply {
+                            setHasFixedSize(true)
+                            layoutManager = LinearLayoutManager(context)
+                            val assetRecyclerViewAdapter = AssetRecyclerViewAdapter(assets, viewModel, childFragmentManager, viewLifecycleOwner.lifecycle)
+                            assetRecyclerViewAdapter.onClickListener = this@MyAssetsFragment
+                            assetRecyclerViewAdapter.rates = rates
+                            adapter = assetRecyclerViewAdapter
+                            show()
+                        }
+                        placeholderLinearLayout.hide()
+                        addSell.show()
+                    } else {
+                        assetsRecyclerView.hide()
+                        placeholderLinearLayout.show()
+                        addSell.hide()
                     }
-                    placeholderLinearLayout.hide()
-                    addSell.show()
-                } else {
-                    assetsRecyclerView.hide()
-                    placeholderLinearLayout.show()
-                    addSell.hide()
                 }
             }
         }

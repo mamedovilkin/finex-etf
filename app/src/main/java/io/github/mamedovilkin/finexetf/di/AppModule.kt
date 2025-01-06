@@ -12,6 +12,7 @@ import io.github.mamedovilkin.finexetf.repository.UseCase
 import io.github.mamedovilkin.finexetf.network.CBRService
 import io.github.mamedovilkin.finexetf.network.FinExService
 import io.github.mamedovilkin.finexetf.database.AssetDatabase
+import io.github.mamedovilkin.finexetf.network.BlogService
 import javax.inject.Named
 
 @Module
@@ -20,16 +21,17 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRemoteRepository(
+    fun provideNetworkRepository(
         @Named("FinEx") finExService: FinExService,
         @Named("CBR") cbrService: CBRService,
+        @Named("Blog") blogService: BlogService,
     ): NetworkRepository {
-        return NetworkRepository(finExService, cbrService)
+        return NetworkRepository(finExService, cbrService, blogService)
     }
 
     @Provides
     @Singleton
-    fun provideLocalRepository(database: AssetDatabase): DatabaseRepository {
+    fun provideDatabaseRepository(database: AssetDatabase): DatabaseRepository {
         return DatabaseRepository(database)
     }
 

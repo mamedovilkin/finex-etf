@@ -5,6 +5,8 @@ import io.github.mamedovilkin.finexetf.network.CBRInstance
 import io.github.mamedovilkin.finexetf.network.CBRService
 import io.github.mamedovilkin.finexetf.network.FinExInstance
 import io.github.mamedovilkin.finexetf.network.FinExService
+import io.github.mamedovilkin.finexetf.network.BlogService
+import io.github.mamedovilkin.finexetf.network.BlogInstance
 import retrofit2.Retrofit
 import dagger.Module
 import dagger.Provides
@@ -42,5 +44,19 @@ object NetworkModule {
     @Named("CBR")
     fun provideCBRService(@Named("CBR") retrofit: Retrofit): CBRService {
         return retrofit.create(CBRService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    @Named("Blog")
+    fun provideBlogInstance(): Retrofit {
+        return BlogInstance.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    @Named("Blog")
+    fun provideBlogService(@Named("Blog") retrofit: Retrofit): BlogService {
+        return retrofit.create(BlogService::class.java)
     }
 }

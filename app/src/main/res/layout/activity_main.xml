@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorBottomNavigationBackground"
             style="@style/Widget.Material3.BottomNavigationView"
+            app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_navigation_menu"
             app:itemActiveIndicatorStyle="@style/Indicator"
             app:itemIconTint="@color/colorPrimary"
