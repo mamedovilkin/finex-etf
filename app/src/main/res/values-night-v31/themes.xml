@@ -8,5 +8,7 @@
         <item name="android:windowSplashScreenAnimatedIcon">@drawable/logo_splash_screen</item>
         <item name="android:fontFamily">@font/nunito</item>
         <item name="fontFamily">@font/nunito</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.Material3.MaterialAlertDialog</item>
+        <item name="dialogCornerRadius">28dp</item>
     </style>
 </resources>

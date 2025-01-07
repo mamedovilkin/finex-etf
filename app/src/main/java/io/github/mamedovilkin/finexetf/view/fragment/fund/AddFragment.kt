@@ -12,11 +12,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import coil3.load
 import coil3.svg.SvgDecoder
-import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentAddBinding
 import io.github.mamedovilkin.finexetf.database.Converter
+import io.github.mamedovilkin.finexetf.di.GlideApp
 import io.github.mamedovilkin.finexetf.model.database.Asset
 import io.github.mamedovilkin.finexetf.model.database.Type
 import io.github.mamedovilkin.finexetf.util.hide
@@ -35,7 +36,7 @@ class AddFragment : Fragment() {
     private lateinit var viewModel: AddViewModel
     private lateinit var ticker: String
     private lateinit var type: String
-    private var totalQuantity: Int = 0
+    private var totalQuantity: Long = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAddBinding.inflate(inflater)
@@ -55,11 +56,8 @@ class AddFragment : Fragment() {
                 binding.apply {
                     when (fund.ticker) {
                         "FXTP" -> {
-                            Glide
-                                .with(root.context)
-                                .load(fund.icon)
-                                .fitCenter()
-                                .into(imageView)
+                            GlideApp.with(root.context).load(fund.icon)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
                         }
                         "FXRE" -> {
                             imageView.setImageDrawable(resources.getDrawable(R.drawable.fxre, null))
@@ -104,14 +102,14 @@ class AddFragment : Fragment() {
                             datetimeString.toString() != "" &&
                             priceDouble.toString().toDoubleOrNull() != null
                         ) {
-                            val quantity = quantityInt.toString().toInt()
+                            val quantity = quantityInt.toString().toLong()
                             val price = priceDouble.toString().toDouble()
                             try {
                                 val datetime = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT).parse(datetimeString.toString()).time
                                 if (Converter.toType(type) == Type.SELL && quantity > totalQuantity) {
                                     Toast.makeText(context, resources.getString(R.string.you_don_t_have_enough_funds), Toast.LENGTH_LONG).show()
                                 } else {
-                                    viewModel.insert(Asset(0, fund.ticker, fund.icon, fund.name, fund.originalName, fund.nav.navPerShare, quantity, datetime, price, type))
+                                    viewModel.insert(Asset(0, fund.ticker, fund.icon, fund.name, fund.originalName, fund.nav.navPerShare, fund.nav.currencyNav, quantity, datetime, price, type))
                                     findNavController().popBackStack()
 
                                     if (Converter.toType(type) == Type.PURCHASE) {

@@ -1,6 +1,6 @@
-package io.github.mamedovilkin.finexetf.network
+package io.github.mamedovilkin.finexetf.network.cbr
 
-import io.github.mamedovilkin.finexetf.model.network.ValCurs
+import io.github.mamedovilkin.finexetf.model.network.cbr.ValCurs
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers

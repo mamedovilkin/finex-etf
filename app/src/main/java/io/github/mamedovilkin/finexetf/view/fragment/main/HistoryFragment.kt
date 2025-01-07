@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentHistoryBinding
 import io.github.mamedovilkin.finexetf.model.database.Asset
 import io.github.mamedovilkin.finexetf.util.hide
@@ -57,11 +59,12 @@ class HistoryFragment : Fragment(), OnClickListener {
         val alertDialog = AlertDialog.Builder(binding.root.context).create()
         alertDialog.setTitle("Delete this ${asset.type.lowercase()}?")
         alertDialog.setMessage("${asset.ticker} (${asset.quantity} pcs.)")
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", { dialog, _ -> dialog.dismiss() })
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Delete", { dialog, _ ->
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, resources.getString(R.string.cancel), { dialog, _ -> dialog.dismiss() })
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, resources.getString(R.string.delete), { dialog, _ ->
             viewModel.delete(asset)
             adapter.notifyDataSetChanged()
             dialog.dismiss()
+            Toast.makeText(binding.root.context, resources.getString(R.string.deleted), Toast.LENGTH_LONG).show()
         })
         alertDialog.show()
     }

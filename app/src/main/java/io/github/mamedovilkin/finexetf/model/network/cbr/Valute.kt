@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.finexetf.model.network
+package io.github.mamedovilkin.finexetf.model.network.cbr
 
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
@@ -7,4 +7,6 @@ import org.simpleframework.xml.Root
 data class Valute @JvmOverloads constructor(
     @field: Element(data = true, required = false)
     var Value: String = "",
+    @field: Element(data = true, required = false)
+    var VunitRate: String = "",
 )

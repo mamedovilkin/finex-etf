@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.finexetf.view.fragment.dialog
+package io.github.mamedovilkin.finexetf.view.fragment.fund
 
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -13,7 +13,7 @@ import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentChooseFundDialogBinding
 import io.github.mamedovilkin.finexetf.database.Converter
 import io.github.mamedovilkin.finexetf.model.database.Type
-import io.github.mamedovilkin.finexetf.model.network.ListFund
+import io.github.mamedovilkin.finexetf.model.network.finex.ListFund
 import io.github.mamedovilkin.finexetf.view.adapter.fund.ChooseFundRecyclerViewAdapter
 import io.github.mamedovilkin.finexetf.view.adapter.fund.OnClickListener
 

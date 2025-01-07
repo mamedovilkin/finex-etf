@@ -10,9 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import coil3.load
 import coil3.svg.SvgDecoder
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentFundBinding
+import io.github.mamedovilkin.finexetf.di.GlideApp
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.viewmodel.FundViewModel
@@ -25,17 +27,15 @@ class FundFragment : Fragment() {
     private val binding: FragmentFundBinding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentFundBinding must not be null")
     private lateinit var viewModel: FundViewModel
-    private var rate: Double = 0.0
+    private var rates: List<Double> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentFundBinding.inflate(inflater)
 
         viewModel = ViewModelProvider(requireActivity())[FundViewModel::class]
 
-        val dateReq = DateFormat.format("dd/MM/yyyy", Date()).toString()
-
-        viewModel.getExchangeRate(dateReq).observe(viewLifecycleOwner) {
-            rate = it
+        viewModel.getExchangeRate().observe(viewLifecycleOwner) {
+            rates = it
         }
 
         return binding.root
@@ -50,11 +50,8 @@ class FundFragment : Fragment() {
             binding.apply {
                 when (fund.ticker) {
                     "FXTP" -> {
-                        Glide
-                            .with(root.context)
-                            .load(fund.icon)
-                            .fitCenter()
-                            .into(imageView)
+                        GlideApp.with(root.context).load(fund.icon)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
                     }
 
                     "FXRE" -> {
@@ -75,7 +72,20 @@ class FundFragment : Fragment() {
 
                 nameTextView.text = fund.originalName.trim()
                 tickerTextView.text = fund.ticker
-                priceTextView.text = "${String.format("%.2f", (fund.nav.navPerShare * rate))}₽"
+                when (fund.nav.currencyNav) {
+                    "USD" -> {
+                        priceTextView.text = "${String.format("%.2f", (fund.nav.navPerShare * rates[0]))}₽"
+                    }
+                    "EUR" -> {
+                        priceTextView.text = "${String.format("%.2f", (fund.nav.navPerShare * rates[1]))}₽"
+                    }
+                    "KZT" -> {
+                        priceTextView.text = "${String.format("%.2f", (fund.nav.navPerShare * rates[2]))}₽"
+                    }
+                    else -> {
+                        priceTextView.text = "${String.format("%.2f", fund.nav.navPerShare)}₽"
+                    }
+                }
                 textView.text = fund.text.substringBefore("[!")
                 progressBar.hide()
                 linearLayout.show()

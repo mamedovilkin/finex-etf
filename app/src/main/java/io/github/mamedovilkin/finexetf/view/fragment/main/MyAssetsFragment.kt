@@ -13,14 +13,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentMyAssetsBinding
 import io.github.mamedovilkin.finexetf.model.view.Asset
-import io.github.mamedovilkin.finexetf.model.network.ListFund
+import io.github.mamedovilkin.finexetf.model.network.finex.ListFund
 import io.github.mamedovilkin.finexetf.model.database.Type
-import io.github.mamedovilkin.finexetf.model.view.ExchangeRate
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.view.adapter.myassets.AssetRecyclerViewAdapter
 import io.github.mamedovilkin.finexetf.view.adapter.fund.OnClickListener
-import io.github.mamedovilkin.finexetf.view.fragment.dialog.ChooseFundDialogFragment
+import io.github.mamedovilkin.finexetf.view.fragment.fund.ChooseFundDialogFragment
 import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
 
 @AndroidEntryPoint
@@ -30,7 +29,6 @@ class MyAssetsFragment : Fragment(), OnClickListener {
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentMyAssetsBinding must not be null")
     private lateinit var viewModel: MyAssetsViewModel
-    private var exchangeRate: ExchangeRate? = null
     private lateinit var funds: List<ListFund>
     private lateinit var assets: List<Asset>
 
@@ -39,31 +37,28 @@ class MyAssetsFragment : Fragment(), OnClickListener {
 
         viewModel = ViewModelProvider(requireActivity())[MyAssetsViewModel::class]
 
-        viewModel.getExchangeRate().observe(viewLifecycleOwner) {
-            exchangeRate = it
-        }
-
-        viewModel.getAssets().observe(viewLifecycleOwner) {
-            assets = it
-            binding.apply {
-                progressBar.hide()
-                if (assets.isNotEmpty()) {
-                    assetsRecyclerView.apply {
-                        setHasFixedSize(true)
-                        layoutManager = LinearLayoutManager(context)
-                        val assetRecyclerViewAdapter = AssetRecyclerViewAdapter(assets, viewModel, childFragmentManager, viewLifecycleOwner.lifecycle)
-                        assetRecyclerViewAdapter.onClickListener = this@MyAssetsFragment
-                        assetRecyclerViewAdapter.rate = exchangeRate?.rate ?: "0"
-                        assetRecyclerViewAdapter.dateFrom = exchangeRate?.dateFrom ?: "00.00.0000"
-                        adapter = assetRecyclerViewAdapter
-                        show()
+        viewModel.getExchangeRate().observe(viewLifecycleOwner) { rates ->
+            viewModel.getAssets().observe(viewLifecycleOwner) {
+                assets = it
+                binding.apply {
+                    progressBar.hide()
+                    if (assets.isNotEmpty()) {
+                        assetsRecyclerView.apply {
+                            setHasFixedSize(true)
+                            layoutManager = LinearLayoutManager(context)
+                            val assetRecyclerViewAdapter = AssetRecyclerViewAdapter(assets, viewModel, childFragmentManager, viewLifecycleOwner.lifecycle)
+                            assetRecyclerViewAdapter.onClickListener = this@MyAssetsFragment
+                            assetRecyclerViewAdapter.rates = rates
+                            adapter = assetRecyclerViewAdapter
+                            show()
+                        }
+                        placeholderLinearLayout.hide()
+                        addSell.show()
+                    } else {
+                        assetsRecyclerView.hide()
+                        placeholderLinearLayout.show()
+                        addSell.hide()
                     }
-                    placeholderLinearLayout.hide()
-                    addSell.show()
-                } else {
-                    assetsRecyclerView.hide()
-                    placeholderLinearLayout.show()
-                    addSell.hide()
                 }
             }
         }

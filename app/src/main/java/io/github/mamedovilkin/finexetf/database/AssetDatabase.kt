@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase
 import android.content.Context
 import io.github.mamedovilkin.finexetf.model.database.Asset
 
-@Database(entities = [Asset::class], version = 2)
+@Database(entities = [Asset::class], version = 1)
 abstract class AssetDatabase : RoomDatabase() {
 
     abstract fun getDao(): AssetDao
@@ -22,7 +22,7 @@ abstract class AssetDatabase : RoomDatabase() {
                     context,
                     AssetDatabase::class.java,
                     "assets"
-                ).fallbackToDestructiveMigration().allowMainThreadQueries().build().also {
+                ).allowMainThreadQueries().build().also {
                     instance = it
                 }
             }

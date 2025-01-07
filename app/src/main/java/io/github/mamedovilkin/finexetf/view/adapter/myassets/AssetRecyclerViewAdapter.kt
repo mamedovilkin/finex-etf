@@ -8,15 +8,17 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
 import coil3.svg.SvgDecoder
-import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.AssetRecyclerViewItemBinding
-import io.github.mamedovilkin.finexetf.databinding.NetWorthRecyclerViewHeaderBinding
+import io.github.mamedovilkin.finexetf.databinding.AssetsRecyclerViewHeaderBinding
+import io.github.mamedovilkin.finexetf.di.GlideApp
 import io.github.mamedovilkin.finexetf.model.view.Asset
 import io.github.mamedovilkin.finexetf.view.adapter.fund.OnClickListener
 import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthRUBFragment
 import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthUSDFragment
 import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
+import java.util.Locale
 
 class AssetRecyclerViewAdapter(
     private val assets: List<Asset>,
@@ -28,15 +30,14 @@ class AssetRecyclerViewAdapter(
     private val HEADER: Int = 0
     private val LIST: Int = 1
     var onClickListener: OnClickListener? = null
-    var rate: String = ""
-    var dateFrom: String = ""
+    var rates: List<Double> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == HEADER) {
-            val binding: NetWorthRecyclerViewHeaderBinding = DataBindingUtil
+            val binding: AssetsRecyclerViewHeaderBinding = DataBindingUtil
                 .inflate(
                     LayoutInflater.from(parent.context),
-                    R.layout.net_worth_recycler_view_header,
+                    R.layout.assets_recycler_view_header,
                     parent,
                     false
                 )
@@ -75,11 +76,14 @@ class AssetRecyclerViewAdapter(
         }
     }
 
-    inner class NetWorthRecyclerViewViewHolder(binding: NetWorthRecyclerViewHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class NetWorthRecyclerViewViewHolder(binding: AssetsRecyclerViewHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.apply {
-                exchangeRateTextView.text = "1$ = $rate₽ (Bank of Russia from $dateFrom)"
+                val usdRate = String.format(Locale.ROOT, "%.2f", rates[0])
+                val eurRate = String.format(Locale.ROOT, "%.2f", rates[1])
+                val kztRate = String.format(Locale.ROOT, "%.2f", rates[2])
+                exchangeRateTextView.text = "1$ = $usdRate₽ / 1€ = $eurRate₽ / 1₸ = $kztRate₽"
                 viewPager2.adapter = NetWorthFragmentStateAdapter(
                     listOf(NetWorthRUBFragment(viewModel), NetWorthUSDFragment(viewModel)),
                     fragmentManager,
@@ -96,11 +100,8 @@ class AssetRecyclerViewAdapter(
             binding.apply {
                 when (asset.ticker) {
                     "FXTP" -> {
-                        Glide
-                            .with(root.context)
-                            .load(asset.icon)
-                            .fitCenter()
-                            .into(imageView)
+                        GlideApp.with(root.context).load(asset.icon)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
                     }
                     "FXRE" -> {
                         imageView.setImageDrawable(root.context.resources.getDrawable(R.drawable.fxre, null))

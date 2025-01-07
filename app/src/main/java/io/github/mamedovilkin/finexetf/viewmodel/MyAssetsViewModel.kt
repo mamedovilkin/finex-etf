@@ -10,10 +10,8 @@ import io.github.mamedovilkin.finexetf.model.view.Asset
 import io.github.mamedovilkin.finexetf.repository.UseCase
 import io.github.mamedovilkin.finexetf.database.Converter
 import io.github.mamedovilkin.finexetf.model.database.Type
-import io.github.mamedovilkin.finexetf.model.network.ListFund
-import io.github.mamedovilkin.finexetf.model.view.ExchangeRate
+import io.github.mamedovilkin.finexetf.model.network.finex.ListFund
 import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,21 +21,28 @@ class MyAssetsViewModel @Inject constructor(
 
     val funds: LiveData<List<ListFund>> = liveData { useCase.getFunds().body()?.let { emit(it) } }
 
-    fun getExchangeRate(): LiveData<ExchangeRate> {
+    fun getExchangeRate(): LiveData<List<Double>> {
         return liveData {
             val formattedDate = DateFormat.format("dd/MM/yyyy", Date()).toString()
             val currencyResponse = useCase.getCurrencies(formattedDate).body()
 
             if (currencyResponse == null) {
-                emit(ExchangeRate("", ""))
+                emit(emptyList())
                 return@liveData
             }
 
-            val exchangeRate = currencyResponse.Valute.getOrNull(13)?.Value?.replace(",", ".")?.toDoubleOrNull()
-            val rate = String.format(Locale.ROOT, "%.2f", exchangeRate)
-            val dateFrom = currencyResponse.Date
+            val exchangeRateUSD = currencyResponse.Valute.getOrNull(13)?.Value?.replace(",", ".")?.toDoubleOrNull()
+            val exchangeRateEUR = currencyResponse.Valute.getOrNull(14)?.Value?.replace(",", ".")?.toDoubleOrNull()
+            val exchangeRateKZT = currencyResponse.Valute.getOrNull(18)?.VunitRate?.replace(",", ".")?.toDoubleOrNull()
 
-            emit(ExchangeRate(rate, dateFrom))
+            if (exchangeRateUSD == null ||
+                exchangeRateEUR == null ||
+                exchangeRateKZT == null) {
+                emit(listOf(0.0, 0.0, 0.0))
+                return@liveData
+            }
+
+            emit(listOf(exchangeRateUSD, exchangeRateEUR, exchangeRateKZT))
         }
     }
 
@@ -51,9 +56,13 @@ class MyAssetsViewModel @Inject constructor(
                 return@liveData
             }
 
-            val exchangeRate = currencyResponse.Valute.getOrNull(13)?.Value?.replace(",", ".")?.toDoubleOrNull()
+            val exchangeRateUSD = currencyResponse.Valute.getOrNull(13)?.Value?.replace(",", ".")?.toDoubleOrNull()
+            val exchangeRateEUR = currencyResponse.Valute.getOrNull(14)?.Value?.replace(",", ".")?.toDoubleOrNull()
+            val exchangeRateKZT = currencyResponse.Valute.getOrNull(18)?.VunitRate?.replace(",", ".")?.toDoubleOrNull()
 
-            if (exchangeRate == null) {
+            if (exchangeRateUSD == null ||
+                exchangeRateEUR == null ||
+                exchangeRateKZT == null) {
                 emit(listOf(0.0, 0.0, 0.0))
                 return@liveData
             }
@@ -70,7 +79,20 @@ class MyAssetsViewModel @Inject constructor(
 
                     assetList.forEach { asset ->
                         val multiplier = if (Converter.toType(asset.type) == Type.PURCHASE) 1 else -1
-                        val navValue = asset.navPrice * exchangeRate
+                        val navValue = when (asset.currencyNav) {
+                            "USD" -> {
+                                asset.navPrice * exchangeRateUSD
+                            }
+                            "EUR" -> {
+                                asset.navPrice * exchangeRateEUR
+                            }
+                            "KZT" -> {
+                                asset.navPrice * exchangeRateKZT
+                            }
+                            else -> {
+                                asset.navPrice
+                            }
+                        }
 
                         localNavNetWorth += multiplier * asset.quantity * navValue
                         localNetWorth += multiplier * asset.quantity * asset.price
@@ -100,9 +122,13 @@ class MyAssetsViewModel @Inject constructor(
                 return@liveData
             }
 
-            val exchangeRate = currencyResponse.Valute.getOrNull(13)?.Value?.replace(",", ".")?.toDoubleOrNull()
+            val exchangeRateUSD = currencyResponse.Valute.getOrNull(13)?.Value?.replace(",", ".")?.toDoubleOrNull()
+            val exchangeRateEUR = currencyResponse.Valute.getOrNull(14)?.Value?.replace(",", ".")?.toDoubleOrNull()
+            val exchangeRateKZT = currencyResponse.Valute.getOrNull(18)?.VunitRate?.replace(",", ".")?.toDoubleOrNull()
 
-            if (exchangeRate == null) {
+            if (exchangeRateUSD == null ||
+                exchangeRateEUR == null ||
+                exchangeRateKZT == null) {
                 emit(listOf(0.0, 0.0, 0.0))
                 return@liveData
             }
@@ -119,9 +145,23 @@ class MyAssetsViewModel @Inject constructor(
 
                     assetList.forEach { asset ->
                         val multiplier = if (Converter.toType(asset.type) == Type.PURCHASE) 1 else -1
+                        val navValue = when (asset.currencyNav) {
+                            "RUB" -> {
+                                asset.navPrice / exchangeRateUSD
+                            }
+                            "EUR" -> {
+                                (asset.navPrice * exchangeRateEUR) / exchangeRateUSD
+                            }
+                            "KZT" -> {
+                                (asset.navPrice * exchangeRateKZT) / exchangeRateUSD
+                            }
+                            else -> {
+                                asset.navPrice
+                            }
+                        }
 
-                        localNavNetWorth += multiplier * asset.quantity * asset.navPrice
-                        localNetWorth += multiplier * asset.quantity * (asset.price / exchangeRate)
+                        localNavNetWorth += multiplier * asset.quantity * navValue
+                        localNetWorth += multiplier * asset.quantity * (asset.price / exchangeRateUSD)
                     }
 
                     localNavNetWorth to localNetWorth
@@ -148,9 +188,13 @@ class MyAssetsViewModel @Inject constructor(
                 return@liveData
             }
 
-            val exchangeRate = currencyResponse.Valute.getOrNull(13)?.Value?.replace(",", ".")?.toDoubleOrNull()
+            val exchangeRateUSD = currencyResponse.Valute.getOrNull(13)?.Value?.replace(",", ".")?.toDoubleOrNull()
+            val exchangeRateEUR = currencyResponse.Valute.getOrNull(14)?.Value?.replace(",", ".")?.toDoubleOrNull()
+            val exchangeRateKZT = currencyResponse.Valute.getOrNull(18)?.VunitRate?.replace(",", ".")?.toDoubleOrNull()
 
-            if (exchangeRate == null) {
+            if (exchangeRateUSD == null ||
+                exchangeRateEUR == null ||
+                exchangeRateKZT == null) {
                 emit(emptyList())
                 return@liveData
             }
@@ -163,7 +207,7 @@ class MyAssetsViewModel @Inject constructor(
                     var name = ""
                     var originalName = ""
                     var navPrice = 0.0
-                    var totalQuantity = 0
+                    var totalQuantity: Long = 0
                     var totalPrice = 0.0
                     var totalNavPrice = 0.0
 
@@ -171,15 +215,28 @@ class MyAssetsViewModel @Inject constructor(
                         if (icon.isEmpty()) icon = asset.icon
                         if (name.isEmpty()) name = asset.name
                         if (originalName.isEmpty()) originalName = asset.originalName
-                        if (navPrice == 0.0) navPrice = asset.navPrice
+                        val navValue = when (asset.currencyNav) {
+                            "USD" -> {
+                                asset.navPrice * exchangeRateUSD
+                            }
+                            "EUR" -> {
+                                asset.navPrice * exchangeRateEUR
+                            }
+                            "KZT" -> {
+                                asset.navPrice * exchangeRateKZT
+                            }
+                            else -> {
+                                asset.navPrice
+                            }
+                        }
 
                         val multiplier = if (Converter.toType(asset.type) == Type.PURCHASE) 1 else -1
                         totalQuantity += multiplier * asset.quantity
                         totalPrice += multiplier * (asset.quantity * asset.price)
-                        totalNavPrice += multiplier * (asset.quantity * (asset.navPrice * exchangeRate))
+                        totalNavPrice += multiplier * (asset.quantity * navValue)
                     }
 
-                    if (totalQuantity != 0) {
+                    if (totalQuantity != 0L) {
                         Asset(ticker, icon, name, originalName, navPrice, totalQuantity, totalPrice, totalNavPrice)
                     } else {
                         null

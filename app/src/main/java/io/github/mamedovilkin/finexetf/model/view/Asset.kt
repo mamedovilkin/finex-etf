@@ -6,7 +6,7 @@ data class Asset(
     val name: String,
     val originalName: String,
     val navPrice: Double,
-    val totalQuantity: Int,
+    val totalQuantity: Long,
     val totalPrice: Double,
     val totalNavPrice: Double,
 )

@@ -1,9 +1,11 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt)
-    alias(libs.plugins.parcelize)
 }
 
 android {
@@ -16,8 +18,16 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val localPropertiesFile = rootProject.file("local.properties")
+        val localProperties = Properties()
+        localProperties.load(FileInputStream(localPropertiesFile))
+
+        buildConfigField("String", "CBR_BASE_URL", localProperties["CBR_BASE_URL"].toString())
+        buildConfigField("String", "FINEX_BASE_URL", localProperties["FINEX_BASE_URL"].toString())
+        buildConfigField("String", "BLOG_BASE_URL", localProperties["BLOG_BASE_URL"].toString())
+        buildConfigField("String", "BLOG_API_KEY", localProperties["BLOG_API_KEY"].toString())
     }
 
     buildTypes {
@@ -39,6 +49,7 @@ android {
     buildFeatures {
         dataBinding = true
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -47,9 +58,6 @@ dependencies {
     // CircleIndicator
     implementation(libs.circleindicator)
 
-    // SplashScreen
-    implementation(libs.androidx.core.splashscreen)
-
     // Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.android)
 
@@ -57,21 +65,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.converter.simplexml)
-
-    // ViewModel
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-
-    // LiveData
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-
-    // Room
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
-
-    // ViewPager2
-    implementation(libs.androidx.viewpager2)
-    implementation(libs.androidx.viewpager2)
 
     // Glide
     implementation(libs.glide)
@@ -83,22 +76,30 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+
+    // AndroidX
+    implementation(libs.material)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-
-    // Annotation processors
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.viewpager2)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.preference.ktx)
     kapt(libs.androidx.lifecycle.compiler)
     kapt(libs.androidx.room.compiler)
-    kapt(libs.hilt.compiler)
+    kapt(libs.compiler)
 
-    // Default
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

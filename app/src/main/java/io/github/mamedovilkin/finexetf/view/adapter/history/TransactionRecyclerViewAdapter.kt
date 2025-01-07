@@ -6,15 +6,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
 import coil3.svg.SvgDecoder
-import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.TransactionRecyclerViewItemBinding
 import io.github.mamedovilkin.finexetf.database.Converter
+import io.github.mamedovilkin.finexetf.di.GlideApp
 import io.github.mamedovilkin.finexetf.model.database.Asset
 import io.github.mamedovilkin.finexetf.model.database.Type
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
-import io.github.mamedovilkin.finexetf.view.adapter.history.OnClickListener
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -57,11 +57,8 @@ class TransactionRecyclerViewAdapter(var assets: List<Asset>) : RecyclerView.Ada
             binding.apply {
                 when (asset.ticker) {
                     "FXTP" -> {
-                        Glide
-                            .with(root.context)
-                            .load(asset.icon)
-                            .fitCenter()
-                            .into(imageView)
+                        GlideApp.with(root.context).load(asset.icon)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
                     }
                     "FXRE" -> {
                         imageView.setImageDrawable(root.context.resources.getDrawable(R.drawable.fxre, null))
