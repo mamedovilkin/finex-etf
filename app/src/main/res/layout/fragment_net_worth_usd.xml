@@ -41,9 +41,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textColor="@color/colorWhite"
+                    android:textAlignment="center"
                     android:textSize="48sp"
                     android:textStyle="bold"
-                    android:text="@string/zero_dollars" />
+                    android:text="@string/zero_dollars"
+                    app:autoSizeMinTextSize="18sp" />
 
                 <TextView
                     android:id="@+id/change_text_view"
@@ -55,7 +57,8 @@
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
                     android:text="@string/zero_change_dollars"
-                    android:background="@drawable/shape_change_text_view_green" />
+                    android:background="@drawable/shape_change_text_view_green"
+                    app:autoSizeMinTextSize="8sp" />
 
             </LinearLayout>
 

@@ -22,7 +22,7 @@ abstract class AssetDatabase : RoomDatabase() {
                     context,
                     AssetDatabase::class.java,
                     "assets"
-                ).fallbackToDestructiveMigration().allowMainThreadQueries().build().also {
+                ).allowMainThreadQueries().build().also {
                     instance = it
                 }
             }

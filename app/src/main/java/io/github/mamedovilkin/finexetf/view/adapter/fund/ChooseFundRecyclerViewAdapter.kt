@@ -6,10 +6,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
 import coil3.svg.SvgDecoder
-import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.ChooseFundRecyclerViewItemBinding
-import io.github.mamedovilkin.finexetf.model.network.ListFund
+import io.github.mamedovilkin.finexetf.di.GlideApp
+import io.github.mamedovilkin.finexetf.model.network.finex.ListFund
 
 class ChooseFundRecyclerViewAdapter(var funds: List<ListFund>) : RecyclerView.Adapter<ChooseFundRecyclerViewAdapter.FundRecyclerViewViewHolder>() {
 
@@ -44,11 +45,8 @@ class ChooseFundRecyclerViewAdapter(var funds: List<ListFund>) : RecyclerView.Ad
             binding.apply {
                 when (fund.ticker) {
                     "FXTP" -> {
-                        Glide
-                            .with(root.context)
-                            .load(fund.icon)
-                            .fitCenter()
-                            .into(imageView)
+                        GlideApp.with(root.context).load(fund.icon)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
                     }
                     "FXRE" -> {
                         imageView.setImageDrawable(root.context.resources.getDrawable(R.drawable.fxre, null))

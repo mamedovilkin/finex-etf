@@ -10,7 +10,7 @@ import io.github.mamedovilkin.finexetf.model.view.Asset
 import io.github.mamedovilkin.finexetf.repository.UseCase
 import io.github.mamedovilkin.finexetf.database.Converter
 import io.github.mamedovilkin.finexetf.model.database.Type
-import io.github.mamedovilkin.finexetf.model.network.ListFund
+import io.github.mamedovilkin.finexetf.model.network.finex.ListFund
 import java.util.Date
 import javax.inject.Inject
 
@@ -207,7 +207,7 @@ class MyAssetsViewModel @Inject constructor(
                     var name = ""
                     var originalName = ""
                     var navPrice = 0.0
-                    var totalQuantity = 0
+                    var totalQuantity: Long = 0
                     var totalPrice = 0.0
                     var totalNavPrice = 0.0
 
@@ -236,7 +236,7 @@ class MyAssetsViewModel @Inject constructor(
                         totalNavPrice += multiplier * (asset.quantity * navValue)
                     }
 
-                    if (totalQuantity != 0) {
+                    if (totalQuantity != 0L) {
                         Asset(ticker, icon, name, originalName, navPrice, totalQuantity, totalPrice, totalNavPrice)
                     } else {
                         null

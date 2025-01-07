@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.finexetf.model.network
+package io.github.mamedovilkin.finexetf.model.network.cbr
 
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root

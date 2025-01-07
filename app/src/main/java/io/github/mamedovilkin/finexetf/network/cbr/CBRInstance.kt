@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.finexetf.network
+package io.github.mamedovilkin.finexetf.network.cbr
 
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory

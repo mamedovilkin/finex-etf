@@ -1,12 +1,12 @@
 package io.github.mamedovilkin.finexetf.di
 
 import dagger.hilt.components.SingletonComponent
-import io.github.mamedovilkin.finexetf.network.CBRInstance
-import io.github.mamedovilkin.finexetf.network.CBRService
-import io.github.mamedovilkin.finexetf.network.FinExInstance
-import io.github.mamedovilkin.finexetf.network.FinExService
-import io.github.mamedovilkin.finexetf.network.BlogService
-import io.github.mamedovilkin.finexetf.network.BlogInstance
+import io.github.mamedovilkin.finexetf.network.cbr.CBRInstance
+import io.github.mamedovilkin.finexetf.network.cbr.CBRService
+import io.github.mamedovilkin.finexetf.network.finex.FinExInstance
+import io.github.mamedovilkin.finexetf.network.finex.FinExService
+import io.github.mamedovilkin.finexetf.network.blog.BlogService
+import io.github.mamedovilkin.finexetf.network.blog.BlogInstance
 import retrofit2.Retrofit
 import dagger.Module
 import dagger.Provides

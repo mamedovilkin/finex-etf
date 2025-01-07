@@ -9,10 +9,10 @@ import io.github.mamedovilkin.finexetf.repository.DatabaseRepository
 import io.github.mamedovilkin.finexetf.repository.NetworkRepository
 import io.github.mamedovilkin.finexetf.repository.Repository
 import io.github.mamedovilkin.finexetf.repository.UseCase
-import io.github.mamedovilkin.finexetf.network.CBRService
-import io.github.mamedovilkin.finexetf.network.FinExService
+import io.github.mamedovilkin.finexetf.network.cbr.CBRService
+import io.github.mamedovilkin.finexetf.network.finex.FinExService
 import io.github.mamedovilkin.finexetf.database.AssetDatabase
-import io.github.mamedovilkin.finexetf.network.BlogService
+import io.github.mamedovilkin.finexetf.network.blog.BlogService
 import javax.inject.Named
 
 @Module

@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.mamedovilkin.finexetf.model.network.Fund
+import io.github.mamedovilkin.finexetf.model.network.finex.Fund
 import io.github.mamedovilkin.finexetf.repository.UseCase
 import java.util.Date
 import javax.inject.Inject

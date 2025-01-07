@@ -10,7 +10,7 @@ import io.github.mamedovilkin.finexetf.repository.UseCase
 import io.github.mamedovilkin.finexetf.database.Converter
 import io.github.mamedovilkin.finexetf.model.database.Asset
 import io.github.mamedovilkin.finexetf.model.database.Type
-import io.github.mamedovilkin.finexetf.model.network.Fund
+import io.github.mamedovilkin.finexetf.model.network.finex.Fund
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -78,11 +78,11 @@ class AddViewModel @Inject constructor(
         }
     }
 
-    fun getFundQuantity(ticker: String): LiveData<Int> {
+    fun getFundQuantity(ticker: String): LiveData<Long> {
         return liveData {
             useCase.getAssets().asFlow().collect {
                 val grouping = it.groupBy { it.ticker }
-                var totalQuantity = 0
+                var totalQuantity: Long = 0
 
                 grouping.forEach {
                     val t = it.key

@@ -10,9 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import coil3.load
 import coil3.svg.SvgDecoder
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentFundBinding
+import io.github.mamedovilkin.finexetf.di.GlideApp
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.viewmodel.FundViewModel
@@ -48,11 +50,8 @@ class FundFragment : Fragment() {
             binding.apply {
                 when (fund.ticker) {
                     "FXTP" -> {
-                        Glide
-                            .with(root.context)
-                            .load(fund.icon)
-                            .fitCenter()
-                            .into(imageView)
+                        GlideApp.with(root.context).load(fund.icon)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
                     }
 
                     "FXRE" -> {

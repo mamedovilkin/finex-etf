@@ -13,7 +13,7 @@ data class Asset(
     val originalName: String,
     val navPrice: Double,
     val currencyNav: String,
-    var quantity: Int,
+    var quantity: Long,
     val datetime: Long,
     var price: Double,
     val type: String,

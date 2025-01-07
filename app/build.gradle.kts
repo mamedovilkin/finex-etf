@@ -97,6 +97,7 @@ dependencies {
     implementation(libs.androidx.preference.ktx)
     kapt(libs.androidx.lifecycle.compiler)
     kapt(libs.androidx.room.compiler)
+    kapt(libs.compiler)
 
     // Testing
     testImplementation(libs.junit)

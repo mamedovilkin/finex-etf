@@ -2,10 +2,10 @@ package io.github.mamedovilkin.finexetf.repository
 
 import androidx.lifecycle.LiveData
 import io.github.mamedovilkin.finexetf.model.database.Asset
-import io.github.mamedovilkin.finexetf.model.network.Fund
-import io.github.mamedovilkin.finexetf.model.network.ListFund
-import io.github.mamedovilkin.finexetf.model.network.Posts
-import io.github.mamedovilkin.finexetf.model.network.ValCurs
+import io.github.mamedovilkin.finexetf.model.network.finex.Fund
+import io.github.mamedovilkin.finexetf.model.network.finex.ListFund
+import io.github.mamedovilkin.finexetf.model.network.blog.Posts
+import io.github.mamedovilkin.finexetf.model.network.cbr.ValCurs
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -42,7 +42,7 @@ class Repository @Inject constructor(
         return networkRepository.getCurrencies(dateReq)
     }
 
-    suspend fun getPosts(): Response<Posts> {
-        return networkRepository.getPosts()
+    suspend fun getPosts(page: Int): Response<Posts> {
+        return networkRepository.getPosts(page)
     }
 }

@@ -8,10 +8,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
 import coil3.svg.SvgDecoder
-import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.AssetRecyclerViewItemBinding
-import io.github.mamedovilkin.finexetf.databinding.NetWorthRecyclerViewHeaderBinding
+import io.github.mamedovilkin.finexetf.databinding.AssetsRecyclerViewHeaderBinding
+import io.github.mamedovilkin.finexetf.di.GlideApp
 import io.github.mamedovilkin.finexetf.model.view.Asset
 import io.github.mamedovilkin.finexetf.view.adapter.fund.OnClickListener
 import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthRUBFragment
@@ -33,10 +34,10 @@ class AssetRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == HEADER) {
-            val binding: NetWorthRecyclerViewHeaderBinding = DataBindingUtil
+            val binding: AssetsRecyclerViewHeaderBinding = DataBindingUtil
                 .inflate(
                     LayoutInflater.from(parent.context),
-                    R.layout.net_worth_recycler_view_header,
+                    R.layout.assets_recycler_view_header,
                     parent,
                     false
                 )
@@ -75,7 +76,7 @@ class AssetRecyclerViewAdapter(
         }
     }
 
-    inner class NetWorthRecyclerViewViewHolder(binding: NetWorthRecyclerViewHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class NetWorthRecyclerViewViewHolder(binding: AssetsRecyclerViewHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.apply {
@@ -99,11 +100,8 @@ class AssetRecyclerViewAdapter(
             binding.apply {
                 when (asset.ticker) {
                     "FXTP" -> {
-                        Glide
-                            .with(root.context)
-                            .load(asset.icon)
-                            .fitCenter()
-                            .into(imageView)
+                        GlideApp.with(root.context).load(asset.icon)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
                     }
                     "FXRE" -> {
                         imageView.setImageDrawable(root.context.resources.getDrawable(R.drawable.fxre, null))

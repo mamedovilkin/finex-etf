@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.finexetf.model.network
+package io.github.mamedovilkin.finexetf.model.network.finex
 
 import com.google.gson.annotations.SerializedName
 
