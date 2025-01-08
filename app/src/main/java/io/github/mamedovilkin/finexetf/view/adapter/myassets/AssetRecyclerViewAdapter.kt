@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
 import coil3.svg.SvgDecoder
@@ -14,6 +15,8 @@ import io.github.mamedovilkin.finexetf.databinding.AssetRecyclerViewItemBinding
 import io.github.mamedovilkin.finexetf.databinding.AssetsRecyclerViewHeaderBinding
 import io.github.mamedovilkin.finexetf.di.GlideApp
 import io.github.mamedovilkin.finexetf.model.view.Asset
+import io.github.mamedovilkin.finexetf.util.hide
+import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.view.adapter.fund.OnClickListener
 import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthRUBFragment
 import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthUSDFragment
@@ -22,7 +25,6 @@ import java.util.Locale
 
 class AssetRecyclerViewAdapter(
     private val assets: List<Asset>,
-    private val viewModel: MyAssetsViewModel,
     private val fragmentManager: FragmentManager,
     private val lifecycle: Lifecycle,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -80,12 +82,20 @@ class AssetRecyclerViewAdapter(
 
         init {
             binding.apply {
-                val usdRate = String.format(Locale.ROOT, "%.2f", rates[0])
-                val eurRate = String.format(Locale.ROOT, "%.2f", rates[1])
-                val kztRate = String.format(Locale.ROOT, "%.2f", rates[2])
-                exchangeRateTextView.text = "1$ = $usdRate₽ / 1€ = $eurRate₽ / 1₸ = $kztRate₽"
+                val showExchangeRates = PreferenceManager.getDefaultSharedPreferences(root.context).getBoolean("show_exchange_rates", false)
+
+                if (showExchangeRates) {
+                    val usdRate = String.format(Locale.ROOT, "%.2f", rates[0])
+                    val eurRate = String.format(Locale.ROOT, "%.2f", rates[1])
+                    val kztRate = String.format(Locale.ROOT, "%.2f", rates[2])
+                    exchangeRateTextView.text = "1$ = $usdRate₽ / 1€ = $eurRate₽ / 1₸ = $kztRate₽"
+                    exchangeRateTextView.show()
+                } else {
+                    exchangeRateTextView.hide()
+                }
+
                 viewPager2.adapter = NetWorthFragmentStateAdapter(
-                    listOf(NetWorthRUBFragment(viewModel), NetWorthUSDFragment(viewModel)),
+                    listOf(NetWorthRUBFragment(), NetWorthUSDFragment()),
                     fragmentManager,
                     lifecycle
                 )

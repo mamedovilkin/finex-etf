@@ -1,7 +1,10 @@
 package io.github.mamedovilkin.finexetf.view.activity
 
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
@@ -34,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
             val navController = navHostFragment.navController
             val appBarConfiguration = AppBarConfiguration(
-                setOf(R.id.my_assets, R.id.history, R.id.blog, R.id.settings)
+                setOf(R.id.my_assets, R.id.history, R.id.blog)
             )
 
             materialToolbar.setupWithNavController(navController, appBarConfiguration)
@@ -53,5 +56,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return navHostFragment.navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+            }
+        }
+
+        return true
     }
 }

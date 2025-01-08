@@ -6,21 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentNetWorthRubBinding
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
 
-class NetWorthRUBFragment(private val viewModel: MyAssetsViewModel) : Fragment() {
+@AndroidEntryPoint
+class NetWorthRUBFragment() : Fragment() {
 
     private var _binding: FragmentNetWorthRubBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentNetWorthRubBinding must not be null")
-
+    private lateinit var viewModel: MyAssetsViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentNetWorthRubBinding.inflate(inflater)
+
+        viewModel =  ViewModelProvider(requireActivity())[MyAssetsViewModel::class]
 
         return binding.root
     }

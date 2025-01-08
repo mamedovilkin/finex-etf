@@ -36,10 +36,8 @@
 
                 <TextView
                     android:id="@+id/net_worth_text_view"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     android:layout_gravity="center"
                     android:textColor="@color/colorWhite"
                     android:textAlignment="center"

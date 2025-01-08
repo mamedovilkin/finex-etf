@@ -46,7 +46,7 @@ class MyAssetsFragment : Fragment(), OnClickListener {
                         assetsRecyclerView.apply {
                             setHasFixedSize(true)
                             layoutManager = LinearLayoutManager(context)
-                            val assetRecyclerViewAdapter = AssetRecyclerViewAdapter(assets, viewModel, childFragmentManager, viewLifecycleOwner.lifecycle)
+                            val assetRecyclerViewAdapter = AssetRecyclerViewAdapter(assets, childFragmentManager, viewLifecycleOwner.lifecycle)
                             assetRecyclerViewAdapter.onClickListener = this@MyAssetsFragment
                             assetRecyclerViewAdapter.rates = rates
                             adapter = assetRecyclerViewAdapter

@@ -6,20 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentNetWorthUsdBinding
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
 
-class NetWorthUSDFragment(private val viewModel: MyAssetsViewModel) : Fragment() {
+@AndroidEntryPoint
+class NetWorthUSDFragment() : Fragment() {
 
     private var _binding: FragmentNetWorthUsdBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentNetWorthUsdBinding must not be null")
+    private lateinit var viewModel: MyAssetsViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentNetWorthUsdBinding.inflate(inflater)
+
+        viewModel = ViewModelProvider(requireActivity())[MyAssetsViewModel::class]
 
         return binding.root
     }

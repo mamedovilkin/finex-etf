@@ -32,4 +32,17 @@
     <string name="delete">Delete</string>
     <string name="deleted">Deleted</string>
     <string name="blog">Blog</string>
+    <string name="about">About</string>
+    <string name="about_finex_etf">About FinEx ETF</string>
+    <string name="about_ilkin_mamedov">About Ilkin Mamedov</string>
+    <string name="show_exchange_rates">Show exchange rates</string>
+    <string name="clear_image_cache">Clear image cache</string>
+    <string name="image_cache_has_been_deleted">Image cache has been deleted</string>
+    <string name="delete_all_data">Delete all data</string>
+    <string name="data_has_been_deleted">Data has been deleted</string>
+    <string name="delete_all_data_summary">All data will be lost forever</string>
+    <string name="feedback">Feedback</string>
+    <string name="send_feedback">Send feedback</string>
+    <string name="feedback_summary">Report technical issues or suggest new features</string>
+    <string name="subject">Feedback FinEx ETF App</string>
 </resources>
