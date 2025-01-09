@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import coil3.load
@@ -44,6 +45,12 @@ class AddFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[AddViewModel::class]
         ticker = arguments?.getString("ticker").toString()
         type = arguments?.getString("type").toString()
+
+        if (Converter.toType(type) == Type.PURCHASE) {
+            (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.add_purchase)
+        } else {
+            (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.add_sell)
+        }
 
         return binding.root
     }
@@ -127,7 +134,7 @@ class AddFragment : Fragment() {
                         }
                     }
 
-                    splitButton.setOnClickListener {
+                    splitLinearLayout.setOnClickListener {
                         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Stock_split")))
                     }
                 }

@@ -4,5 +4,6 @@
     <color name="colorBottomNavigationBackground">#121A25</color>
     <color name="colorBackground">#111111</color>
     <color name="colorSecondaryBackground">#2A2A2A</color>
+    <color name="colorCardBackground">#2A2A2A</color>
     <color name="colorText">#FFFFFF</color>
 </resources>

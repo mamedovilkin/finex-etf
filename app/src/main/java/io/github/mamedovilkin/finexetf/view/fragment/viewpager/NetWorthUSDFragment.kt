@@ -10,22 +10,23 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentNetWorthUsdBinding
+import io.github.mamedovilkin.finexetf.model.view.Currency
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
-import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
+import io.github.mamedovilkin.finexetf.viewmodel.NetWorthViewModel
 
 @AndroidEntryPoint
-class NetWorthUSDFragment() : Fragment() {
+class NetWorthUSDFragment : Fragment() {
 
     private var _binding: FragmentNetWorthUsdBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentNetWorthUsdBinding must not be null")
-    private lateinit var viewModel: MyAssetsViewModel
+    private lateinit var viewModel: NetWorthViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentNetWorthUsdBinding.inflate(inflater)
 
-        viewModel = ViewModelProvider(requireActivity())[MyAssetsViewModel::class]
+        viewModel = ViewModelProvider(requireActivity())[NetWorthViewModel::class]
 
         return binding.root
     }
@@ -33,7 +34,7 @@ class NetWorthUSDFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getNetWorthUSD().observe(viewLifecycleOwner) {
+        viewModel.getNetWorth(Currency.USD).observe(viewLifecycleOwner) {
             val netWorth = it[0]
             val change = it[1]
             val percentChange = it[2]
@@ -50,7 +51,8 @@ class NetWorthUSDFragment() : Fragment() {
                     changeTextView.text = "${String.format("%.2f", change)}$ (${String.format("%.2f", percentChange)}%)"
                 }
                 progressBar.hide()
-                linearLayout.show()
+                netWorthTextView.show()
+                changeTextView.show()
             }
         }
     }

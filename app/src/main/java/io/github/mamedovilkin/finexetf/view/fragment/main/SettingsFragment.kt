@@ -44,6 +44,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             CoroutineScope(Dispatchers.IO).launch {
                 GlideApp.get(requireActivity()).clearDiskCache()
                 withContext(Dispatchers.Main) {
+                    findPreference<Preference>("clear_image_cache")?.summary = "0 KB / 100 MB"
                     Toast.makeText(context, context?.resources?.getString(R.string.image_cache_has_been_deleted), Toast.LENGTH_LONG).show()
                 }
             }

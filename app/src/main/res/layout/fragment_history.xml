@@ -33,17 +33,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
+                android:id="@+id/placeholder_image_view"
                 android:layout_width="300dp"
                 android:layout_height="250dp"
-                android:src="@drawable/history_placeholder" />
+                android:src="@drawable/nothing_in_history" />
 
             <TextView
+                android:id="@+id/placeholder_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"

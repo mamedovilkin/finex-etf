@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -16,6 +18,7 @@ import io.github.mamedovilkin.finexetf.model.view.Asset
 import io.github.mamedovilkin.finexetf.model.network.finex.ListFund
 import io.github.mamedovilkin.finexetf.model.database.Type
 import io.github.mamedovilkin.finexetf.util.hide
+import io.github.mamedovilkin.finexetf.util.isNetworkAvailable
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.view.adapter.myassets.AssetRecyclerViewAdapter
 import io.github.mamedovilkin.finexetf.view.adapter.fund.OnClickListener
@@ -37,34 +40,45 @@ class MyAssetsFragment : Fragment(), OnClickListener {
 
         viewModel = ViewModelProvider(requireActivity())[MyAssetsViewModel::class]
 
-        viewModel.getExchangeRate().observe(viewLifecycleOwner) { rates ->
-            viewModel.getAssets().observe(viewLifecycleOwner) {
-                assets = it
-                binding.apply {
-                    progressBar.hide()
-                    if (assets.isNotEmpty()) {
-                        assetsRecyclerView.apply {
-                            setHasFixedSize(true)
-                            layoutManager = LinearLayoutManager(context)
-                            val assetRecyclerViewAdapter = AssetRecyclerViewAdapter(assets, childFragmentManager, viewLifecycleOwner.lifecycle)
-                            assetRecyclerViewAdapter.onClickListener = this@MyAssetsFragment
-                            assetRecyclerViewAdapter.rates = rates
-                            adapter = assetRecyclerViewAdapter
-                            show()
+        if (isNetworkAvailable(binding.root.context)) {
+            viewModel.getExchangeRate().observe(viewLifecycleOwner) { rates ->
+                viewModel.getAssets().observe(viewLifecycleOwner) {
+                    assets = it
+                    binding.apply {
+                        progressBar.hide()
+                        if (assets.isNotEmpty()) {
+                            assetsRecyclerView.apply {
+                                setHasFixedSize(true)
+                                layoutManager = LinearLayoutManager(context)
+                                val assetRecyclerViewAdapter = AssetRecyclerViewAdapter(assets, childFragmentManager, viewLifecycleOwner.lifecycle)
+                                assetRecyclerViewAdapter.onClickListener = this@MyAssetsFragment
+                                assetRecyclerViewAdapter.rates = rates
+                                adapter = assetRecyclerViewAdapter
+                                show()
+                            }
+                            placeholderLinearLayout.hide()
+                            addSell.show()
+                        } else {
+                            assetsRecyclerView.hide()
+                            placeholderLinearLayout.show()
+                            addSell.hide()
                         }
-                        placeholderLinearLayout.hide()
-                        addSell.show()
-                    } else {
-                        assetsRecyclerView.hide()
-                        placeholderLinearLayout.show()
-                        addSell.hide()
                     }
                 }
             }
-        }
 
-        viewModel.funds.observe(viewLifecycleOwner) {
-            funds = it
+            viewModel.funds.observe(viewLifecycleOwner) {
+                funds = it
+            }
+        } else {
+            binding.apply {
+                placeholderImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.no_internet_connection, null))
+                placeholderTextView.text = resources.getString(R.string.no_internet_connection)
+                placeholderLinearLayout.show()
+                progressBar.hide()
+                addPurchase.hide()
+                addSell.hide()
+            }
         }
 
         return binding.root
@@ -75,24 +89,35 @@ class MyAssetsFragment : Fragment(), OnClickListener {
 
         binding.apply {
             addPurchase.setOnClickListener {
-                if (funds.isNotEmpty()) {
-                    ChooseFundDialogFragment(funds, Type.PURCHASE).show(parentFragmentManager, "ChooseFundDialogFragment")
+                if (funds.isNotEmpty() && isNetworkAvailable(binding.root.context)) {
+                    ChooseFundDialogFragment(funds, Type.PURCHASE).show(
+                        parentFragmentManager,
+                        "ChooseFundDialogFragment"
+                    )
+                } else {
+                    Toast.makeText(binding.root.context, resources.getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
                 }
             }
 
             addSell.setOnClickListener {
-                if (assets.isNotEmpty()) {
+                if (assets.isNotEmpty() && isNetworkAvailable(binding.root.context)) {
                     val availableListFunds = mutableListOf<ListFund>()
                     assets.forEach {
                         availableListFunds.add(ListFund(it.ticker, it.icon, it.name, it.originalName))
                     }
                     ChooseFundDialogFragment(availableListFunds, Type.SELL).show(parentFragmentManager, "ChooseFundDialogFragment")
+                } else {
+                    Toast.makeText(binding.root.context, resources.getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
 
     override fun onFundClickListener(ticker: String) {
-        findNavController().navigate(R.id.action_my_assets_to_fund, bundleOf("ticker" to ticker))
+        if (isNetworkAvailable(binding.root.context)) {
+            findNavController().navigate(R.id.action_my_assets_to_fund, bundleOf("ticker" to ticker))
+        } else {
+            Toast.makeText(binding.root.context, resources.getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
+        }
     }
 }

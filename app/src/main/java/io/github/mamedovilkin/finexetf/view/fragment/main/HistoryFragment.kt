@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentHistoryBinding
 import io.github.mamedovilkin.finexetf.model.database.Asset
 import io.github.mamedovilkin.finexetf.util.hide
+import io.github.mamedovilkin.finexetf.util.isNetworkAvailable
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.view.adapter.history.OnClickListener
 import io.github.mamedovilkin.finexetf.view.adapter.history.TransactionRecyclerViewAdapter
@@ -33,22 +35,31 @@ class HistoryFragment : Fragment(), OnClickListener {
 
         viewModel = ViewModelProvider(requireActivity())[HistoryViewModel::class]
 
-        viewModel.assets.observe(viewLifecycleOwner) { assets ->
-            binding.apply {
-                progressBar.hide()
-                if (assets.isNotEmpty()) {
-                    val sortedAssets = assets.sortedByDescending { it.datetime }
-                    transactionsRecyclerView.setHasFixedSize(true)
-                    transactionsRecyclerView.layoutManager = LinearLayoutManager(context)
-                    adapter = TransactionRecyclerViewAdapter(sortedAssets)
-                    adapter.onClickListener = this@HistoryFragment
-                    transactionsRecyclerView.adapter = adapter
-                    transactionsRecyclerView.show()
-                    placeholderLinearLayout.hide()
-                } else {
-                    transactionsRecyclerView.hide()
-                    placeholderLinearLayout.show()
+        if (isNetworkAvailable(binding.root.context)) {
+            viewModel.assets.observe(viewLifecycleOwner) { assets ->
+                binding.apply {
+                    progressBar.hide()
+                    if (assets.isNotEmpty()) {
+                        val sortedAssets = assets.sortedByDescending { it.datetime }
+                        transactionsRecyclerView.setHasFixedSize(true)
+                        transactionsRecyclerView.layoutManager = LinearLayoutManager(context)
+                        adapter = TransactionRecyclerViewAdapter(sortedAssets)
+                        adapter.onClickListener = this@HistoryFragment
+                        transactionsRecyclerView.adapter = adapter
+                        transactionsRecyclerView.show()
+                        placeholderLinearLayout.hide()
+                    } else {
+                        transactionsRecyclerView.hide()
+                        placeholderLinearLayout.show()
+                    }
                 }
+            }
+        } else {
+            binding.apply {
+                placeholderImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.no_internet_connection, null))
+                placeholderTextView.text = resources.getString(R.string.no_internet_connection)
+                placeholderLinearLayout.show()
+                progressBar.hide()
             }
         }
 

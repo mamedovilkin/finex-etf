@@ -18,9 +18,10 @@ import io.github.mamedovilkin.finexetf.model.view.Asset
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.view.adapter.fund.OnClickListener
+import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthEURFragment
+import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthKZTFragment
 import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthRUBFragment
 import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthUSDFragment
-import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
 import java.util.Locale
 
 class AssetRecyclerViewAdapter(
@@ -95,7 +96,7 @@ class AssetRecyclerViewAdapter(
                 }
 
                 viewPager2.adapter = NetWorthFragmentStateAdapter(
-                    listOf(NetWorthRUBFragment(), NetWorthUSDFragment()),
+                    listOf(NetWorthRUBFragment(), NetWorthUSDFragment(), NetWorthEURFragment(), NetWorthKZTFragment()),
                     fragmentManager,
                     lifecycle
                 )
