@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import coil3.load
 import coil3.svg.SvgDecoder
@@ -45,6 +46,8 @@ class FundFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val ticker = arguments?.getString("ticker").toString()
+
+        (activity as AppCompatActivity).supportActionBar?.title = ticker
 
         viewModel.getFund(ticker).observe(viewLifecycleOwner) { fund ->
             binding.apply {

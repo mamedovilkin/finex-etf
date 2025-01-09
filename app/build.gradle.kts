@@ -58,6 +58,9 @@ dependencies {
     // CircleIndicator
     implementation(libs.circleindicator)
 
+    // Introduction
+    implementation(libs.introduction)
+
     // Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.android)
 

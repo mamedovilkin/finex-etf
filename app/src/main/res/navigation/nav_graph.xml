@@ -36,11 +36,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/settings"
-        android:name="io.github.mamedovilkin.finexetf.view.fragment.main.SettingsFragment"
-        android:label="@string/settings" />
-
-    <fragment
         android:id="@+id/add"
         android:name="io.github.mamedovilkin.finexetf.view.fragment.fund.AddFragment"
         android:label="" />

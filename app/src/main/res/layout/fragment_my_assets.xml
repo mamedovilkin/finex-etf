@@ -44,11 +44,13 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageView
+                android:id="@+id/placeholder_image_view"
                 android:layout_width="300dp"
                 android:layout_height="250dp"
-                android:src="@drawable/my_assets_placeholder" />
+                android:src="@drawable/nothing_in_assets" />
 
             <TextView
+                android:id="@+id/placeholder_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"

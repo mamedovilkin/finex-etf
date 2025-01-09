@@ -12,35 +12,33 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_margin="16dp"
-            android:backgroundTint="@color/colorPrimary"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
             tools:context=".view.fragment.viewpager.NetWorthRUBFragment">
 
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:indeterminate="true"
-                android:indeterminateTintMode="src_atop"
-                android:indeterminateTint="@color/colorWhite" />
-
             <LinearLayout
                 android:id="@+id/linear_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/shape_net_worth_card_gradient_background"
                 android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:indeterminateTintMode="src_atop"
+                    android:indeterminateTint="@color/colorWhite" />
 
                 <TextView
                     android:id="@+id/net_worth_text_view"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     android:layout_gravity="center"
+                    android:visibility="gone"
                     android:textColor="@color/colorWhite"
                     android:textAlignment="center"
                     android:textSize="48sp"
@@ -57,6 +55,7 @@
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
                     android:layout_gravity="center"
+                    android:visibility="gone"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
                     android:text="@string/zero_change_rubles"

@@ -6,20 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentNetWorthUsdBinding
+import io.github.mamedovilkin.finexetf.model.view.Currency
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
-import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
+import io.github.mamedovilkin.finexetf.viewmodel.NetWorthViewModel
 
-class NetWorthUSDFragment(private val viewModel: MyAssetsViewModel) : Fragment() {
+@AndroidEntryPoint
+class NetWorthUSDFragment : Fragment() {
 
     private var _binding: FragmentNetWorthUsdBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentNetWorthUsdBinding must not be null")
+    private lateinit var viewModel: NetWorthViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentNetWorthUsdBinding.inflate(inflater)
+
+        viewModel = ViewModelProvider(requireActivity())[NetWorthViewModel::class]
 
         return binding.root
     }
@@ -27,7 +34,7 @@ class NetWorthUSDFragment(private val viewModel: MyAssetsViewModel) : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getNetWorthUSD().observe(viewLifecycleOwner) {
+        viewModel.getNetWorth(Currency.USD).observe(viewLifecycleOwner) {
             val netWorth = it[0]
             val change = it[1]
             val percentChange = it[2]
@@ -44,7 +51,8 @@ class NetWorthUSDFragment(private val viewModel: MyAssetsViewModel) : Fragment()
                     changeTextView.text = "${String.format("%.2f", change)}$ (${String.format("%.2f", percentChange)}%)"
                 }
                 progressBar.hide()
-                linearLayout.show()
+                netWorthTextView.show()
+                changeTextView.show()
             }
         }
     }
