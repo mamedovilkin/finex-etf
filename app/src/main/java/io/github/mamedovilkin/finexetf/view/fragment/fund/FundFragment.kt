@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import coil3.load
 import coil3.svg.SvgDecoder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -24,13 +24,11 @@ class FundFragment : Fragment() {
     private var _binding: FragmentFundBinding? = null
     private val binding: FragmentFundBinding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentFundBinding must not be null")
-    private lateinit var viewModel: FundViewModel
+    private val viewModel: FundViewModel by viewModels()
     private var rates: List<Double> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentFundBinding.inflate(inflater)
-
-        viewModel = ViewModelProvider(requireActivity())[FundViewModel::class]
 
         viewModel.getExchangeRate().observe(viewLifecycleOwner) {
             rates = it

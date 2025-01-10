@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,14 +31,16 @@ class MyAssetsFragment : Fragment(), OnClickListener {
     private var _binding: FragmentMyAssetsBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentMyAssetsBinding must not be null")
-    private lateinit var viewModel: MyAssetsViewModel
-    private lateinit var funds: List<ListFund>
-    private lateinit var assets: List<Asset>
+    private val viewModel: MyAssetsViewModel by viewModels()
+    private var funds: List<ListFund> = emptyList()
+    private var assets: List<Asset> = emptyList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentMyAssetsBinding.inflate(inflater)
 
-        viewModel = ViewModelProvider(requireActivity())[MyAssetsViewModel::class]
+        viewModel.funds.observe(viewLifecycleOwner) {
+            funds = it
+        }
 
         if (isNetworkAvailable(binding.root.context)) {
             viewModel.getExchangeRate().observe(viewLifecycleOwner) { rates ->
@@ -66,10 +68,6 @@ class MyAssetsFragment : Fragment(), OnClickListener {
                     }
                 }
             }
-
-            viewModel.funds.observe(viewLifecycleOwner) {
-                funds = it
-            }
         } else {
             binding.apply {
                 placeholderImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.no_internet_connection, null))
@@ -89,13 +87,15 @@ class MyAssetsFragment : Fragment(), OnClickListener {
 
         binding.apply {
             addPurchase.setOnClickListener {
-                if (funds.isNotEmpty() && isNetworkAvailable(binding.root.context)) {
-                    ChooseFundDialogFragment(funds, Type.PURCHASE).show(
-                        parentFragmentManager,
-                        "ChooseFundDialogFragment"
-                    )
-                } else {
-                    Toast.makeText(binding.root.context, resources.getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
+                if (funds.isNotEmpty()) {
+                    if (isNetworkAvailable(binding.root.context)) {
+                        ChooseFundDialogFragment(funds, Type.PURCHASE).show(
+                            parentFragmentManager,
+                            "ChooseFundDialogFragment"
+                        )
+                    } else {
+                        Toast.makeText(binding.root.context, resources.getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
+                    }
                 }
             }
 

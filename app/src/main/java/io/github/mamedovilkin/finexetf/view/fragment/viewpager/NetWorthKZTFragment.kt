@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentNetWorthKztBinding
@@ -21,12 +21,10 @@ class NetWorthKZTFragment : Fragment() {
     private var _binding: FragmentNetWorthKztBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentNetWorthKztBinding must not be null")
-    private lateinit var viewModel: NetWorthViewModel
+    private val viewModel: NetWorthViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentNetWorthKztBinding.inflate(inflater)
-
-        viewModel = ViewModelProvider(requireActivity())[NetWorthViewModel::class]
 
         return binding.root
     }

@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
@@ -27,13 +27,11 @@ class HistoryFragment : Fragment(), OnClickListener {
     private var _binding: FragmentHistoryBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentHistoryBinding must not be null")
-    private lateinit var viewModel: HistoryViewModel
-    private lateinit var adapter: TransactionRecyclerViewAdapter
+    private val viewModel: HistoryViewModel by viewModels()
+    private var adapter: TransactionRecyclerViewAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHistoryBinding.inflate(inflater)
-
-        viewModel = ViewModelProvider(requireActivity())[HistoryViewModel::class]
 
         if (isNetworkAvailable(binding.root.context)) {
             viewModel.assets.observe(viewLifecycleOwner) { assets ->
@@ -44,7 +42,7 @@ class HistoryFragment : Fragment(), OnClickListener {
                         transactionsRecyclerView.setHasFixedSize(true)
                         transactionsRecyclerView.layoutManager = LinearLayoutManager(context)
                         adapter = TransactionRecyclerViewAdapter(sortedAssets)
-                        adapter.onClickListener = this@HistoryFragment
+                        adapter?.onClickListener = this@HistoryFragment
                         transactionsRecyclerView.adapter = adapter
                         transactionsRecyclerView.show()
                         placeholderLinearLayout.hide()
@@ -73,7 +71,7 @@ class HistoryFragment : Fragment(), OnClickListener {
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, resources.getString(R.string.cancel), { dialog, _ -> dialog.dismiss() })
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, resources.getString(R.string.delete), { dialog, _ ->
             viewModel.delete(asset)
-            adapter.notifyDataSetChanged()
+            adapter?.notifyDataSetChanged()
             dialog.dismiss()
             Toast.makeText(binding.root.context, resources.getString(R.string.deleted), Toast.LENGTH_LONG).show()
         })

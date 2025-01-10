@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,8 +33,8 @@ class BlogFragment : Fragment(), OnClickListener {
     private var _binding: FragmentBlogBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentBlogBinding must not be null")
-    private lateinit var viewModel: BlogViewModel
-    private lateinit var adapter: PostRecyclerViewAdapter
+    private val viewModel: BlogViewModel by viewModels()
+    private var adapter: PostRecyclerViewAdapter? = null
     private var posts: MutableList<Post> = mutableListOf()
     private var currentPage = 1
     private var totalPages = 1
@@ -50,15 +50,13 @@ class BlogFragment : Fragment(), OnClickListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentBlogBinding.inflate(inflater)
 
-        viewModel = ViewModelProvider(requireActivity())[BlogViewModel::class]
-
         if (isNetworkAvailable(binding.root.context)) {
             lifecycleScope.launch {
                 viewModel.loadingState.collect {
                     isLoading = it
                     withContext(Dispatchers.Main) {
-                        adapter.isLoading = it
-                        adapter.notifyDataSetChanged()
+                        adapter?.isLoading = it
+                        adapter?.notifyDataSetChanged()
                     }
                 }
             }
@@ -69,8 +67,8 @@ class BlogFragment : Fragment(), OnClickListener {
                 postsRecyclerView.setHasFixedSize(true)
                 postsRecyclerView.layoutManager = LinearLayoutManager(context)
                 adapter = PostRecyclerViewAdapter(posts)
-                adapter.onClickListener = this@BlogFragment
-                adapter.isLoading = isLoading
+                adapter?.onClickListener = this@BlogFragment
+                adapter?.isLoading = isLoading
                 postsRecyclerView.adapter = adapter
                 postsRecyclerView.addOnScrollListener(object :
                     PaginationScrollListener(postsRecyclerView.layoutManager as LinearLayoutManager) {
@@ -101,7 +99,7 @@ class BlogFragment : Fragment(), OnClickListener {
             posts.addAll(it.posts)
             currentPage = it.meta.pagination.page
             totalPages = it.meta.pagination.total
-            adapter.notifyDataSetChanged()
+            adapter?.notifyDataSetChanged()
         }
     }
 

@@ -35,21 +35,25 @@ class AddFragment : Fragment() {
     private val binding: FragmentAddBinding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentAddBinding must not be null")
     private lateinit var viewModel: AddViewModel
-    private lateinit var ticker: String
-    private lateinit var type: String
+    private var ticker: String? = null
+    private var type: String? = null
     private var totalQuantity: Long = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAddBinding.inflate(inflater)
 
         viewModel = ViewModelProvider(requireActivity())[AddViewModel::class]
-        ticker = arguments?.getString("ticker").toString()
-        type = arguments?.getString("type").toString()
+        ticker = arguments?.getString("ticker")
+        type = arguments?.getString("type")
 
-        if (Converter.toType(type) == Type.PURCHASE) {
-            (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.add_purchase)
+        if (type != null || ticker == null) {
+            if (Converter.toType(type ?: Converter.fromType(Type.PURCHASE)) == Type.PURCHASE) {
+                (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.add_purchase)
+            } else {
+                (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.add_sell)
+            }
         } else {
-            (activity as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.add_sell)
+            findNavController().popBackStack()
         }
 
         return binding.root
@@ -58,88 +62,90 @@ class AddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getFund(ticker).observe(viewLifecycleOwner) { fund ->
-            if (fund != null) {
-                binding.apply {
-                    when (fund.ticker) {
-                        "FXTP" -> {
-                            GlideApp.with(root.context).load(fund.icon)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
-                        }
-                        "FXRE" -> {
-                            imageView.setImageDrawable(resources.getDrawable(R.drawable.fxre, null))
-                        }
-                        else -> {
-                            imageView.load(fund.icon) {
-                                decoderFactory { result, options, _ -> SvgDecoder(result.source, options) }
+        if (ticker != null) {
+            viewModel.getFund(ticker ?: "FXUS").observe(viewLifecycleOwner) { fund ->
+                if (fund != null) {
+                    binding.apply {
+                        when (fund.ticker) {
+                            "FXTP" -> {
+                                GlideApp.with(root.context).load(fund.icon)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
                             }
-                        }
-                    }
-
-                    nameTextView.text = fund.originalName.trim()
-                    tickerTextView.text = fund.ticker
-                    progressBar.visibility = View.GONE
-                    linearLayout.visibility = View.VISIBLE
-
-                    if (Converter.toType(type) == Type.PURCHASE) {
-                        dateTimeTextInputLayout.hint = resources.getString(R.string.date_time_purchase)
-                        priceTextInputLayout.hint = resources.getString(R.string.price_purchase)
-                        addButton.text = resources.getString(R.string.add_purchase)
-                        addButton.setBackgroundResource(R.drawable.shape_add_purchase_button)
-                        splitLinearLayout.show()
-                    } else {
-                        viewModel.getFundQuantity(ticker).observe(viewLifecycleOwner) {
-                            totalQuantity = it
-                            quantityTextInputLayout.helperText = "You have $it funds"
-                        }
-                        dateTimeTextInputLayout.hint = resources.getString(R.string.date_time_sell)
-                        priceTextInputLayout.hint = resources.getString(R.string.price_sell)
-                        addButton.text = resources.getString(R.string.add_sell)
-                        addButton.setBackgroundResource(R.drawable.shape_add_sell_button)
-                        splitLinearLayout.hide()
-                    }
-
-                    addButton.setOnClickListener {
-                        val quantityInt = quantityTextInputLayoutEditText.text
-                        val datetimeString = dateTimeTextInputLayoutEditText.text
-                        val priceDouble = priceTextInputLayoutEditText.text
-
-                        if (
-                            quantityInt.toString().toIntOrNull() != null &&
-                            datetimeString.toString() != "" &&
-                            priceDouble.toString().toDoubleOrNull() != null
-                        ) {
-                            val quantity = quantityInt.toString().toLong()
-                            val price = priceDouble.toString().toDouble()
-                            try {
-                                val datetime = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT).parse(datetimeString.toString()).time
-                                if (Converter.toType(type) == Type.SELL && quantity > totalQuantity) {
-                                    Toast.makeText(context, resources.getString(R.string.you_don_t_have_enough_funds), Toast.LENGTH_LONG).show()
-                                } else {
-                                    viewModel.insert(Asset(0, fund.ticker, fund.icon, fund.name, fund.originalName, fund.nav.navPerShare, fund.nav.currencyNav, quantity, datetime, price, type))
-                                    findNavController().popBackStack()
-
-                                    if (Converter.toType(type) == Type.PURCHASE) {
-                                        Toast.makeText(context, resources.getText(R.string.purchase_has_been_added), Toast.LENGTH_LONG).show()
-                                    } else {
-                                        Toast.makeText(context, resources.getText(R.string.sell_has_been_added), Toast.LENGTH_LONG).show()
-                                    }
+                            "FXRE" -> {
+                                imageView.setImageDrawable(resources.getDrawable(R.drawable.fxre, null))
+                            }
+                            else -> {
+                                imageView.load(fund.icon) {
+                                    decoderFactory { result, options, _ -> SvgDecoder(result.source, options) }
                                 }
-
-                            } catch (e: ParseException) {
-                                Toast.makeText(context, resources.getText(R.string.date_time_type_invalid), Toast.LENGTH_LONG).show()
                             }
+                        }
+
+                        nameTextView.text = fund.originalName.trim()
+                        tickerTextView.text = fund.ticker
+                        progressBar.visibility = View.GONE
+                        linearLayout.visibility = View.VISIBLE
+
+                        if (Converter.toType(type ?: Converter.fromType(Type.PURCHASE)) == Type.PURCHASE) {
+                            dateTimeTextInputLayout.hint = resources.getString(R.string.date_time_purchase)
+                            priceTextInputLayout.hint = resources.getString(R.string.price_purchase)
+                            addButton.text = resources.getString(R.string.add_purchase)
+                            addButton.setBackgroundResource(R.drawable.shape_add_purchase_button)
+                            splitLinearLayout.show()
                         } else {
-                            Toast.makeText(context, resources.getText(R.string.fields_is_empty), Toast.LENGTH_LONG).show()
+                            viewModel.getFundQuantity(ticker ?: "FXUS").observe(viewLifecycleOwner) {
+                                totalQuantity = it
+                                quantityTextInputLayout.helperText = "You have $it funds"
+                            }
+                            dateTimeTextInputLayout.hint = resources.getString(R.string.date_time_sell)
+                            priceTextInputLayout.hint = resources.getString(R.string.price_sell)
+                            addButton.text = resources.getString(R.string.add_sell)
+                            addButton.setBackgroundResource(R.drawable.shape_add_sell_button)
+                            splitLinearLayout.hide()
+                        }
+
+                        addButton.setOnClickListener {
+                            val quantityInt = quantityTextInputLayoutEditText.text
+                            val datetimeString = dateTimeTextInputLayoutEditText.text
+                            val priceDouble = priceTextInputLayoutEditText.text
+
+                            if (
+                                quantityInt.toString().toIntOrNull() != null &&
+                                datetimeString.toString() != "" &&
+                                priceDouble.toString().toDoubleOrNull() != null
+                            ) {
+                                val quantity = quantityInt.toString().toLong()
+                                val price = priceDouble.toString().toDouble()
+                                try {
+                                    val datetime = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT).parse(datetimeString.toString()).time
+                                    if (Converter.toType(type ?: Converter.fromType(Type.PURCHASE)) == Type.SELL && quantity > totalQuantity) {
+                                        Toast.makeText(context, resources.getString(R.string.you_don_t_have_enough_funds), Toast.LENGTH_LONG).show()
+                                    } else {
+                                        viewModel.insert(Asset(0, fund.ticker, fund.icon, fund.name, fund.originalName, fund.nav.navPerShare, fund.nav.currencyNav, quantity, datetime, price, type ?: Converter.fromType(Type.PURCHASE)))
+                                        findNavController().popBackStack()
+
+                                        if (Converter.toType(type ?: Converter.fromType(Type.PURCHASE)) == Type.PURCHASE) {
+                                            Toast.makeText(context, resources.getText(R.string.purchase_has_been_added), Toast.LENGTH_LONG).show()
+                                        } else {
+                                            Toast.makeText(context, resources.getText(R.string.sell_has_been_added), Toast.LENGTH_LONG).show()
+                                        }
+                                    }
+
+                                } catch (e: ParseException) {
+                                    Toast.makeText(context, resources.getText(R.string.date_time_type_invalid), Toast.LENGTH_LONG).show()
+                                }
+                            } else {
+                                Toast.makeText(context, resources.getText(R.string.fields_is_empty), Toast.LENGTH_LONG).show()
+                            }
+                        }
+
+                        splitLinearLayout.setOnClickListener {
+                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Stock_split")))
                         }
                     }
-
-                    splitLinearLayout.setOnClickListener {
-                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Stock_split")))
-                    }
+                } else {
+                    findNavController().popBackStack()
                 }
-            } else {
-                findNavController().popBackStack()
             }
         }
     }
