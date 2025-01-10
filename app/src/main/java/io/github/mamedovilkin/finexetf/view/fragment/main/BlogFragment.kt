@@ -15,14 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentBlogBinding
-import io.github.mamedovilkin.finexetf.model.network.blog.Post
+import io.github.mamedovilkin.network.model.blog.Post
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.isNetworkAvailable
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.view.adapter.blog.OnClickListener
 import io.github.mamedovilkin.finexetf.view.adapter.blog.PaginationScrollListener
 import io.github.mamedovilkin.finexetf.view.adapter.blog.PostRecyclerViewAdapter
-import io.github.mamedovilkin.finexetf.viewmodel.BlogViewModel
+import io.github.mamedovilkin.finexetf.viewmodel.blog.BlogViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

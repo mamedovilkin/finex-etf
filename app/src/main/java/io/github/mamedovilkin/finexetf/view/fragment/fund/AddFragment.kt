@@ -23,7 +23,7 @@ import io.github.mamedovilkin.finexetf.model.database.Asset
 import io.github.mamedovilkin.finexetf.model.database.Type
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
-import io.github.mamedovilkin.finexetf.viewmodel.AddViewModel
+import io.github.mamedovilkin.finexetf.viewmodel.fund.AddViewModel
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Locale

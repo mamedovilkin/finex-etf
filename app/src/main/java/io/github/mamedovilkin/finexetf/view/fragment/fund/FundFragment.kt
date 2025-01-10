@@ -1,7 +1,6 @@
 package io.github.mamedovilkin.finexetf.view.fragment.fund
 
 import android.os.Bundle
-import android.text.format.DateFormat
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import coil3.load
 import coil3.svg.SvgDecoder
-import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
@@ -18,8 +16,7 @@ import io.github.mamedovilkin.finexetf.databinding.FragmentFundBinding
 import io.github.mamedovilkin.finexetf.di.GlideApp
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
-import io.github.mamedovilkin.finexetf.viewmodel.FundViewModel
-import java.util.Date
+import io.github.mamedovilkin.finexetf.viewmodel.fund.FundViewModel
 
 @AndroidEntryPoint
 class FundFragment : Fragment() {

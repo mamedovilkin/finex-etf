@@ -1,20 +1,17 @@
 package io.github.mamedovilkin.finexetf.repository
 
+import io.github.mamedovilkin.network.model.finex.Fund
+import io.github.mamedovilkin.network.model.finex.ListFund
+import io.github.mamedovilkin.network.model.blog.Posts
+import io.github.mamedovilkin.network.model.cbr.ValCurs
 import io.github.mamedovilkin.finexetf.BuildConfig
-import io.github.mamedovilkin.finexetf.model.network.finex.Fund
-import io.github.mamedovilkin.finexetf.model.network.finex.ListFund
-import io.github.mamedovilkin.finexetf.model.network.blog.Posts
-import io.github.mamedovilkin.finexetf.model.network.cbr.ValCurs
-import io.github.mamedovilkin.finexetf.network.blog.BlogService
-import io.github.mamedovilkin.finexetf.network.cbr.CBRService
-import io.github.mamedovilkin.finexetf.network.finex.FinExService
 import retrofit2.Response
 import javax.inject.Inject
 
 class NetworkRepository @Inject constructor(
-    private val finExService: FinExService,
-    private val cbrService: CBRService,
-    private val blogService: BlogService,
+    private val finExService: io.github.mamedovilkin.network.network.finex.FinExService,
+    private val cbrService: io.github.mamedovilkin.network.network.cbr.CBRService,
+    private val blogService: io.github.mamedovilkin.network.network.blog.BlogService,
 ) {
 
     suspend fun getFunds(): Response<List<ListFund>> {

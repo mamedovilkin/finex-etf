@@ -13,7 +13,7 @@ import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentChooseFundDialogBinding
 import io.github.mamedovilkin.finexetf.database.Converter
 import io.github.mamedovilkin.finexetf.model.database.Type
-import io.github.mamedovilkin.finexetf.model.network.finex.ListFund
+import io.github.mamedovilkin.network.model.finex.ListFund
 import io.github.mamedovilkin.finexetf.view.adapter.fund.ChooseFundRecyclerViewAdapter
 import io.github.mamedovilkin.finexetf.view.adapter.fund.OnClickListener
 

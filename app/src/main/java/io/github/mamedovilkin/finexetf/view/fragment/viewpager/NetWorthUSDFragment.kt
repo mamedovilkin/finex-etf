@@ -13,7 +13,7 @@ import io.github.mamedovilkin.finexetf.databinding.FragmentNetWorthUsdBinding
 import io.github.mamedovilkin.finexetf.model.view.Currency
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
-import io.github.mamedovilkin.finexetf.viewmodel.NetWorthViewModel
+import io.github.mamedovilkin.finexetf.viewmodel.myassets.NetWorthViewModel
 
 @AndroidEntryPoint
 class NetWorthUSDFragment : Fragment() {
