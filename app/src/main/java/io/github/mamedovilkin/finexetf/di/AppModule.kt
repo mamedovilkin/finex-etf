@@ -1,13 +1,15 @@
 package io.github.mamedovilkin.finexetf.di
 
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import javax.inject.Singleton
 import dagger.hilt.components.SingletonComponent
+import io.github.mamedovilkin.core.repository.CoreRepository
 import io.github.mamedovilkin.database.database.AssetDatabase
-import io.github.mamedovilkin.finexetf.repository.DatabaseRepository
-import io.github.mamedovilkin.finexetf.repository.NetworkRepository
+import io.github.mamedovilkin.database.repository.DatabaseRepository
+import io.github.mamedovilkin.network.repository.NetworkRepository
 import io.github.mamedovilkin.finexetf.repository.Repository
 import io.github.mamedovilkin.finexetf.repository.UseCase
 import io.github.mamedovilkin.network.api.blog.BlogService
@@ -37,11 +39,18 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideCoreRepository(firebaseAuth: FirebaseAuth): CoreRepository {
+        return CoreRepository(firebaseAuth)
+    }
+
+    @Provides
+    @Singleton
     fun provideRepository(
         networkRepository: NetworkRepository,
         databaseRepository: DatabaseRepository,
+        coreRepository: CoreRepository,
     ): Repository {
-        return Repository(networkRepository, databaseRepository)
+        return Repository(networkRepository, databaseRepository, coreRepository)
     }
 
     @Provides

@@ -28,6 +28,11 @@
         app:title="@string/settings"
         app:iconSpaceReserved="false">
 
+        <Preference
+            app:key="backup_data"
+            app:title="@string/backup_data"
+            app:iconSpaceReserved="false" />
+
         <CheckBoxPreference
             app:key="show_exchange_rates"
             app:title="@string/show_exchange_rates"

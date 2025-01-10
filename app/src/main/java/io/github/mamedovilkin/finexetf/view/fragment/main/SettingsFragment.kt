@@ -3,11 +3,20 @@ package io.github.mamedovilkin.finexetf.view.fragment.main
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
+import io.github.mamedovilkin.finexetf.BuildConfig
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.di.GlideApp
 import io.github.mamedovilkin.finexetf.viewmodel.settings.SettingsViewModel
@@ -16,14 +25,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
 
+    @Inject lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var viewModel: SettingsViewModel
+    private var user: FirebaseUser? = null
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
-        val viewModel = ViewModelProvider(requireActivity())[SettingsViewModel::class]
+        viewModel = ViewModelProvider(requireActivity())[SettingsViewModel::class]
 
         findPreference<Preference>("about_finex_etf")?.setOnPreferenceClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://finexetf.com/")))
@@ -34,6 +48,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://mamedovilkin.github.io/")))
             true
         }
+
+        findPreference<Preference>("version")?.title = "${resources.getString(R.string.version)} ${BuildConfig.VERSION_NAME}"
 
         val imageCacheDir = File(context?.cacheDir, "image_manager_disk_cache") // Glide cache path
         val cacheSize = getCacheSize(imageCacheDir)
@@ -61,6 +77,53 @@ class SettingsFragment : PreferenceFragmentCompat() {
             val uri = Uri.parse("mailto:ilkinmamedov0208@gmail.com?subject=" + context?.resources?.getString(R.string.subject))
             startActivity(Intent.createChooser(Intent(Intent.ACTION_SENDTO, uri), context?.resources?.getString(R.string.send_feedback)))
             true
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
+        viewModel.getCurrentUser().observe(viewLifecycleOwner) { user ->
+            updatePreference(user)
+        }
+
+        viewModel.user.observe(viewLifecycleOwner) { user ->
+            updatePreference(user)
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) { error ->
+            if (!error.isNullOrEmpty()) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        val signInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                account?.idToken?.let { viewModel.signInWithGoogle(it) }
+            } catch (e: ApiException) {
+                Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        findPreference<Preference>("backup_data")?.setOnPreferenceClickListener {
+            if (user == null) {
+                signInLauncher.launch(googleSignInClient.signInIntent)
+            } else {
+                viewModel.signOut()
+            }
+            true
+        }
+
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    private fun updatePreference(user: FirebaseUser?) {
+        if (user != null) {
+            this.user = user
+            findPreference<Preference>("backup_data")?.summary = "Signed in as ${user.displayName}"
+        } else {
+            findPreference<Preference>("backup_data")?.summary = resources.getString(R.string.backup_data_summary)
         }
     }
 

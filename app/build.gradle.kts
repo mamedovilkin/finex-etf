@@ -1,11 +1,9 @@
-import java.io.FileInputStream
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -19,12 +17,6 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        val localPropertiesFile = rootProject.file("local.properties")
-        val localProperties = Properties()
-        localProperties.load(FileInputStream(localPropertiesFile))
-
-        buildConfigField("String", "BLOG_API_KEY", localProperties["BLOG_API_KEY"].toString())
     }
 
     buildTypes {
@@ -53,6 +45,7 @@ android {
 dependencies {
 
     // Modules
+    implementation(project(":core"))
     implementation(project(":network"))
     implementation(project(":database"))
 
@@ -81,6 +74,12 @@ dependencies {
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth)
 
     // AndroidX
     implementation(libs.material)

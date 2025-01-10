@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.finexetf.repository
+package io.github.mamedovilkin.database.repository
 
 import androidx.lifecycle.LiveData
 import io.github.mamedovilkin.database.database.AssetDatabase

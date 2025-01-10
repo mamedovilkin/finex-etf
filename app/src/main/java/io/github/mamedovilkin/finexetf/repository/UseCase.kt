@@ -1,6 +1,7 @@
 package io.github.mamedovilkin.finexetf.repository
 
 import androidx.lifecycle.LiveData
+import com.google.firebase.auth.FirebaseUser
 import io.github.mamedovilkin.database.entity.Asset
 import io.github.mamedovilkin.network.model.finex.Fund
 import io.github.mamedovilkin.network.model.finex.ListFund
@@ -44,4 +45,12 @@ class UseCase @Inject constructor(
     suspend fun getPosts(page: Int): Response<Posts> {
         return repository.getPosts(page)
     }
+
+    suspend fun signInWithGoogle(idToken: String): FirebaseUser? {
+        return repository.signInWithGoogle(idToken)
+    }
+
+    fun getCurrentUser(): FirebaseUser? = repository.getCurrentUser()
+
+    fun signOut() = repository.signOut()
 }
