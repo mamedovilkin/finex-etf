@@ -6,7 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.github.mamedovilkin.finexetf.database.AssetDatabase
+import io.github.mamedovilkin.database.database.AssetDatabase
 import javax.inject.Singleton
 
 @Module

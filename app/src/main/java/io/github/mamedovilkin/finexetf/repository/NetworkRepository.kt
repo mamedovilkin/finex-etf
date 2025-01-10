@@ -1,13 +1,13 @@
 package io.github.mamedovilkin.finexetf.repository
 
+import io.github.mamedovilkin.network.model.finex.Fund
+import io.github.mamedovilkin.network.model.finex.ListFund
+import io.github.mamedovilkin.network.model.blog.Posts
+import io.github.mamedovilkin.network.model.cbr.ValCurs
 import io.github.mamedovilkin.finexetf.BuildConfig
-import io.github.mamedovilkin.finexetf.model.network.finex.Fund
-import io.github.mamedovilkin.finexetf.model.network.finex.ListFund
-import io.github.mamedovilkin.finexetf.model.network.blog.Posts
-import io.github.mamedovilkin.finexetf.model.network.cbr.ValCurs
-import io.github.mamedovilkin.finexetf.network.blog.BlogService
-import io.github.mamedovilkin.finexetf.network.cbr.CBRService
-import io.github.mamedovilkin.finexetf.network.finex.FinExService
+import io.github.mamedovilkin.network.api.blog.BlogService
+import io.github.mamedovilkin.network.api.cbr.CBRService
+import io.github.mamedovilkin.network.api.finex.FinExService
 import retrofit2.Response
 import javax.inject.Inject
 

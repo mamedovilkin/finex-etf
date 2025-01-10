@@ -10,7 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.ChooseFundRecyclerViewItemBinding
 import io.github.mamedovilkin.finexetf.di.GlideApp
-import io.github.mamedovilkin.finexetf.model.network.finex.ListFund
+import io.github.mamedovilkin.network.model.finex.ListFund
 
 class ChooseFundRecyclerViewAdapter(var funds: List<ListFund>) : RecyclerView.Adapter<ChooseFundRecyclerViewAdapter.FundRecyclerViewViewHolder>() {
 

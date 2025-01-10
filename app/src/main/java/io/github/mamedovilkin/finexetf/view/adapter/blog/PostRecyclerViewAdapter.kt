@@ -11,7 +11,7 @@ import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.PostRecyclerViewItemBinding
 import io.github.mamedovilkin.finexetf.databinding.PostsRecyclerViewFooterBinding
 import io.github.mamedovilkin.finexetf.di.GlideApp
-import io.github.mamedovilkin.finexetf.model.network.blog.Post
+import io.github.mamedovilkin.network.model.blog.Post
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import java.text.SimpleDateFormat

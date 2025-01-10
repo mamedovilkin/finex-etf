@@ -1,8 +1,8 @@
 package io.github.mamedovilkin.finexetf.repository
 
 import androidx.lifecycle.LiveData
-import io.github.mamedovilkin.finexetf.model.database.Asset
-import io.github.mamedovilkin.finexetf.database.AssetDatabase
+import io.github.mamedovilkin.database.database.AssetDatabase
+import io.github.mamedovilkin.database.entity.Asset
 import javax.inject.Inject
 
 class DatabaseRepository @Inject constructor(database: AssetDatabase) {

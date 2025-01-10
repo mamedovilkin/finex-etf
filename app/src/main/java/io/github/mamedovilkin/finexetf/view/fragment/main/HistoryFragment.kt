@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentHistoryBinding
-import io.github.mamedovilkin.finexetf.model.database.Asset
+import io.github.mamedovilkin.database.entity.Asset
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.isNetworkAvailable
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.view.adapter.history.OnClickListener
 import io.github.mamedovilkin.finexetf.view.adapter.history.TransactionRecyclerViewAdapter
-import io.github.mamedovilkin.finexetf.viewmodel.HistoryViewModel
+import io.github.mamedovilkin.finexetf.viewmodel.history.HistoryViewModel
 
 @AndroidEntryPoint
 class HistoryFragment : Fragment(), OnClickListener {

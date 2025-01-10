@@ -24,9 +24,6 @@ android {
         val localProperties = Properties()
         localProperties.load(FileInputStream(localPropertiesFile))
 
-        buildConfigField("String", "CBR_BASE_URL", localProperties["CBR_BASE_URL"].toString())
-        buildConfigField("String", "FINEX_BASE_URL", localProperties["FINEX_BASE_URL"].toString())
-        buildConfigField("String", "BLOG_BASE_URL", localProperties["BLOG_BASE_URL"].toString())
         buildConfigField("String", "BLOG_API_KEY", localProperties["BLOG_API_KEY"].toString())
     }
 
@@ -54,6 +51,10 @@ android {
 }
 
 dependencies {
+
+    // Modules
+    implementation(project(":network"))
+    implementation(project(":database"))
 
     // CircleIndicator
     implementation(libs.circleindicator)

@@ -14,16 +14,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentMyAssetsBinding
-import io.github.mamedovilkin.finexetf.model.view.Asset
-import io.github.mamedovilkin.finexetf.model.network.finex.ListFund
-import io.github.mamedovilkin.finexetf.model.database.Type
+import io.github.mamedovilkin.finexetf.model.Asset
+import io.github.mamedovilkin.network.model.finex.ListFund
+import io.github.mamedovilkin.database.util.Type
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.isNetworkAvailable
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.view.adapter.myassets.AssetRecyclerViewAdapter
 import io.github.mamedovilkin.finexetf.view.adapter.fund.OnClickListener
 import io.github.mamedovilkin.finexetf.view.fragment.fund.ChooseFundDialogFragment
-import io.github.mamedovilkin.finexetf.viewmodel.MyAssetsViewModel
+import io.github.mamedovilkin.finexetf.viewmodel.myassets.MyAssetsViewModel
 
 @AndroidEntryPoint
 class MyAssetsFragment : Fragment(), OnClickListener {

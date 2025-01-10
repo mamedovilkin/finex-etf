@@ -1,17 +1,17 @@
 package io.github.mamedovilkin.finexetf.di
 
 import dagger.hilt.components.SingletonComponent
-import io.github.mamedovilkin.finexetf.network.cbr.CBRInstance
-import io.github.mamedovilkin.finexetf.network.cbr.CBRService
-import io.github.mamedovilkin.finexetf.network.finex.FinExInstance
-import io.github.mamedovilkin.finexetf.network.finex.FinExService
-import io.github.mamedovilkin.finexetf.network.blog.BlogService
-import io.github.mamedovilkin.finexetf.network.blog.BlogInstance
 import retrofit2.Retrofit
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
 import dagger.hilt.InstallIn
+import io.github.mamedovilkin.network.api.blog.BlogInstance
+import io.github.mamedovilkin.network.api.blog.BlogService
+import io.github.mamedovilkin.network.api.cbr.CBRInstance
+import io.github.mamedovilkin.network.api.cbr.CBRService
+import io.github.mamedovilkin.network.api.finex.FinExInstance
+import io.github.mamedovilkin.network.api.finex.FinExService
 import javax.inject.Singleton
 
 @Module

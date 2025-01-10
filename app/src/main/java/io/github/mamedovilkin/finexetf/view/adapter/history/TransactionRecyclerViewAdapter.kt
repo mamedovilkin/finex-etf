@@ -9,10 +9,10 @@ import coil3.svg.SvgDecoder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.TransactionRecyclerViewItemBinding
-import io.github.mamedovilkin.finexetf.database.Converter
+import io.github.mamedovilkin.database.util.Converter
 import io.github.mamedovilkin.finexetf.di.GlideApp
-import io.github.mamedovilkin.finexetf.model.database.Asset
-import io.github.mamedovilkin.finexetf.model.database.Type
+import io.github.mamedovilkin.database.entity.Asset
+import io.github.mamedovilkin.database.util.Type
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import java.text.SimpleDateFormat

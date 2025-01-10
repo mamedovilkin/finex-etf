@@ -1,11 +1,11 @@
 package io.github.mamedovilkin.finexetf.repository
 
 import androidx.lifecycle.LiveData
-import io.github.mamedovilkin.finexetf.model.database.Asset
-import io.github.mamedovilkin.finexetf.model.network.finex.Fund
-import io.github.mamedovilkin.finexetf.model.network.finex.ListFund
-import io.github.mamedovilkin.finexetf.model.network.blog.Posts
-import io.github.mamedovilkin.finexetf.model.network.cbr.ValCurs
+import io.github.mamedovilkin.database.entity.Asset
+import io.github.mamedovilkin.network.model.finex.Fund
+import io.github.mamedovilkin.network.model.finex.ListFund
+import io.github.mamedovilkin.network.model.blog.Posts
+import io.github.mamedovilkin.network.model.cbr.ValCurs
 import retrofit2.Response
 import javax.inject.Inject
 

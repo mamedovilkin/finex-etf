@@ -10,7 +10,7 @@ import androidx.preference.PreferenceFragmentCompat
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.di.GlideApp
-import io.github.mamedovilkin.finexetf.viewmodel.SettingsViewModel
+import io.github.mamedovilkin.finexetf.viewmodel.settings.SettingsViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
