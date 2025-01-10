@@ -14,7 +14,7 @@ import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.AssetRecyclerViewItemBinding
 import io.github.mamedovilkin.finexetf.databinding.AssetsRecyclerViewHeaderBinding
 import io.github.mamedovilkin.finexetf.di.GlideApp
-import io.github.mamedovilkin.finexetf.model.view.Asset
+import io.github.mamedovilkin.finexetf.model.Asset
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.view.adapter.fund.OnClickListener

@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.network.network.blog
+package io.github.mamedovilkin.network.api.blog
 
 import io.github.mamedovilkin.network.model.blog.Posts
 import retrofit2.Response

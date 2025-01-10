@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentHistoryBinding
-import io.github.mamedovilkin.finexetf.model.database.Asset
+import io.github.mamedovilkin.database.entity.Asset
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.isNetworkAvailable
 import io.github.mamedovilkin.finexetf.util.show

@@ -7,9 +7,9 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.mamedovilkin.finexetf.repository.UseCase
-import io.github.mamedovilkin.finexetf.database.Converter
-import io.github.mamedovilkin.finexetf.model.database.Asset
-import io.github.mamedovilkin.finexetf.model.database.Type
+import io.github.mamedovilkin.database.util.Converter
+import io.github.mamedovilkin.database.entity.Asset
+import io.github.mamedovilkin.database.util.Type
 import io.github.mamedovilkin.network.model.finex.Fund
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat

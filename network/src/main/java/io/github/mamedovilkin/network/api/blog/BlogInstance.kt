@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.network.network.blog
+package io.github.mamedovilkin.network.api.blog
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

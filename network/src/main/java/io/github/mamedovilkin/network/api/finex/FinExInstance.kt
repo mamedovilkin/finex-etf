@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.network.network.finex
+package io.github.mamedovilkin.network.api.finex
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

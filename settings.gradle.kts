@@ -23,3 +23,4 @@ dependencyResolutionManagement {
 rootProject.name = "FinEx ETF"
 include(":app")
 include(":network")
+include(":database")

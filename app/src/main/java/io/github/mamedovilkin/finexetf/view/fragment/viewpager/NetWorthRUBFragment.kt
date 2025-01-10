@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentNetWorthRubBinding
-import io.github.mamedovilkin.finexetf.model.view.Currency
+import io.github.mamedovilkin.finexetf.model.Currency
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.viewmodel.myassets.NetWorthViewModel

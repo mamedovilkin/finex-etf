@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.finexetf.model.database
+package io.github.mamedovilkin.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

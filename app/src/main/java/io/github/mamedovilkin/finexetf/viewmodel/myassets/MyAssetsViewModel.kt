@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.mamedovilkin.finexetf.model.view.Asset
+import io.github.mamedovilkin.finexetf.model.Asset
 import io.github.mamedovilkin.finexetf.repository.UseCase
-import io.github.mamedovilkin.finexetf.database.Converter
-import io.github.mamedovilkin.finexetf.model.database.Type
+import io.github.mamedovilkin.database.util.Converter
+import io.github.mamedovilkin.database.util.Type
 import io.github.mamedovilkin.network.model.finex.ListFund
 import java.util.Date
 import javax.inject.Inject

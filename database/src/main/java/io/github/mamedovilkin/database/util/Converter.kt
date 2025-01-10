@@ -1,7 +1,6 @@
-package io.github.mamedovilkin.finexetf.database
+package io.github.mamedovilkin.database.util
 
 import androidx.room.TypeConverter
-import io.github.mamedovilkin.finexetf.model.database.Type
 
 class Converter {
 

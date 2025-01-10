@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.finexetf.model.view
+package io.github.mamedovilkin.finexetf.model
 
 data class Asset(
     val ticker: String,

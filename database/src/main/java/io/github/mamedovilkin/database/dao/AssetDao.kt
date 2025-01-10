@@ -1,11 +1,11 @@
-package io.github.mamedovilkin.finexetf.database
+package io.github.mamedovilkin.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Delete
 import androidx.lifecycle.LiveData
-import io.github.mamedovilkin.finexetf.model.database.Asset
+import io.github.mamedovilkin.database.entity.Asset
 
 @Dao
 interface AssetDao {

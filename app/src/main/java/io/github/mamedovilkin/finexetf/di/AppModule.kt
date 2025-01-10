@@ -5,14 +5,14 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import javax.inject.Singleton
 import dagger.hilt.components.SingletonComponent
+import io.github.mamedovilkin.database.database.AssetDatabase
 import io.github.mamedovilkin.finexetf.repository.DatabaseRepository
 import io.github.mamedovilkin.finexetf.repository.NetworkRepository
 import io.github.mamedovilkin.finexetf.repository.Repository
 import io.github.mamedovilkin.finexetf.repository.UseCase
-import io.github.mamedovilkin.finexetf.database.AssetDatabase
-import io.github.mamedovilkin.network.network.blog.BlogService
-import io.github.mamedovilkin.network.network.cbr.CBRService
-import io.github.mamedovilkin.network.network.finex.FinExService
+import io.github.mamedovilkin.network.api.blog.BlogService
+import io.github.mamedovilkin.network.api.cbr.CBRService
+import io.github.mamedovilkin.network.api.finex.FinExService
 import javax.inject.Named
 
 @Module

@@ -52,8 +52,9 @@ android {
 
 dependencies {
 
-    // Network Module
+    // Modules
     implementation(project(":network"))
+    implementation(project(":database"))
 
     // CircleIndicator
     implementation(libs.circleindicator)

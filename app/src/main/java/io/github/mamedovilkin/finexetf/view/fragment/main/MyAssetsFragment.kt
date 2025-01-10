@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentMyAssetsBinding
-import io.github.mamedovilkin.finexetf.model.view.Asset
+import io.github.mamedovilkin.finexetf.model.Asset
 import io.github.mamedovilkin.network.model.finex.ListFund
-import io.github.mamedovilkin.finexetf.model.database.Type
+import io.github.mamedovilkin.database.util.Type
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.isNetworkAvailable
 import io.github.mamedovilkin.finexetf.util.show

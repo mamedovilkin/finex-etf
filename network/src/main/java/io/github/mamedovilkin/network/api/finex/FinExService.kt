@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.network.network.finex
+package io.github.mamedovilkin.network.api.finex
 
 import io.github.mamedovilkin.network.model.finex.Fund
 import io.github.mamedovilkin.network.model.finex.ListFund

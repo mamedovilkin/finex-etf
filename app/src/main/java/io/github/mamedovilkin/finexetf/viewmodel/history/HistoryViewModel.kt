@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.mamedovilkin.finexetf.repository.UseCase
-import io.github.mamedovilkin.finexetf.model.database.Asset
+import io.github.mamedovilkin.database.entity.Asset
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

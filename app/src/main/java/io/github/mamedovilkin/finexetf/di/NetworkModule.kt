@@ -6,12 +6,12 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Named
 import dagger.hilt.InstallIn
-import io.github.mamedovilkin.network.network.blog.BlogInstance
-import io.github.mamedovilkin.network.network.blog.BlogService
-import io.github.mamedovilkin.network.network.cbr.CBRInstance
-import io.github.mamedovilkin.network.network.cbr.CBRService
-import io.github.mamedovilkin.network.network.finex.FinExInstance
-import io.github.mamedovilkin.network.network.finex.FinExService
+import io.github.mamedovilkin.network.api.blog.BlogInstance
+import io.github.mamedovilkin.network.api.blog.BlogService
+import io.github.mamedovilkin.network.api.cbr.CBRInstance
+import io.github.mamedovilkin.network.api.cbr.CBRService
+import io.github.mamedovilkin.network.api.finex.FinExInstance
+import io.github.mamedovilkin.network.api.finex.FinExService
 import javax.inject.Singleton
 
 @Module

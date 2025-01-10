@@ -1,7 +1,7 @@
 package io.github.mamedovilkin.finexetf.repository
 
 import androidx.lifecycle.LiveData
-import io.github.mamedovilkin.finexetf.model.database.Asset
+import io.github.mamedovilkin.database.entity.Asset
 import io.github.mamedovilkin.network.model.finex.Fund
 import io.github.mamedovilkin.network.model.finex.ListFund
 import io.github.mamedovilkin.network.model.blog.Posts

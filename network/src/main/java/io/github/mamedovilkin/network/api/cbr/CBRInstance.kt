@@ -1,4 +1,4 @@
-package io.github.mamedovilkin.network.network.cbr
+package io.github.mamedovilkin.network.api.cbr
 
 import io.github.mamedovilkin.network.BuildConfig
 import retrofit2.Retrofit
