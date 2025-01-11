@@ -13,8 +13,8 @@
             app:iconSpaceReserved="false" />
 
         <Preference
-            app:key="about_ilkin_mamedov"
-            app:title="@string/about_ilkin_mamedov"
+            app:key="about_developer"
+            app:title="@string/about_developer"
             app:iconSpaceReserved="false" />
 
         <Preference

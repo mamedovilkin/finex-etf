@@ -11,6 +11,7 @@ data class Asset(
     val icon: String,
     val name: String,
     val originalName: String,
+    val isActive: Boolean,
     val navPrice: Double,
     val currencyNav: String,
     var quantity: Long,

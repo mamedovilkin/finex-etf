@@ -10,6 +10,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.ChooseFundRecyclerViewItemBinding
 import io.github.mamedovilkin.finexetf.di.GlideApp
+import io.github.mamedovilkin.finexetf.util.hide
+import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.network.model.finex.ListFund
 
 class ChooseFundRecyclerViewAdapter(var funds: List<ListFund>) : RecyclerView.Adapter<ChooseFundRecyclerViewAdapter.FundRecyclerViewViewHolder>() {
@@ -60,6 +62,12 @@ class ChooseFundRecyclerViewAdapter(var funds: List<ListFund>) : RecyclerView.Ad
 
                 nameTextView.text = fund.originalName.trim()
                 tickerTextView.text = fund.ticker
+
+                if (fund.isActive) {
+                    closedTextView.hide()
+                } else {
+                    closedTextView.show()
+                }
             }
         }
     }
