@@ -50,7 +50,12 @@
     <string name="feedback_summary">Report technical issues or suggest new features</string>
     <string name="subject">Feedback FinEx ETF App</string>
     <string name="no_internet_connection">No internet connection</string>
-    <string name="backup_data">Backup data</string>
-    <string name="backup_data_summary">Require sign in to your Google Account</string>
     <string name="closed">Closed</string>
+    <string name="account">Account</string>
+    <string name="account_summary">Sign in to your Google Account</string>
+    <string name="sign_out">Sign out</string>
+    <string name="sign_out_summary">Do you want to sign out of your Google Account?</string>
+    <string name="yes">Yes</string>
+    <string name="backup_data">Backup data</string>
+    <string name="synced">Synced</string>
 </resources>

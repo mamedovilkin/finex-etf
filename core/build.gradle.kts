@@ -37,6 +37,9 @@ android {
 
 dependencies {
 
+    // Modules
+    implementation(project(":database"))
+
     // Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.android)
 
@@ -47,6 +50,7 @@ dependencies {
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+    implementation(libs.firebase.database)
     implementation(libs.firebase.auth)
     implementation(libs.play.services.auth)
 

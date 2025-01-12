@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -40,24 +41,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
 
-        val aboutFinExETF = findPreference<Preference>("about_finex_etf")
-        val aboutDeveloper = findPreference<Preference>("about_developer")
-        val version = findPreference<Preference>("version")
         val clearImageCache = findPreference<Preference>("clear_image_cache")
         val deleteAllData = findPreference<Preference>("delete_all_data")
         val feedback = findPreference<Preference>("feedback")
-
-        aboutFinExETF?.setOnPreferenceClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://finexetf.com/")))
-            true
-        }
-
-        aboutDeveloper?.setOnPreferenceClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://mamedovilkin.github.io/")))
-            true
-        }
-
-        version?.title = "${resources.getString(R.string.version)} ${BuildConfig.VERSION_NAME}"
+        val aboutFinExETF = findPreference<Preference>("about_finex_etf")
+        val aboutDeveloper = findPreference<Preference>("about_developer")
+        val version = findPreference<Preference>("version")
 
         val imageCacheDir = File(context?.cacheDir, "image_manager_disk_cache")
         val cacheSize = getCacheSize(imageCacheDir)
@@ -77,7 +66,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         deleteAllData?.setOnPreferenceClickListener {
             viewModel.deleteAllAssets()
-            Toast.makeText(context,  context?.resources?.getString(R.string.data_has_been_deleted), Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context?.resources?.getString(R.string.data_has_been_deleted), Toast.LENGTH_LONG).show()
             true
         }
 
@@ -86,18 +75,28 @@ class SettingsFragment : PreferenceFragmentCompat() {
             startActivity(Intent.createChooser(Intent(Intent.ACTION_SENDTO, uri), context?.resources?.getString(R.string.send_feedback)))
             true
         }
+
+
+        aboutFinExETF?.setOnPreferenceClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://finexetf.com/")))
+            true
+        }
+
+        aboutDeveloper?.setOnPreferenceClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://mamedovilkin.github.io/")))
+            true
+        }
+
+        version?.title = "${resources.getString(R.string.version)} ${BuildConfig.VERSION_NAME}"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
+        val account = findPreference<Preference>("account")
         val backupData = findPreference<Preference>("backup_data")
 
-        viewModel.getCurrentUser().observe(viewLifecycleOwner) { user ->
-            updatePreference(backupData, user)
-        }
-
         viewModel.user.observe(viewLifecycleOwner) { user ->
-            updatePreference(backupData, user)
+            updatePreference(account, backupData, user)
         }
 
         viewModel.error.observe(viewLifecycleOwner) { error ->
@@ -106,34 +105,62 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
+        viewModel.getCurrentUser().observe(viewLifecycleOwner) { user ->
+            updatePreference(account, backupData, user)
+        }
+
         val signInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
             try {
-                val account = task.getResult(ApiException::class.java)
-                account?.idToken?.let { viewModel.signInWithGoogle(it) }
+                val googleAccount = task.getResult(ApiException::class.java)
+                googleAccount?.idToken?.let { viewModel.signInWithGoogle(it) }
             } catch (e: ApiException) {
                 Log.e("SettingsFragment", e.message.toString())
             }
         }
 
-        backupData?.setOnPreferenceClickListener {
+        account?.setOnPreferenceClickListener {
             if (user == null) {
                 signInLauncher.launch(googleSignInClient.signInIntent)
             } else {
-                viewModel.signOut()
+                val alertDialog = AlertDialog.Builder(inflater.context).create()
+                alertDialog.setTitle(resources.getString(R.string.sign_out))
+                alertDialog.setMessage(resources.getString(R.string.sign_out_summary))
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, resources.getString(R.string.cancel), { dialog, _ -> dialog.dismiss() })
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, resources.getString(R.string.yes), { dialog, _ ->
+                    user = null
+                    viewModel.signOut()
+                })
+                alertDialog.show()
             }
+            true
+        }
+
+        backupData?.setOnPreferenceClickListener {
+            if (user != null) {
+                viewModel.assets.observe(viewLifecycleOwner) {
+                    if (it.isNotEmpty()) {
+                        viewModel.backupAssets(user!!.uid, it)
+                    } else {
+                        viewModel.getBackup(user!!.uid)
+                    }
+                }
+            }
+            Toast.makeText(context, context?.resources?.getString(R.string.synced), Toast.LENGTH_LONG).show()
             true
         }
 
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    private fun updatePreference(preference: Preference?, user: FirebaseUser?) {
+    private fun updatePreference(account: Preference?, backupData: Preference?, user: FirebaseUser?) {
         if (user != null) {
             this.user = user
-            preference?.summary = "Signed in as ${user.displayName}"
+            account?.summary = "Signed in as ${user.displayName}"
+            backupData?.isEnabled = true
         } else {
-            preference?.summary = resources.getString(R.string.backup_data_summary)
+            account?.summary = resources.getString(R.string.account_summary)
+            backupData?.isEnabled = false
         }
     }
 }

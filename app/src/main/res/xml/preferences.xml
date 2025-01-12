@@ -4,29 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:title="@string/about"
-        app:iconSpaceReserved="false">
-
-        <Preference
-            app:key="about_finex_etf"
-            app:title="@string/about_finex_etf"
-            app:iconSpaceReserved="false" />
-
-        <Preference
-            app:key="about_developer"
-            app:title="@string/about_developer"
-            app:iconSpaceReserved="false" />
-
-        <Preference
-            app:key="version"
-            app:title="@string/version"
-            app:iconSpaceReserved="false" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         app:title="@string/settings"
         app:iconSpaceReserved="false">
+
+        <Preference
+            app:key="account"
+            app:title="@string/account"
+            app:summary="@string/account_summary"
+            app:iconSpaceReserved="false" />
 
         <Preference
             app:key="backup_data"
@@ -59,6 +44,27 @@
             app:key="feedback"
             app:title="@string/send_feedback"
             app:summary="@string/feedback_summary"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/about"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            app:key="about_finex_etf"
+            app:title="@string/about_finex_etf"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            app:key="about_developer"
+            app:title="@string/about_developer"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            app:key="version"
+            app:title="@string/version"
             app:iconSpaceReserved="false" />
 
     </PreferenceCategory>

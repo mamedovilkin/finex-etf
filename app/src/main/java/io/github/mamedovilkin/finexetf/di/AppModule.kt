@@ -1,6 +1,7 @@
 package io.github.mamedovilkin.finexetf.di
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,8 +40,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCoreRepository(firebaseAuth: FirebaseAuth): CoreRepository {
-        return CoreRepository(firebaseAuth)
+    fun provideCoreRepository(firebaseAuth: FirebaseAuth, firebaseDatabase: FirebaseDatabase): CoreRepository {
+        return CoreRepository(firebaseAuth, firebaseDatabase)
     }
 
     @Provides

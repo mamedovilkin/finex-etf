@@ -53,4 +53,12 @@ class UseCase @Inject constructor(
     fun getCurrentUser(): FirebaseUser? = repository.getCurrentUser()
 
     fun signOut() = repository.signOut()
+
+    fun backupAsset(uid: String, asset: io.github.mamedovilkin.core.model.Asset) {
+        repository.backupAsset(uid, asset)
+    }
+
+    fun getBackup(uid: String): LiveData<List<io.github.mamedovilkin.core.model.Asset>> {
+        return repository.getBackup(uid)
+    }
 }

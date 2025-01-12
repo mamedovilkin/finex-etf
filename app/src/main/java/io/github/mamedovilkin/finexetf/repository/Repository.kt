@@ -58,4 +58,12 @@ class Repository @Inject constructor(
     fun getCurrentUser(): FirebaseUser? = coreRepository.getCurrentUser()
 
     fun signOut() = coreRepository.signOut()
+
+    fun backupAsset(uid: String, asset: io.github.mamedovilkin.core.model.Asset) {
+        coreRepository.backupAsset(uid, asset)
+    }
+
+    fun getBackup(uid: String): LiveData<List<io.github.mamedovilkin.core.model.Asset>> {
+        return coreRepository.getBackup(uid)
+    }
 }
