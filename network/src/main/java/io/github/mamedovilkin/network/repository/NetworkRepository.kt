@@ -1,10 +1,10 @@
-package io.github.mamedovilkin.finexetf.repository
+package io.github.mamedovilkin.network.repository
 
 import io.github.mamedovilkin.network.model.finex.Fund
 import io.github.mamedovilkin.network.model.finex.ListFund
 import io.github.mamedovilkin.network.model.blog.Posts
 import io.github.mamedovilkin.network.model.cbr.ValCurs
-import io.github.mamedovilkin.finexetf.BuildConfig
+import io.github.mamedovilkin.network.BuildConfig
 import io.github.mamedovilkin.network.api.blog.BlogService
 import io.github.mamedovilkin.network.api.cbr.CBRService
 import io.github.mamedovilkin.network.api.finex.FinExService

@@ -7,4 +7,5 @@ data class ListFund(
     @SerializedName("icon_svg") val icon: String,
     @SerializedName("name") val name: String,
     @SerializedName("original_name") val originalName: String,
+    @SerializedName("is_active") val isActive: Boolean,
 )

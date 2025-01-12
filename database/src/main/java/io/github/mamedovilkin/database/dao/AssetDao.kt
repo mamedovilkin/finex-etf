@@ -4,13 +4,14 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Delete
+import androidx.room.OnConflictStrategy
 import androidx.lifecycle.LiveData
 import io.github.mamedovilkin.database.entity.Asset
 
 @Dao
 interface AssetDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(asset: Asset)
 
     @Delete

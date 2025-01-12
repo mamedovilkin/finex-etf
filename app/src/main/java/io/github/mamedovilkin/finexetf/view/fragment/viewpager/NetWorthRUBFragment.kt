@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentNetWorthRubBinding
@@ -21,12 +21,10 @@ class NetWorthRUBFragment : Fragment() {
     private var _binding: FragmentNetWorthRubBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentNetWorthRubBinding must not be null")
-    private lateinit var viewModel: NetWorthViewModel
+    private val viewModel: NetWorthViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentNetWorthRubBinding.inflate(inflater)
-
-        viewModel =  ViewModelProvider(requireActivity())[NetWorthViewModel::class]
 
         return binding.root
     }

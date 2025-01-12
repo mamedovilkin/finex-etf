@@ -74,7 +74,8 @@ class MyAssetsViewModel @Inject constructor(
                     var icon = ""
                     var name = ""
                     var originalName = ""
-                    var navPrice = 0.0
+                    var isActive = false
+                    val navPrice = 0.0
                     var totalQuantity: Long = 0
                     var totalPrice = 0.0
                     var totalNavPrice = 0.0
@@ -83,6 +84,7 @@ class MyAssetsViewModel @Inject constructor(
                         if (icon.isEmpty()) icon = asset.icon
                         if (name.isEmpty()) name = asset.name
                         if (originalName.isEmpty()) originalName = asset.originalName
+                        if (!isActive) isActive = asset.isActive
                         val navValue = when (asset.currencyNav) {
                             "USD" -> {
                                 asset.navPrice * exchangeRateUSD
@@ -105,7 +107,7 @@ class MyAssetsViewModel @Inject constructor(
                     }
 
                     if (totalQuantity != 0L) {
-                        Asset(ticker, icon, name, originalName, navPrice, totalQuantity, totalPrice, totalNavPrice)
+                        Asset(ticker, icon, name, originalName, isActive, navPrice, totalQuantity, totalPrice, totalNavPrice)
                     } else {
                         null
                     }

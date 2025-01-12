@@ -26,7 +26,7 @@ class ChooseFundDialogFragment(private val funds: List<ListFund>, private val ty
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentChooseFundDialogBinding must not be null")
 
-    private lateinit var adapter: ChooseFundRecyclerViewAdapter
+    private var adapter: ChooseFundRecyclerViewAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentChooseFundDialogBinding.inflate(inflater)
@@ -40,7 +40,7 @@ class ChooseFundDialogFragment(private val funds: List<ListFund>, private val ty
             fundsRecyclerView.setHasFixedSize(true)
             fundsRecyclerView.layoutManager = LinearLayoutManager(context)
             adapter = ChooseFundRecyclerViewAdapter(funds)
-            adapter.onClickListener = this@ChooseFundDialogFragment
+            adapter?.onClickListener = this@ChooseFundDialogFragment
             fundsRecyclerView.adapter = adapter
         }
     }
@@ -67,8 +67,8 @@ class ChooseFundDialogFragment(private val funds: List<ListFund>, private val ty
             }
 
             if (filteredFunds.isNotEmpty()) {
-                adapter.funds = filteredFunds
-                adapter.notifyDataSetChanged()
+                adapter?.funds = filteredFunds
+                adapter?.notifyDataSetChanged()
             }
         }
 

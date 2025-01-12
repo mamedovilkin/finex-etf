@@ -4,6 +4,8 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -23,6 +25,7 @@ android {
         buildConfigField("String", "CBR_BASE_URL", localProperties["CBR_BASE_URL"].toString())
         buildConfigField("String", "FINEX_BASE_URL", localProperties["FINEX_BASE_URL"].toString())
         buildConfigField("String", "BLOG_BASE_URL", localProperties["BLOG_BASE_URL"].toString())
+        buildConfigField("String", "BLOG_API_KEY", localProperties["BLOG_API_KEY"].toString())
     }
 
     buildTypes {
@@ -50,6 +53,10 @@ dependencies {
 
     // Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.android)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
     // Retrofit
     implementation(libs.retrofit)
