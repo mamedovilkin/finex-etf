@@ -55,6 +55,7 @@
     <string name="account_summary">Sign in to your Google Account</string>
     <string name="sign_out">Sign out</string>
     <string name="sign_out_summary">Do you want to sign out of your Google Account?</string>
+    <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="backup_data">Backup data</string>
     <string name="synced">Synced</string>

@@ -1,72 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
-        app:title="@string/settings"
-        app:iconSpaceReserved="false">
+    <Preference
+        app:key="account"
+        app:title="@string/account"
+        app:summary="@string/account_summary"
+        app:iconSpaceReserved="false" />
 
-        <Preference
-            app:key="account"
-            app:title="@string/account"
-            app:summary="@string/account_summary"
-            app:iconSpaceReserved="false" />
+    <Preference
+        app:key="backup_data"
+        app:title="@string/backup_data"
+        app:iconSpaceReserved="false" />
 
-        <Preference
-            app:key="backup_data"
-            app:title="@string/backup_data"
-            app:iconSpaceReserved="false" />
+    <CheckBoxPreference
+        app:key="show_exchange_rates"
+        app:title="@string/show_exchange_rates"
+        app:iconSpaceReserved="false" />
 
-        <CheckBoxPreference
-            app:key="show_exchange_rates"
-            app:title="@string/show_exchange_rates"
-            app:iconSpaceReserved="false" />
+    <Preference
+        app:key="clear_image_cache"
+        app:title="@string/clear_image_cache"
+        app:iconSpaceReserved="false" />
 
-        <Preference
-            app:key="clear_image_cache"
-            app:title="@string/clear_image_cache"
-            app:iconSpaceReserved="false" />
+    <Preference
+        app:key="delete_all_data"
+        app:title="@string/delete_all_data"
+        app:summary="@string/delete_all_data_summary"
+        app:iconSpaceReserved="false" />
 
-        <Preference
-            app:key="delete_all_data"
-            app:title="@string/delete_all_data"
-            app:summary="@string/delete_all_data_summary"
-            app:iconSpaceReserved="false" />
+    <Preference
+        app:key="feedback"
+        app:title="@string/send_feedback"
+        app:summary="@string/feedback_summary"
+        app:iconSpaceReserved="false" />
 
-    </PreferenceCategory>
+    <Preference
+        app:key="about_finex_etf"
+        app:title="@string/about_finex_etf"
+        app:iconSpaceReserved="false" />
 
-    <PreferenceCategory
-        app:title="@string/feedback"
-        app:iconSpaceReserved="false">
+    <Preference
+        app:key="about_developer"
+        app:title="@string/about_developer"
+        app:iconSpaceReserved="false" />
 
-        <Preference
-            app:key="feedback"
-            app:title="@string/send_feedback"
-            app:summary="@string/feedback_summary"
-            app:iconSpaceReserved="false" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/about"
-        app:iconSpaceReserved="false">
-
-        <Preference
-            app:key="about_finex_etf"
-            app:title="@string/about_finex_etf"
-            app:iconSpaceReserved="false" />
-
-        <Preference
-            app:key="about_developer"
-            app:title="@string/about_developer"
-            app:iconSpaceReserved="false" />
-
-        <Preference
-            app:key="version"
-            app:title="@string/version"
-            app:iconSpaceReserved="false" />
-
-    </PreferenceCategory>
+    <Preference
+        app:key="version"
+        app:title="@string/version"
+        app:iconSpaceReserved="false" />
 
 </androidx.preference.PreferenceScreen>

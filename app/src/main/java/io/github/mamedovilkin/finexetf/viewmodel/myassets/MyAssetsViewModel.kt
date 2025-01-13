@@ -19,7 +19,7 @@ class MyAssetsViewModel @Inject constructor(
     private val useCase: UseCase
 ) : ViewModel() {
 
-    val funds: LiveData<List<ListFund>> = liveData { useCase.getFunds().body()?.let { emit(it) } }
+    val funds: LiveData<List<ListFund>> = useCase.funds
 
     fun getExchangeRate(): LiveData<List<Double>> {
         return liveData {

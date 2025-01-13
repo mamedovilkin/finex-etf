@@ -1,6 +1,7 @@
 package io.github.mamedovilkin.finexetf.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import com.google.firebase.auth.FirebaseUser
 import io.github.mamedovilkin.core.repository.CoreRepository
 import io.github.mamedovilkin.database.entity.Asset
@@ -35,9 +36,7 @@ class Repository @Inject constructor(
         return databaseRepository.getAssets()
     }
 
-    suspend fun getFunds(): Response<List<ListFund>> {
-        return networkRepository.getFunds()
-    }
+    val funds: LiveData<List<ListFund>> = networkRepository.cachedFunds.asLiveData()
 
     suspend fun getFund(ticker: String): Response<Fund> {
         return networkRepository.getFund(ticker)

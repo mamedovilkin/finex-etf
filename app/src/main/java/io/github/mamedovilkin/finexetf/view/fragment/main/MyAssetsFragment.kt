@@ -103,7 +103,7 @@ class MyAssetsFragment : Fragment(), OnClickListener {
                 if (assets.isNotEmpty() && isNetworkAvailable(binding.root.context)) {
                     val availableListFunds = mutableListOf<ListFund>()
                     assets.forEach {
-                        availableListFunds.add(ListFund(it.ticker, it.icon, it.name, it.originalName, it.isActive))
+                        availableListFunds.add(ListFund(0, it.ticker, it.icon, it.name, it.originalName, it.isActive))
                     }
                     ChooseFundDialogFragment(availableListFunds, Type.SELL).show(parentFragmentManager, "ChooseFundDialogFragment")
                 } else {

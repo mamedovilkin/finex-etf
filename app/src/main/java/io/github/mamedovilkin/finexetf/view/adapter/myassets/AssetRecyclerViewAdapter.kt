@@ -2,6 +2,7 @@ package io.github.mamedovilkin.finexetf.view.adapter.myassets
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -115,7 +116,7 @@ class AssetRecyclerViewAdapter(
                             .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
                     }
                     "FXRE" -> {
-                        imageView.setImageDrawable(root.context.resources.getDrawable(R.drawable.fxre, null))
+                        imageView.setImageDrawable(ResourcesCompat.getDrawable(root.context.resources, R.drawable.fxre, null))
                     }
                     else -> {
                         imageView.load(asset.icon) {

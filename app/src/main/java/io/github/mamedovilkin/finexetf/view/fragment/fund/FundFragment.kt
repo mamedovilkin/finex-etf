@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import coil3.load
 import coil3.svg.SvgDecoder
@@ -53,7 +54,7 @@ class FundFragment : Fragment() {
                     }
 
                     "FXRE" -> {
-                        imageView.setImageDrawable(resources.getDrawable(R.drawable.fxre, null))
+                        imageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.fxre, null))
                     }
 
                     else -> {
@@ -86,7 +87,7 @@ class FundFragment : Fragment() {
                 }
                 textView.text = fund.text.substringBefore("[!")
                 progressBar.hide()
-                linearLayout.show()
+                scrollView.show()
             }
         }
     }

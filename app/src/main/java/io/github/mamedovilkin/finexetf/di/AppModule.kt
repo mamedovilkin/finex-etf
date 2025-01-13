@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import javax.inject.Singleton
 import dagger.hilt.components.SingletonComponent
+import io.github.mamedovilkin.network.dao.FundDao
 import io.github.mamedovilkin.core.repository.CoreRepository
 import io.github.mamedovilkin.database.database.AssetDatabase
 import io.github.mamedovilkin.database.repository.DatabaseRepository
@@ -28,8 +29,9 @@ object AppModule {
         @Named("FinEx") finExService: FinExService,
         @Named("CBR") cbrService: CBRService,
         @Named("Blog") blogService: BlogService,
+        fundDao: FundDao,
     ): NetworkRepository {
-        return NetworkRepository(finExService, cbrService, blogService)
+        return NetworkRepository(finExService, cbrService, blogService, fundDao)
     }
 
     @Provides

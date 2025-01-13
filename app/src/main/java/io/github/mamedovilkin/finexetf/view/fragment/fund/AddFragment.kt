@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import coil3.load
@@ -73,7 +74,7 @@ class AddFragment : Fragment() {
                                     .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
                             }
                             "FXRE" -> {
-                                imageView.setImageDrawable(resources.getDrawable(R.drawable.fxre, null))
+                                imageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.fxre, null))
                             }
                             else -> {
                                 imageView.load(fund.icon) {
@@ -84,8 +85,9 @@ class AddFragment : Fragment() {
 
                         nameTextView.text = fund.originalName.trim()
                         tickerTextView.text = fund.ticker
-                        progressBar.visibility = View.GONE
-                        linearLayout.visibility = View.VISIBLE
+                        progressBar.hide()
+                        scrollView.show()
+                        linearLayout.show()
 
                         if (Converter.toType(type ?: Converter.fromType(Type.PURCHASE)) == Type.PURCHASE) {
                             dateTimeTextInputLayout.hint = resources.getString(R.string.date_time_purchase)

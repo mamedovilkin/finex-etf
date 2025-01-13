@@ -126,7 +126,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 val alertDialog = AlertDialog.Builder(inflater.context).create()
                 alertDialog.setTitle(resources.getString(R.string.sign_out))
                 alertDialog.setMessage(resources.getString(R.string.sign_out_summary))
-                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, resources.getString(R.string.cancel), { dialog, _ -> dialog.dismiss() })
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, resources.getString(R.string.no), { dialog, _ -> dialog.dismiss() })
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, resources.getString(R.string.yes), { dialog, _ ->
                     user = null
                     viewModel.signOut()

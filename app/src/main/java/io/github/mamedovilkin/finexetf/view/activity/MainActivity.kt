@@ -2,7 +2,6 @@ package io.github.mamedovilkin.finexetf.view.activity
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -24,7 +23,7 @@ import io.github.mamedovilkin.finexetf.databinding.ActivityMainBinding
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    val sharedPreferences by lazy {
+    private val sharedPreferences by lazy {
         getSharedPreferences(
             "${BuildConfig.APPLICATION_ID}_sharedPreferences",
             Context.MODE_PRIVATE
@@ -39,8 +38,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 

@@ -2,6 +2,7 @@ package io.github.mamedovilkin.finexetf.view.adapter.fund
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
@@ -51,7 +52,7 @@ class ChooseFundRecyclerViewAdapter(var funds: List<ListFund>) : RecyclerView.Ad
                             .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
                     }
                     "FXRE" -> {
-                        imageView.setImageDrawable(root.context.resources.getDrawable(R.drawable.fxre, null))
+                        imageView.setImageDrawable(ResourcesCompat.getDrawable(root.context.resources, R.drawable.fxre, null))
                     }
                     else -> {
                         imageView.load(fund.icon) {
