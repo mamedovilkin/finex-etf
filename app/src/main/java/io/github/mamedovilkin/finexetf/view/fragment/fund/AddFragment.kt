@@ -83,7 +83,11 @@ class AddFragment : Fragment() {
                             }
                         }
 
-                        nameTextView.text = fund.originalName.trim()
+                        if (Locale.getDefault().language == "ru") {
+                            nameTextView.text = fund.name.trim()
+                        } else {
+                            nameTextView.text = fund.originalName.trim()
+                        }
                         tickerTextView.text = fund.ticker
                         progressBar.hide()
                         scrollView.show()
@@ -98,7 +102,7 @@ class AddFragment : Fragment() {
                         } else {
                             viewModel.getFundQuantity(ticker ?: "FXUS").observe(viewLifecycleOwner) {
                                 totalQuantity = it
-                                quantityTextInputLayout.helperText = "You have $it funds"
+                                quantityTextInputLayout.helperText = resources.getString(R.string.you_have, it)
                             }
                             dateTimeTextInputLayout.hint = resources.getString(R.string.date_time_sell)
                             priceTextInputLayout.hint = resources.getString(R.string.price_sell)
@@ -121,20 +125,21 @@ class AddFragment : Fragment() {
                                 val quantity = quantityInt.toString().toLong()
                                 val price = priceDouble.toString().toDouble()
                                 try {
-                                    val datetime = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT).parse(datetimeString.toString()).time
-                                    if (Converter.toType(type ?: Converter.fromType(Type.PURCHASE)) == Type.SELL && quantity > totalQuantity) {
-                                        Toast.makeText(context, resources.getString(R.string.you_don_t_have_enough_funds), Toast.LENGTH_LONG).show()
-                                    } else {
-                                        viewModel.insert(Asset(id, fund.ticker, fund.icon, fund.name, fund.originalName, fund.isActive, fund.nav.navPerShare, fund.nav.currencyNav, quantity, datetime, price, type ?: Converter.fromType(Type.PURCHASE)))
-                                        findNavController().popBackStack()
-
-                                        if (Converter.toType(type ?: Converter.fromType(Type.PURCHASE)) == Type.PURCHASE) {
-                                            Toast.makeText(context, resources.getText(R.string.purchase_has_been_added), Toast.LENGTH_LONG).show()
+                                    val datetime = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT).parse(datetimeString.toString())?.time
+                                    if (datetime != null) {
+                                        if (Converter.toType(type ?: Converter.fromType(Type.PURCHASE)) == Type.SELL && quantity > totalQuantity) {
+                                            Toast.makeText(context, resources.getString(R.string.you_don_t_have_enough_funds), Toast.LENGTH_LONG).show()
                                         } else {
-                                            Toast.makeText(context, resources.getText(R.string.sell_has_been_added), Toast.LENGTH_LONG).show()
+                                            viewModel.insert(Asset(id, fund.ticker, fund.icon, fund.name, fund.originalName, fund.isActive, fund.nav.navPerShare, fund.nav.currencyNav, quantity, datetime, price, type ?: Converter.fromType(Type.PURCHASE)))
+                                            findNavController().popBackStack()
+
+                                            if (Converter.toType(type ?: Converter.fromType(Type.PURCHASE)) == Type.PURCHASE) {
+                                                Toast.makeText(context, resources.getText(R.string.purchase_has_been_added), Toast.LENGTH_LONG).show()
+                                            } else {
+                                                Toast.makeText(context, resources.getText(R.string.sell_has_been_added), Toast.LENGTH_LONG).show()
+                                            }
                                         }
                                     }
-
                                 } catch (e: ParseException) {
                                     Toast.makeText(context, resources.getText(R.string.date_time_type_invalid), Toast.LENGTH_LONG).show()
                                 }
@@ -144,7 +149,11 @@ class AddFragment : Fragment() {
                         }
 
                         splitLinearLayout.setOnClickListener {
-                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Stock_split")))
+                            if (Locale.getDefault().language == "ru") {
+                                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://ru.wikipedia.org/wiki/%D0%94%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B0%D0%BA%D1%86%D0%B8%D0%B9")))
+                            } else {
+                                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/Stock_split")))
+                            }
                         }
                     }
                 } else {

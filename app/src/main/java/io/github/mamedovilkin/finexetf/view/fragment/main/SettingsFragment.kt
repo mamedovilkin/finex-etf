@@ -1,6 +1,7 @@
 package io.github.mamedovilkin.finexetf.view.fragment.main
 
 import android.content.Intent
+import android.graphics.Insets
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -30,6 +32,7 @@ import java.io.File
 import javax.inject.Inject
 import io.github.mamedovilkin.finexetf.util.getCacheSize
 import io.github.mamedovilkin.finexetf.util.formatSize
+import java.util.Locale
 
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -66,7 +69,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         deleteAllData?.setOnPreferenceClickListener {
             viewModel.deleteAllAssets()
-            Toast.makeText(context, context?.resources?.getString(R.string.data_has_been_deleted), Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context?.resources?.getString(R.string.all_data_has_been_deleted), Toast.LENGTH_LONG).show()
             true
         }
 
@@ -78,16 +81,24 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
 
         aboutFinExETF?.setOnPreferenceClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://finexetf.com/")))
+            if (Locale.getDefault().language == "ru") {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://finex-etf.ru/")))
+            } else {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://finexetf.com/")))
+            }
             true
         }
 
         aboutDeveloper?.setOnPreferenceClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://mamedovilkin.github.io/")))
+            if (Locale.getDefault().language == "ru") {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://mamedovilkin.github.io/ru")))
+            } else {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://mamedovilkin.github.io/")))
+            }
             true
         }
 
-        version?.title = "${resources.getString(R.string.version)} ${BuildConfig.VERSION_NAME}"
+        version?.title = resources.getString(R.string.version, BuildConfig.VERSION_NAME)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -126,11 +137,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 val alertDialog = AlertDialog.Builder(inflater.context).create()
                 alertDialog.setTitle(resources.getString(R.string.sign_out))
                 alertDialog.setMessage(resources.getString(R.string.sign_out_summary))
-                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, resources.getString(R.string.no), { dialog, _ -> dialog.dismiss() })
-                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, resources.getString(R.string.yes), { dialog, _ ->
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, resources.getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, resources.getString(R.string.yes)) { _, _ ->
                     user = null
                     viewModel.signOut()
-                })
+                }
                 alertDialog.show()
             }
             true
@@ -156,11 +167,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun updatePreference(account: Preference?, backupData: Preference?, user: FirebaseUser?) {
         if (user != null) {
             this.user = user
-            account?.summary = "Signed in as ${user.displayName}"
+            account?.summary = resources.getString(R.string.signed_in, user.displayName)
             backupData?.isEnabled = true
+            backupData?.icon = ResourcesCompat.getDrawable(resources, R.drawable.baseline_backup_enabled_24, null)
         } else {
             account?.summary = resources.getString(R.string.account_summary)
             backupData?.isEnabled = false
+            backupData?.icon = ResourcesCompat.getDrawable(resources, R.drawable.baseline_backup_disabled_24, null)
         }
     }
 }

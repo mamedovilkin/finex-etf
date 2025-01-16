@@ -1,5 +1,6 @@
 package io.github.mamedovilkin.finexetf.view.fragment.main
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -47,6 +48,7 @@ class BlogFragment : Fragment(), OnClickListener {
         isLoading = true
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentBlogBinding.inflate(inflater)
 
@@ -94,6 +96,7 @@ class BlogFragment : Fragment(), OnClickListener {
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun getPosts(page: Int) {
         viewModel.getPosts(page).observe(viewLifecycleOwner) {
             posts.addAll(it.posts)

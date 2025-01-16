@@ -10,6 +10,6 @@
     <color name="colorText">#000000</color>
     <color name="colorTextSecondary">#909090</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorPurchase">#00A36C</color>
-    <color name="colorSell">#F01E2C</color>
+    <color name="colorGreen">#00A36C</color>
+    <color name="colorRed">#F01E2C</color>
 </resources>

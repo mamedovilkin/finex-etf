@@ -44,7 +44,6 @@
                     android:textAlignment="center"
                     android:textSize="48sp"
                     android:textStyle="bold"
-                    android:text="@string/zero_tenge"
                     app:autoSizeMinTextSize="18sp" />
 
                 <TextView
@@ -57,7 +56,6 @@
                     android:visibility="gone"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
-                    android:text="@string/zero_change_tenge"
                     android:background="@drawable/shape_change_text_view_green"
                     app:autoSizeMinTextSize="8sp" />
 

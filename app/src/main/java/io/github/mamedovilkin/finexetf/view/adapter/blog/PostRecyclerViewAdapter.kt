@@ -19,13 +19,13 @@ import java.util.Locale
 
 class PostRecyclerViewAdapter(private val posts: List<Post>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val LIST: Int = 0
-    private val FOOTER: Int = 1
+    private val list: Int = 0
+    private val footer: Int = 1
     var onClickListener: OnClickListener? = null
     var isLoading: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == LIST) {
+        if (viewType == list) {
             val binding: PostRecyclerViewItemBinding = DataBindingUtil
                 .inflate(
                     LayoutInflater.from(parent.context),
@@ -50,9 +50,9 @@ class PostRecyclerViewAdapter(private val posts: List<Post>) : RecyclerView.Adap
 
     override fun getItemViewType(position: Int): Int {
         return if (position == posts.size) {
-            FOOTER
+            footer
         } else {
-            LIST
+            list
         }
     }
 

@@ -113,7 +113,7 @@ class MyAssetsViewModel @Inject constructor(
                     }
                 }
 
-                emit(processedAssets.filterNotNull())
+                emit(processedAssets.filterNotNull().filter { it.totalQuantity > 0 })
             }
         }
     }

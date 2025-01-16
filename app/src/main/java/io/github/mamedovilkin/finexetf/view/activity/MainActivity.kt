@@ -57,7 +57,9 @@ class MainActivity : AppCompatActivity() {
                     .introduceMyself()
             }
 
-            sharedPreferences.edit().putBoolean("introduction", true).apply()
+            val edit = sharedPreferences.edit()
+            edit.putBoolean("introduction", true)
+            edit.apply()
         }
 
         binding.apply {

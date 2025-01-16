@@ -18,6 +18,7 @@ import io.github.mamedovilkin.finexetf.di.GlideApp
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.viewmodel.fund.FundViewModel
+import java.util.Locale
 
 @AndroidEntryPoint
 class FundFragment : Fragment() {
@@ -28,7 +29,7 @@ class FundFragment : Fragment() {
     private val viewModel: FundViewModel by viewModels()
     private var rates: List<Double> = mutableListOf()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentFundBinding.inflate(inflater)
 
         viewModel.getExchangeRate().observe(viewLifecycleOwner) {
@@ -69,20 +70,24 @@ class FundFragment : Fragment() {
                     }
                 }
 
-                nameTextView.text = fund.originalName.trim()
+                if (Locale.getDefault().language == "ru") {
+                    nameTextView.text = fund.name.trim()
+                } else {
+                    nameTextView.text = fund.originalName.trim()
+                }
                 tickerTextView.text = fund.ticker
                 when (fund.nav.currencyNav) {
                     "USD" -> {
-                        priceTextView.text = "${String.format("%.2f", (fund.nav.navPerShare * rates[0]))}₽"
+                        priceTextView.text = resources.getString(R.string.price_rub, (fund.nav.navPerShare * rates[0]))
                     }
                     "EUR" -> {
-                        priceTextView.text = "${String.format("%.2f", (fund.nav.navPerShare * rates[1]))}₽"
+                        priceTextView.text = resources.getString(R.string.price_rub, (fund.nav.navPerShare * rates[1]))
                     }
                     "KZT" -> {
-                        priceTextView.text = "${String.format("%.2f", (fund.nav.navPerShare * rates[2]))}₽"
+                        priceTextView.text = resources.getString(R.string.price_rub, (fund.nav.navPerShare * rates[2]))
                     }
                     else -> {
-                        priceTextView.text = "${String.format("%.2f", fund.nav.navPerShare)}₽"
+                        priceTextView.text = resources.getString(R.string.price_rub, fund.nav.navPerShare)
                     }
                 }
                 textView.text = fund.text.substringBefore("[!")

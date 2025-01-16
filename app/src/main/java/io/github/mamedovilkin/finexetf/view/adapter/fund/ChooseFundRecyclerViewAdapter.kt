@@ -14,6 +14,7 @@ import io.github.mamedovilkin.finexetf.di.GlideApp
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.network.model.finex.ListFund
+import java.util.Locale
 
 class ChooseFundRecyclerViewAdapter(var funds: List<ListFund>) : RecyclerView.Adapter<ChooseFundRecyclerViewAdapter.FundRecyclerViewViewHolder>() {
 
@@ -61,7 +62,11 @@ class ChooseFundRecyclerViewAdapter(var funds: List<ListFund>) : RecyclerView.Ad
                     }
                 }
 
-                nameTextView.text = fund.originalName.trim()
+                if (Locale.getDefault().language == "ru") {
+                    nameTextView.text = fund.name.trim()
+                } else {
+                    nameTextView.text = fund.originalName.trim()
+                }
                 tickerTextView.text = fund.ticker
 
                 if (fund.isActive) {

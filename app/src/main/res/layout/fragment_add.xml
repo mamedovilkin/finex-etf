@@ -59,14 +59,15 @@
                         android:layout_marginEnd="8dp"
                         android:layout_gravity="center"
                         android:src="@drawable/baseline_split_24"
-                        app:tint="@color/colorPurchase" />
+                        android:contentDescription="@string/attention_icon"
+                        app:tint="@color/colorGreen" />
 
                     <TextView
                         android:id="@+id/split_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textColor="@color/colorPurchase"
+                        android:textColor="@color/colorGreen"
                         android:text="@string/split"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -95,6 +96,7 @@
                             android:layout_width="64dp"
                             android:layout_height="64dp"
                             android:scaleType="centerInside"
+                            android:contentDescription="@string/fund_image"
                             tools:src="@drawable/fxre" />
 
                         <LinearLayout

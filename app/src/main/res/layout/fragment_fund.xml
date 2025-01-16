@@ -51,6 +51,7 @@
                         android:layout_height="64dp"
                         android:layout_marginEnd="8dp"
                         android:scaleType="centerInside"
+                        android:contentDescription="@string/fund_image"
                         tools:src="@drawable/fxre"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
@@ -106,8 +107,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
-                    android:textSize="18sp"
-                    tools:text="FXRE ETF  — долларовый фонд, инвестирующий в американские трасты недвижимости (REIT).\r\nВ составе FXRE более 120 акций компаний сектора недвижимости США. Компании, представленные в фонде, владеют и управляют приносящей доход недвижимостью, а также имеют ряд налоговых преимуществ." />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 

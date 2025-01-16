@@ -30,6 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
+                    android:contentDescription="@string/post_image"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -39,6 +40,7 @@
                     android:id="@+id/share_image_button"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:contentDescription="@string/share_icon"
                     android:src="@drawable/baseline_share_24"
                     android:background="@android:color/transparent"
                     app:tint="@color/colorWhite"
@@ -54,8 +56,7 @@
                 android:layout_margin="8dp"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:maxLines="1"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultrices mauris neque, vel luctus dolor egestas sed. Donec lobortis, orci id tempus sollicitudin, odio sem egestas dolor, et interdum mauris ante sed est." />
+                android:maxLines="1" />
 
             <TextView
                 android:id="@+id/excerpt_text_view"
@@ -64,8 +65,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:textSize="18sp"
-                android:maxLines="3"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ultrices mauris neque, vel luctus dolor egestas sed. Donec lobortis, orci id tempus sollicitudin, odio sem egestas dolor, et interdum mauris ante sed est." />
+                android:maxLines="3" />
 
             <TextView
                 android:id="@+id/published_at_text_view"

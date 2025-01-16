@@ -37,16 +37,17 @@ class NetWorthUSDFragment : Fragment() {
             val change = it[1]
             val percentChange = it[2]
             binding.apply {
-                netWorthTextView.text = "${String.format("%.2f", netWorth)}$"
+                netWorthTextView.text = resources.getString(R.string.price_usd, netWorth)
                 if (change > 0.0 && percentChange > 0.0) {
                     changeTextView.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_change_text_view_green, null)
-                    changeTextView.text = "+${String.format("%.2f", change)}$ (+${String.format("%.2f", percentChange)}%)"
+                    changeTextView.text = resources.getString(R.string.positive_change_usd, change, percentChange)
                 } else if (change < 0.0 && percentChange < 0.0) {
                     changeTextView.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_change_text_view_red, null)
-                    changeTextView.text = "${String.format("%.2f", change)}$ (${String.format("%.2f", percentChange)}%)"
+                    changeTextView.text = resources.getString(R.string.change_usd, change, percentChange)
                 } else {
                     changeTextView.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_change_text_view_normal, null)
-                    changeTextView.text = "${String.format("%.2f", change)}$ (${String.format("%.2f", percentChange)}%)"
+                    changeTextView.setTextColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, null))
+                    changeTextView.text = resources.getString(R.string.change_usd, change, percentChange)
                 }
                 progressBar.hide()
                 netWorthTextView.show()
