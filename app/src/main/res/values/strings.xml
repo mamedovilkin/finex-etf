@@ -77,4 +77,17 @@
     <string name="delete_message">%1$s (%2$d pcs.)</string>
     <string name="you_have">You have %1$d pcs.</string>
     <string name="date_time_format">MMMM dd, yyyy \'at\' HH:mm a</string>
+    <string name="welcome">Welcome!</string>
+    <string name="welcome_summary">Welcome to unofficial FinEx ETF app! Swipe right to know how to use this app.</string>
+    <string name="my_assets_summary">My assets tab, you can see the net worth of your entire portfolio and individual funds, as well as a list of the funds you own.</string>
+    <string name="fund">Fund</string>
+    <string name="fund_summary">Tap fund in \'My Assets\' tab to see information about it, like current price or description.</string>
+    <string name="add_purchase_button">Add Purchase Button</string>
+    <string name="add_purchase_button_summary">Tap this button will take you to the add purchase fund screen.</string>
+    <string name="add_sell_button">Add Sell Button</string>
+    <string name="add_sell_button_summary">Tap this button will take you to the add sell fund screen.</string>
+    <string name="choose_fund_summary">Choose fund to add purchase/sell.</string>
+    <string name="add_purchase_summary">Enter the quantity, purchase date and time, and purchase price. You can find this information in your broker account.</string>
+    <string name="history_summary">In the \'History\' tab you can see all transactions (purchases and sales) in chronological order.</string>
+    <string name="blog_summary">In the \'Blog\' tab you can see latest posts from FinEx ETF.</string>
 </resources>
