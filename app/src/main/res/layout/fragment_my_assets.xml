@@ -41,12 +41,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:id="@+id/placeholder_image_view"
                 android:layout_width="300dp"
                 android:layout_height="250dp"
+                android:contentDescription="@string/placeholder_image"
                 android:src="@drawable/nothing_in_assets" />
 
             <TextView
@@ -67,12 +69,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:src="@drawable/baseline_add_sale_24"
+            android:contentDescription="@string/add_sell_icon"
             android:visibility="gone"
             tools:visibility="visible"
             app:fabCustomSize="48dp"
             app:elevation="4dp"
             app:tint="@color/colorWhite"
-            app:backgroundTint="@color/colorSell"
+            app:backgroundTint="@color/colorRed"
             app:layout_constraintBottom_toTopOf="@id/add_purchase"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
@@ -88,7 +91,7 @@
             android:elevation="4dp"
             app:iconTint="@color/colorWhite"
             app:icon="@drawable/baseline_add_purchase_24"
-            app:backgroundTint="@color/colorPurchase"
+            app:backgroundTint="@color/colorGreen"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />

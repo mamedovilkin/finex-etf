@@ -2,6 +2,7 @@ package io.github.mamedovilkin.finexetf.view.adapter.fund
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
@@ -13,6 +14,7 @@ import io.github.mamedovilkin.finexetf.di.GlideApp
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.network.model.finex.ListFund
+import java.util.Locale
 
 class ChooseFundRecyclerViewAdapter(var funds: List<ListFund>) : RecyclerView.Adapter<ChooseFundRecyclerViewAdapter.FundRecyclerViewViewHolder>() {
 
@@ -51,7 +53,7 @@ class ChooseFundRecyclerViewAdapter(var funds: List<ListFund>) : RecyclerView.Ad
                             .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
                     }
                     "FXRE" -> {
-                        imageView.setImageDrawable(root.context.resources.getDrawable(R.drawable.fxre, null))
+                        imageView.setImageDrawable(ResourcesCompat.getDrawable(root.context.resources, R.drawable.fxre, null))
                     }
                     else -> {
                         imageView.load(fund.icon) {
@@ -60,7 +62,11 @@ class ChooseFundRecyclerViewAdapter(var funds: List<ListFund>) : RecyclerView.Ad
                     }
                 }
 
-                nameTextView.text = fund.originalName.trim()
+                if (Locale.getDefault().language == "ru") {
+                    nameTextView.text = fund.name.trim()
+                } else {
+                    nameTextView.text = fund.originalName.trim()
+                }
                 tickerTextView.text = fund.ticker
 
                 if (fund.isActive) {

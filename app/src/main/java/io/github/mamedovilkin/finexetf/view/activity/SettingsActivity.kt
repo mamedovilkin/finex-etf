@@ -25,10 +25,9 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         title = resources.getString(R.string.settings)
 
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container_view, SettingsFragment())
-            .commit()
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container_view, SettingsFragment())
+        fragmentTransaction.commit()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

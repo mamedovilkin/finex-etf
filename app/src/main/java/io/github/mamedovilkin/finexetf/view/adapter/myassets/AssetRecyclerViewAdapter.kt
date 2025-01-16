@@ -2,6 +2,7 @@ package io.github.mamedovilkin.finexetf.view.adapter.myassets
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -30,13 +31,13 @@ class AssetRecyclerViewAdapter(
     private val lifecycle: Lifecycle,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val HEADER: Int = 0
-    private val LIST: Int = 1
+    private val header: Int = 0
+    private val list: Int = 1
     var onClickListener: OnClickListener? = null
     var rates: List<Double> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == HEADER) {
+        if (viewType == header) {
             val binding: AssetsRecyclerViewHeaderBinding = DataBindingUtil
                 .inflate(
                     LayoutInflater.from(parent.context),
@@ -61,9 +62,9 @@ class AssetRecyclerViewAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) {
-            HEADER
+            header
         } else {
-            LIST
+            list
         }
     }
 
@@ -89,7 +90,7 @@ class AssetRecyclerViewAdapter(
                     val usdRate = String.format(Locale.ROOT, "%.2f", rates[0])
                     val eurRate = String.format(Locale.ROOT, "%.2f", rates[1])
                     val kztRate = String.format(Locale.ROOT, "%.2f", rates[2])
-                    exchangeRateTextView.text = "1$ = $usdRate₽ / 1€ = $eurRate₽ / 1₸ = $kztRate₽"
+                    exchangeRateTextView.text = root.context.resources.getString(R.string.exchange_rates, usdRate, eurRate, kztRate)
                     exchangeRateTextView.show()
                 } else {
                     exchangeRateTextView.hide()
@@ -115,7 +116,7 @@ class AssetRecyclerViewAdapter(
                             .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
                     }
                     "FXRE" -> {
-                        imageView.setImageDrawable(root.context.resources.getDrawable(R.drawable.fxre, null))
+                        imageView.setImageDrawable(ResourcesCompat.getDrawable(root.context.resources, R.drawable.fxre, null))
                     }
                     else -> {
                         imageView.load(asset.icon) {
@@ -124,10 +125,14 @@ class AssetRecyclerViewAdapter(
                     }
                 }
 
-                nameTextView.text = asset.originalName.trim()
+                if (Locale.getDefault().language == "ru") {
+                    nameTextView.text = asset.name.trim()
+                } else {
+                    nameTextView.text = asset.originalName.trim()
+                }
                 tickerTextView.text = asset.ticker
-                totalPriceTextView.text = "${String.format("%.2f", asset.totalNavPrice)}₽"
-                totalQuantityTextView.text = "${asset.totalQuantity} pcs."
+                totalPriceTextView.text = root.context.resources.getString(R.string.price_rub, asset.totalNavPrice)
+                totalQuantityTextView.text = root.context.resources.getString(R.string.quantity_pcs, asset.totalQuantity)
             }
         }
     }

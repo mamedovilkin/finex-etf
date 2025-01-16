@@ -30,12 +30,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:id="@+id/placeholder_image_view"
                 android:layout_width="300dp"
-                android:layout_height="250dp" />
+                android:layout_height="250dp"
+                android:contentDescription="@string/placeholder_image"/>
 
             <TextView
                 android:id="@+id/placeholder_text_view"

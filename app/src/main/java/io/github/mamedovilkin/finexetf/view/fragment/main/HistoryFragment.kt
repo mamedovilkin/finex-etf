@@ -14,6 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.FragmentHistoryBinding
 import io.github.mamedovilkin.database.entity.Asset
+import io.github.mamedovilkin.database.util.Converter
+import io.github.mamedovilkin.database.util.Type
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.isNetworkAvailable
 import io.github.mamedovilkin.finexetf.util.show
@@ -64,17 +66,21 @@ class HistoryFragment : Fragment(), OnClickListener {
         return binding.root
     }
 
-    override fun onTransactionClickListener(asset: Asset) {
+    override fun onTransactionClickListener(asset: Asset, position: Int) {
         val alertDialog = AlertDialog.Builder(binding.root.context).create()
-        alertDialog.setTitle("Delete this ${asset.type.lowercase()}?")
-        alertDialog.setMessage("${asset.ticker} (${asset.quantity} pcs.)")
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, resources.getString(R.string.cancel), { dialog, _ -> dialog.dismiss() })
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, resources.getString(R.string.delete), { dialog, _ ->
+        if (Converter.toType(asset.type) == Type.PURCHASE) {
+            alertDialog.setTitle(resources.getString(R.string.delete_this_purchase))
+        } else {
+            alertDialog.setTitle(resources.getString(R.string.delete_this_sell))
+        }
+        alertDialog.setMessage(resources.getString(R.string.delete_message, asset.ticker, asset.quantity))
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, resources.getString(R.string.cancel)) { dialog, _ -> dialog.dismiss() }
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, resources.getString(R.string.delete)) { dialog, _ ->
             viewModel.delete(asset)
-            adapter?.notifyDataSetChanged()
+            adapter?.notifyItemRemoved(position)
             dialog.dismiss()
             Toast.makeText(binding.root.context, resources.getString(R.string.deleted), Toast.LENGTH_LONG).show()
-        })
+        }
         alertDialog.show()
     }
 }

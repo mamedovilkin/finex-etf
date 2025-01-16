@@ -2,6 +2,7 @@ package io.github.mamedovilkin.finexetf.view.adapter.history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil3.load
@@ -44,7 +45,7 @@ class TransactionRecyclerViewAdapter(var assets: List<Asset>) : RecyclerView.Ada
         }
         holder.bind(asset)
         holder.itemView.setOnLongClickListener {
-            onClickListener?.onTransactionClickListener(asset)
+            onClickListener?.onTransactionClickListener(asset, position)
             true
         }
     }
@@ -61,7 +62,7 @@ class TransactionRecyclerViewAdapter(var assets: List<Asset>) : RecyclerView.Ada
                             .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
                     }
                     "FXRE" -> {
-                        imageView.setImageDrawable(root.context.resources.getDrawable(R.drawable.fxre, null))
+                        imageView.setImageDrawable(ResourcesCompat.getDrawable(root.context.resources, R.drawable.fxre, null))
                     }
                     else -> {
                         imageView.load(asset.icon) {
@@ -70,19 +71,25 @@ class TransactionRecyclerViewAdapter(var assets: List<Asset>) : RecyclerView.Ada
                     }
                 }
 
-                dateTimeTextView.text = SimpleDateFormat("MMMM dd, yyyy 'at' HH:mm", Locale.US).format(Date(asset.datetime))
-                nameTextView.text = asset.originalName.trim()
+                dateTimeTextView.text = SimpleDateFormat(root.context.resources.getString(R.string.date_time_format), Locale.getDefault()).format(Date(asset.datetime))
+
+                if (Locale.getDefault().language == "ru") {
+                    nameTextView.text = asset.name.trim()
+                } else {
+                    nameTextView.text = asset.originalName.trim()
+                }
+
                 tickerTextView.text = asset.ticker
-                priceTextView.text = "${String.format("%.2f", asset.price)}₽"
+                priceTextView.text = root.context.resources.getString(R.string.price_rub, asset.price)
 
                 if (asset.type == Converter.fromType(Type.PURCHASE)) {
-                    quantityTextView.setTextColor(root.context.resources.getColor(R.color.colorPurchase, null))
-                    quantityTextView.text = "+${asset.quantity} pcs."
+                    quantityTextView.setTextColor(root.context.resources.getColor(R.color.colorGreen, null))
+                    quantityTextView.text = root.context.resources.getString(R.string.positive_quantity_pcs, asset.quantity)
                 }
 
                 if (asset.type == Converter.fromType(Type.SELL)) {
-                    quantityTextView.setTextColor(root.context.resources.getColor(R.color.colorSell, null))
-                    quantityTextView.text = "-${asset.quantity} pcs."
+                    quantityTextView.setTextColor(root.context.resources.getColor(R.color.colorRed, null))
+                    quantityTextView.text = root.context.resources.getString(R.string.negative_quantity_pcs, asset.quantity)
                 }
             }
         }

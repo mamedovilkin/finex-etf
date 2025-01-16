@@ -34,6 +34,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:scaleType="centerInside"
+                android:contentDescription="@string/fund_image"
                 tools:src="@drawable/fxre"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -88,7 +89,7 @@
                     android:layout_gravity="end"
                     android:textSize="18sp"
                     tools:text="+25 pcs."
-                    tools:textColor="@color/colorPurchase" />
+                    tools:textColor="@color/colorGreen" />
 
                 <TextView
                     android:id="@+id/price_text_view"

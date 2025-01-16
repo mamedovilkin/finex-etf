@@ -1,5 +1,6 @@
 package io.github.mamedovilkin.finexetf.view.fragment.fund
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
@@ -54,6 +55,7 @@ class ChooseFundDialogFragment(private val funds: List<ListFund>, private val ty
         return false
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onQueryTextChange(newText: String?): Boolean {
         if (newText != null) {
             val filteredFunds = mutableListOf<ListFund>()

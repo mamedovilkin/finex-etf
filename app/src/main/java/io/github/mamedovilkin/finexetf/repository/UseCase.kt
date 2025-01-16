@@ -30,9 +30,7 @@ class UseCase @Inject constructor(
         return repository.getAssets()
     }
 
-    suspend fun getFunds(): Response<List<ListFund>> {
-        return repository.getFunds()
-    }
+    val funds: LiveData<List<ListFund>> = repository.funds
 
     suspend fun getFund(ticker: String): Response<Fund> {
         return repository.getFund(ticker)

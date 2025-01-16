@@ -24,45 +24,45 @@ class AddViewModel @Inject constructor(
     fun insert(asset: Asset) {
         viewModelScope.launch {
             if (Converter.toType(asset.type) == Type.PURCHASE) {
-                val firstSplit = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT).parse("07/12/2018 00:00").time
-                val secondSplit = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT).parse("09/09/2021 00:00").time
-                val thirdSplit = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT).parse("07/10/2021 00:00").time
-                val fourthSplit = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT).parse("03/02/2022 00:00").time
+                val firstSplit = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT).parse("07/12/2018 00:00")?.time
+                val secondSplit = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT).parse("09/09/2021 00:00")?.time
+                val thirdSplit = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT).parse("07/10/2021 00:00")?.time
+                val fourthSplit = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ROOT).parse("03/02/2022 00:00")?.time
 
-                if (asset.ticker == "FXGD" && asset.datetime < fourthSplit) {
+                if (fourthSplit != null && asset.ticker == "FXGD" && asset.datetime < fourthSplit) {
                     asset.quantity *= 10
                     asset.price /= 10
                 }
 
-                if (asset.ticker == "FXTB" && asset.datetime < fourthSplit) {
+                if (fourthSplit != null && asset.ticker == "FXTB" && asset.datetime < fourthSplit) {
                     asset.quantity *= 10
                     asset.price /= 10
                 }
 
-                if (asset.ticker == "FXUS" && asset.datetime < thirdSplit) {
+                if (thirdSplit != null &&  asset.ticker == "FXUS" && asset.datetime < thirdSplit) {
                     asset.quantity *= 100
                     asset.price /= 100
                 }
 
-                if (asset.ticker == "FXRL" && asset.datetime < thirdSplit) {
+                if (thirdSplit != null && asset.ticker == "FXRL" && asset.datetime < thirdSplit) {
                     asset.quantity *= 100
                     asset.price /= 100
                 }
 
-                if (asset.ticker == "FXRB" && asset.datetime < thirdSplit) {
+                if (thirdSplit != null && asset.ticker == "FXRB" && asset.datetime < thirdSplit) {
                     asset.quantity *= 100
                     asset.price /= 100
                 }
 
-                if (asset.ticker == "FXDE" && asset.datetime < secondSplit) {
+                if (secondSplit != null && asset.ticker == "FXDE" && asset.datetime < secondSplit) {
                     asset.quantity *= 100
                     asset.price /= 100
                 }
 
-                if (asset.ticker == "FXRU" && asset.datetime < firstSplit) {
+                if (firstSplit != null && asset.ticker == "FXRU" && asset.datetime < firstSplit) {
                     asset.quantity *= 10
                     asset.price /= 10
-                } else if (asset.ticker == "FXRU" && asset.datetime > firstSplit && asset.datetime < fourthSplit) {
+                } else if (firstSplit != null && fourthSplit != null && asset.ticker == "FXRU" && asset.datetime > firstSplit && asset.datetime < fourthSplit) {
                     asset.quantity *= 10
                     asset.price /= 10
                 }
@@ -81,18 +81,18 @@ class AddViewModel @Inject constructor(
     fun getFundQuantity(ticker: String): LiveData<Long> {
         return liveData {
             useCase.getAssets().asFlow().collect {
-                val grouping = it.groupBy { it.ticker }
+                val grouping = it.groupBy { asset -> asset.ticker }
                 var totalQuantity: Long = 0
 
-                grouping.forEach {
-                    val t = it.key
+                grouping.forEach { group ->
+                    val t = group.key
 
-                    it.value.forEach {
+                    group.value.forEach { asset ->
                         if (ticker == t) {
-                            if (Converter.toType(it.type) == Type.PURCHASE) {
-                                totalQuantity += it.quantity
+                            if (Converter.toType(asset.type) == Type.PURCHASE) {
+                                totalQuantity += asset.quantity
                             } else {
-                                totalQuantity -= it.quantity
+                                totalQuantity -= asset.quantity
                             }
                         }
                     }
