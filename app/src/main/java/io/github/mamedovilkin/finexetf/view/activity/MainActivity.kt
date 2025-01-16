@@ -110,64 +110,72 @@ class MainActivity : AppCompatActivity() {
 
         slides.add(
             Slide()
-                .withTitle("Welcome!")
-                .withDescription("Welcome to unofficial FinEx ETF app! Swipe right to know how to use this app.")
+                .withTitle(resources.getString(R.string.welcome))
+                .withDescription(resources.getString(R.string.welcome_summary))
                 .withImage(R.drawable.logo_splash_screen)
                 .withColorResource(R.color.colorPrimarySecondary)
         )
 
         slides.add(
             Slide()
-                .withTitle("My Assets")
-                .withDescription("Here you can see the net worth of your entire portfolio and individual funds, as well as a list of the funds you own.")
+                .withTitle(resources.getString(R.string.my_assets))
+                .withDescription(resources.getString(R.string.my_assets_summary))
                 .withImage(R.drawable.slide_my_assets)
                 .withColorResource(R.color.colorPrimarySecondary)
         )
 
         slides.add(
             Slide()
-                .withTitle("Fund")
-                .withDescription("Tap to fund in 'My Assets' bottom tab to see information about it, like current price or description.")
+                .withTitle(resources.getString(R.string.fund))
+                .withDescription(resources.getString(R.string.fund_summary))
                 .withImage(R.drawable.slide_fund)
                 .withColorResource(R.color.colorPrimarySecondary)
         )
 
         slides.add(
             Slide()
-                .withTitle("Add Purchase Button")
-                .withDescription("Tap this button will take you to the add purchase fund screen.")
+                .withTitle(resources.getString(R.string.add_purchase_button))
+                .withDescription(resources.getString(R.string.add_purchase_button_summary))
                 .withImage(R.drawable.slide_add_purchase_button)
                 .withColorResource(R.color.colorPrimarySecondary)
         )
 
         slides.add(
             Slide()
-                .withTitle("Add Sell Button")
-                .withDescription("Tap this button will take you to the add sell fund screen.")
+                .withTitle(resources.getString(R.string.add_sell_button))
+                .withDescription(resources.getString(R.string.add_sell_button_summary))
                 .withImage(R.drawable.slide_add_sell_button)
                 .withColorResource(R.color.colorPrimarySecondary)
         )
 
         slides.add(
             Slide()
-                .withTitle("Add Purchase")
-                .withDescription("Enter the quantity, purchase date and time, and purchase price. You can find this information in your broker account.")
+                .withTitle(resources.getString(R.string.choose_fund))
+                .withDescription(resources.getString(R.string.choose_fund_summary))
+                .withImage(R.drawable.slide_choose_fund)
+                .withColorResource(R.color.colorPrimarySecondary)
+        )
+
+        slides.add(
+            Slide()
+                .withTitle(resources.getString(R.string.add_purchase))
+                .withDescription(resources.getString(R.string.add_purchase_summary))
                 .withImage(R.drawable.slide_add_purchase)
                 .withColorResource(R.color.colorPrimarySecondary)
         )
 
         slides.add(
             Slide()
-                .withTitle("History")
-                .withDescription("In the 'History' bottom tab you can see all transactions (purchases and sales) in chronological order.")
+                .withTitle(resources.getString(R.string.history))
+                .withDescription(resources.getString(R.string.history_summary))
                 .withImage(R.drawable.slide_history)
                 .withColorResource(R.color.colorPrimarySecondary)
         )
 
         slides.add(
             Slide()
-                .withTitle("Blog")
-                .withDescription("In the 'Blog' bottom tab you can see latest posts from FinEx ETF.")
+                .withTitle(resources.getString(R.string.blog))
+                .withDescription(resources.getString(R.string.blog_summary))
                 .withImage(R.drawable.slide_blog)
                 .withColorResource(R.color.colorPrimarySecondary)
         )

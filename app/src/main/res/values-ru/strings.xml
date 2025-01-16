@@ -64,4 +64,17 @@
     <string name="delete_message">%1$s (%2$d шт.)</string>
     <string name="you_have">У Вас есть %1$d шт.</string>
     <string name="date_time_format">dd MMMM yyyy \'в\' HH:mm</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="welcome_summary">Добро пожаловать в неофициальное приложение FinEx ETF! Проведите пальцем вправо, чтобы узнать, как использовать это приложение.</string>
+    <string name="my_assets_summary">На вкладке «Мои активы» вы можете увидеть чистую стоимость всего вашего портфеля и отдельных фондов, а также список принадлежащих вам фондов.</string>
+    <string name="fund">Фонд</string>
+    <string name="fund_summary">Нажмите на фонд на вкладке «Мои активы», чтобы просмотреть информацию о нем, например текущую цену или описание.</string>
+    <string name="add_purchase_button">Кнопка «Добавить покупку»</string>
+    <string name="add_purchase_button_summary">Нажмите эту кнопку, чтобы перейти на экран добавления фонда для покупки.</string>
+    <string name="add_sell_button">Кнопка «Добавить продажу»</string>
+    <string name="add_sell_button_summary">Нажмите эту кнопку, чтобы перейти на экран добавления фонда для продажи.</string>
+    <string name="choose_fund_summary">Выберите фонд для добавления покупки/продажи.</string>
+    <string name="add_purchase_summary">Введите количество, дату и время покупки, а также цену покупки. Эту информацию вы можете найти в своем брокерском счете.</string>
+    <string name="history_summary">Во вкладке «История» вы можете просмотреть все операции (покупки и продажи) в хронологическом порядке.</string>
+    <string name="blog_summary">Во вкладке «Блог» вы можете увидеть последние публикации FinEx ETF.</string>
 </resources>

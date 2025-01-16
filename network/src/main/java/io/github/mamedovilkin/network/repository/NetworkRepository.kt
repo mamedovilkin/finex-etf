@@ -25,10 +25,15 @@ class NetworkRepository @Inject constructor(
 
     val cachedFunds: Flow<List<ListFund>> = flow {
         emit(fundDao.getAllFunds())
-        val funds = finExService.getFunds()
-        fundDao.deleteAllFunds()
-        fundDao.insertFunds(funds)
-        emit(funds)
+        val fundsResponse = finExService.getFunds()
+        if (fundsResponse.isSuccessful && fundsResponse.body() != null) {
+            val funds = fundsResponse.body() as List<ListFund>
+            fundDao.deleteAllFunds()
+            fundDao.insertFunds(funds)
+            emit(funds)
+        } else {
+            emit(fundDao.getAllFunds())
+        }
     }.flowOn(Dispatchers.IO)
 
     suspend fun getFund(ticker: String): Response<Fund> {
