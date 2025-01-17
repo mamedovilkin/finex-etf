@@ -52,8 +52,8 @@ class UseCase @Inject constructor(
 
     fun signOut() = repository.signOut()
 
-    fun backupAsset(uid: String, asset: io.github.mamedovilkin.core.model.Asset) {
-        repository.backupAsset(uid, asset)
+    fun backupAsset(uid: String, assets: List<Asset>) {
+        repository.backupAsset(uid, assets)
     }
 
     fun getBackup(uid: String): LiveData<List<io.github.mamedovilkin.core.model.Asset>> {

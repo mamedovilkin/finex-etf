@@ -43,16 +43,33 @@ class CoreRepository @Inject constructor(
             .child("assets").removeValue()
     }
 
-    fun backupAsset(uid: String, asset: Asset) {
+    fun backupAsset(uid: String, assets: List<io.github.mamedovilkin.database.entity.Asset>) {
         clearOldBackup(uid)
 
-        firebaseDatabase
-            .getReferenceFromUrl("https://finex-etf-default-rtdb.europe-west1.firebasedatabase.app")
-            .child("users")
-            .child(uid)
-            .child("assets")
-            .child(asset.id.toString())
-            .setValue(asset)
+        assets.forEach {
+            val asset = Asset(
+                it.id,
+                it.ticker,
+                it.icon,
+                it.name,
+                it.originalName,
+                it.isActive,
+                it.navPrice,
+                it.currencyNav,
+                it.quantity,
+                it.datetime,
+                it.price,
+                it.type,
+            )
+
+            firebaseDatabase
+                .getReferenceFromUrl("https://finex-etf-default-rtdb.europe-west1.firebasedatabase.app")
+                .child("users")
+                .child(uid)
+                .child("assets")
+                .child(asset.id.toString())
+                .setValue(asset)
+        }
     }
 
     fun getBackup(uid: String): LiveData<List<Asset>> {

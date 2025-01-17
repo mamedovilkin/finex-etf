@@ -1,7 +1,6 @@
 package io.github.mamedovilkin.finexetf.view.fragment.main
 
 import android.content.Intent
-import android.graphics.Insets
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
