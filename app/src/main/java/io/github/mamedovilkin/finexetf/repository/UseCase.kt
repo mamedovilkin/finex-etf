@@ -56,7 +56,7 @@ class UseCase @Inject constructor(
         repository.backupAsset(uid, assets)
     }
 
-    fun getBackup(uid: String): LiveData<List<io.github.mamedovilkin.core.model.Asset>> {
+    fun getBackup(uid: String) {
         return repository.getBackup(uid)
     }
 }

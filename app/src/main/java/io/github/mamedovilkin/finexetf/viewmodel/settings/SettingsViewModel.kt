@@ -62,12 +62,7 @@ class SettingsViewModel @Inject constructor(
 
     fun getBackup(uid: String) {
         viewModelScope.launch {
-            useCase.getBackup(uid).asFlow().collect { assets ->
-                assets.forEach {
-                    val asset = Asset(it.id ?: "", it.ticker ?: "", it.icon ?: "", it.name ?: "", it.originalName ?: "", it.isActive ?: false, it.navPrice ?: 0.0, it.currencyNav ?: "", it.quantity ?: 0, it.datetime ?: 0L, it.price ?: 0.0, it.type ?: Converter.fromType(Type.PURCHASE))
-                    useCase.insert(asset)
-                }
-            }
+            useCase.getBackup(uid)
         }
     }
 }

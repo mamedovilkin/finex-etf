@@ -1,23 +1,25 @@
 package io.github.mamedovilkin.core.repository
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import io.github.mamedovilkin.core.model.Asset
+import com.google.firebase.firestore.FirebaseFirestore
+import io.github.mamedovilkin.database.database.AssetDatabase
+import io.github.mamedovilkin.database.entity.Asset
+import io.github.mamedovilkin.database.util.Converter
+import io.github.mamedovilkin.database.util.Type
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class CoreRepository @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val firebaseDatabase: FirebaseDatabase,
+    private val firebaseFirestore: FirebaseFirestore,
+    private val assetDatabase: AssetDatabase,
 ) {
 
     suspend fun signInWithGoogle(idToken: String): FirebaseUser? {
@@ -35,68 +37,51 @@ class CoreRepository @Inject constructor(
 
     fun signOut() = firebaseAuth.signOut()
 
-    private fun clearOldBackup(uid: String) {
-        firebaseDatabase
-            .getReferenceFromUrl("https://finex-etf-default-rtdb.europe-west1.firebasedatabase.app")
-            .child("users")
-            .child(uid)
-            .child("assets").removeValue()
-    }
-
-    fun backupAsset(uid: String, assets: List<io.github.mamedovilkin.database.entity.Asset>) {
-        clearOldBackup(uid)
-
-        assets.forEach {
-            val asset = Asset(
-                it.id,
-                it.ticker,
-                it.icon,
-                it.name,
-                it.originalName,
-                it.isActive,
-                it.navPrice,
-                it.currencyNav,
-                it.quantity,
-                it.datetime,
-                it.price,
-                it.type,
-            )
-
-            firebaseDatabase
-                .getReferenceFromUrl("https://finex-etf-default-rtdb.europe-west1.firebasedatabase.app")
-                .child("users")
-                .child(uid)
-                .child("assets")
-                .child(asset.id.toString())
-                .setValue(asset)
-        }
-    }
-
-    fun getBackup(uid: String): LiveData<List<Asset>> {
-        val assetsLiveData = MutableLiveData<List<Asset>>()
-
-        firebaseDatabase
-            .getReferenceFromUrl("https://finex-etf-default-rtdb.europe-west1.firebasedatabase.app")
-            .child("users")
-            .child(uid)
-            .child("assets")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val userList = mutableListOf<Asset>()
-
-                    for (userSnapshot in snapshot.children) {
-                        val user = userSnapshot.getValue(Asset::class.java)
-                        user?.let { userList.add(it) }
+    fun backupAsset(uid: String, assets: List<Asset>) {
+        firebaseFirestore
+            .collection("users")
+            .document(uid)
+            .collection("assets")
+            .get()
+            .addOnSuccessListener { snapshot ->
+                for (document in snapshot) {
+                    firebaseFirestore
+                        .collection("users")
+                        .document(uid)
+                        .collection("assets")
+                        .document(document.id)
+                        .delete()
+                }
+            }
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    assets.forEach { asset ->
+                        firebaseFirestore
+                            .collection("users")
+                            .document(uid)
+                            .collection("assets")
+                            .document(asset.id)
+                            .set(asset)
                     }
-
-                    assetsLiveData.value = userList
                 }
+            }
+    }
 
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e("CoreRepository", error.message)
+    fun getBackup(uid: String) {
+        firebaseFirestore
+            .collection("users")
+            .document(uid)
+            .collection("assets")
+            .get()
+            .addOnSuccessListener { snapshot ->
+                for (document in snapshot) {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        assetDatabase.getDao().insert(Asset((document.data["id"] ?: "").toString(), (document.data["ticker"] ?: "").toString(), (document.data["icon"] ?: "").toString(), (document.data["name"] ?: "").toString(), (document.data["originalName"] ?: "").toString(), (document.data["isActive"] ?: true) as Boolean, (document.data["navPrice"] ?: 0.0) as Double, (document.data["currencyNav"] ?: "").toString(), (document.data["quantity"] ?: 0L) as Long, (document.data["datetime"] ?: 0L) as Long, (document.data["price"] ?: 0.0) as Double,  ((document.data["type"] ?: Converter.fromType(Type.PURCHASE)).toString())))
+                    }
                 }
-            })
-
-        return assetsLiveData
+            }
+            .addOnFailureListener { e ->
+                Log.e("CoreRepository", e.message.toString())
+            }
     }
 }

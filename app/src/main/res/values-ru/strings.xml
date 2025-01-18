@@ -77,4 +77,5 @@
     <string name="add_purchase_summary">Введите количество, дату и время покупки, а также цену покупки. Эту информацию вы можете найти в своем брокерском счете.</string>
     <string name="history_summary">Во вкладке «История» вы можете просмотреть все операции (покупки и продажи) в хронологическом порядке.</string>
     <string name="blog_summary">Во вкладке «Блог» вы можете увидеть последние публикации FinEx ETF.</string>
+    <string name="language">Язык</string>
 </resources>

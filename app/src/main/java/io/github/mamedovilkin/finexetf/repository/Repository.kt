@@ -62,7 +62,7 @@ class Repository @Inject constructor(
         coreRepository.backupAsset(uid, assets)
     }
 
-    fun getBackup(uid: String): LiveData<List<io.github.mamedovilkin.core.model.Asset>> {
+    fun getBackup(uid: String) {
         return coreRepository.getBackup(uid)
     }
 }

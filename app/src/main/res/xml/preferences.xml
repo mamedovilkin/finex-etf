@@ -13,6 +13,11 @@
         app:title="@string/backup_data"
         app:icon="@drawable/baseline_backup_enabled_24" />
 
+    <Preference
+        app:key="language"
+        app:title="@string/language"
+        app:icon="@drawable/baseline_language_24" />
+
     <CheckBoxPreference
         app:key="show_exchange_rates"
         app:title="@string/show_exchange_rates"
