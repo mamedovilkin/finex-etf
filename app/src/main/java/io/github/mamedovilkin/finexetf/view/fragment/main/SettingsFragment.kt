@@ -1,7 +1,6 @@
 package io.github.mamedovilkin.finexetf.view.fragment.main
 
 import android.content.Intent
-import android.graphics.Insets
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -74,11 +73,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         feedback?.setOnPreferenceClickListener {
-            val uri = Uri.parse("mailto:ilkinmamedov0208@gmail.com?subject=" + context?.resources?.getString(R.string.subject))
+            val uri = Uri.parse("mailto:ilkinmamedovdev@gmail.com?subject=" + context?.resources?.getString(R.string.subject))
             startActivity(Intent.createChooser(Intent(Intent.ACTION_SENDTO, uri), context?.resources?.getString(R.string.send_feedback)))
             true
         }
-
 
         aboutFinExETF?.setOnPreferenceClickListener {
             if (Locale.getDefault().language == "ru") {
@@ -105,6 +103,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val account = findPreference<Preference>("account")
         val backupData = findPreference<Preference>("backup_data")
+        val language = findPreference<Preference>("language")
+
+        language?.summary = Locale.getDefault().displayName.replaceFirstChar(Char::titlecase)
+
+        val settingsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ -> }
+
+        language?.setOnPreferenceClickListener {
+            settingsLauncher.launch(Intent(android.provider.Settings.ACTION_LOCALE_SETTINGS))
+            true
+        }
 
         viewModel.user.observe(viewLifecycleOwner) { user ->
             updatePreference(account, backupData, user)

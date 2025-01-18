@@ -58,11 +58,11 @@ class Repository @Inject constructor(
 
     fun signOut() = coreRepository.signOut()
 
-    fun backupAsset(uid: String, asset: io.github.mamedovilkin.core.model.Asset) {
-        coreRepository.backupAsset(uid, asset)
+    fun backupAsset(uid: String, assets: List<Asset>) {
+        coreRepository.backupAsset(uid, assets)
     }
 
-    fun getBackup(uid: String): LiveData<List<io.github.mamedovilkin.core.model.Asset>> {
+    fun getBackup(uid: String) {
         return coreRepository.getBackup(uid)
     }
 }

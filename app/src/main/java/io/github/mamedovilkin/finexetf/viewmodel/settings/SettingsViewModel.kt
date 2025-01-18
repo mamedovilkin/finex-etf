@@ -56,34 +56,13 @@ class SettingsViewModel @Inject constructor(
 
     fun backupAssets(uid: String, assets: List<Asset>) {
         viewModelScope.launch {
-            assets.forEach {
-                val asset = io.github.mamedovilkin.core.model.Asset(
-                    it.id,
-                    it.ticker,
-                    it.icon,
-                    it.name,
-                    it.originalName,
-                    it.isActive,
-                    it.navPrice,
-                    it.currencyNav,
-                    it.quantity,
-                    it.datetime,
-                    it.price,
-                    it.type,
-                )
-                useCase.backupAsset(uid, asset)
-            }
+            useCase.backupAsset(uid, assets)
         }
     }
 
     fun getBackup(uid: String) {
         viewModelScope.launch {
-            useCase.getBackup(uid).asFlow().collect { assets ->
-                assets.forEach {
-                    val asset = Asset(it.id ?: "", it.ticker ?: "", it.icon ?: "", it.name ?: "", it.originalName ?: "", it.isActive ?: false, it.navPrice ?: 0.0, it.currencyNav ?: "", it.quantity ?: 0, it.datetime ?: 0L, it.price ?: 0.0, it.type ?: Converter.fromType(Type.PURCHASE))
-                    useCase.insert(asset)
-                }
-            }
+            useCase.getBackup(uid)
         }
     }
 }

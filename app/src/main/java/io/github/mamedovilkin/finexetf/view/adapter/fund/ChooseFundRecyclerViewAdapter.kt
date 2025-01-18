@@ -67,6 +67,7 @@ class ChooseFundRecyclerViewAdapter(var funds: List<ListFund>) : RecyclerView.Ad
                 } else {
                     nameTextView.text = fund.originalName.trim()
                 }
+
                 tickerTextView.text = fund.ticker
 
                 if (fund.isActive) {
