@@ -76,7 +76,7 @@ class CoreRepository @Inject constructor(
             .addOnSuccessListener { snapshot ->
                 for (document in snapshot) {
                     CoroutineScope(Dispatchers.IO).launch {
-                        assetDatabase.getDao().insert(Asset((document.data["id"] ?: "").toString(), (document.data["ticker"] ?: "").toString(), (document.data["icon"] ?: "").toString(), (document.data["name"] ?: "").toString(), (document.data["originalName"] ?: "").toString(), (document.data["isActive"] ?: true) as Boolean, (document.data["navPrice"] ?: 0.0) as Double, (document.data["currencyNav"] ?: "").toString(), (document.data["quantity"] ?: 0L) as Long, (document.data["datetime"] ?: 0L) as Long, (document.data["price"] ?: 0.0) as Double,  ((document.data["type"] ?: Converter.fromType(Type.PURCHASE)).toString())))
+                        assetDatabase.getDao().insert(Asset((document.data["id"] ?: "").toString(), (document.data["ticker"] ?: "").toString(), (document.data["icon"] ?: "").toString(), (document.data["name"] ?: "").toString(), (document.data["originalName"] ?: "").toString(), (document.data["isActive"] ?: true) as Boolean, (document.data["quantity"] ?: 0L) as Long, (document.data["datetime"] ?: 0L) as Long, (document.data["price"] ?: 0.0) as Double,  ((document.data["type"] ?: Converter.fromType(Type.PURCHASE)).toString())))
                     }
                 }
             }

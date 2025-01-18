@@ -130,7 +130,7 @@ class AddFragment : Fragment() {
                                         if (Converter.toType(type ?: Converter.fromType(Type.PURCHASE)) == Type.SELL && quantity > totalQuantity) {
                                             Toast.makeText(context, resources.getString(R.string.you_don_t_have_enough_funds), Toast.LENGTH_LONG).show()
                                         } else {
-                                            viewModel.insert(Asset(id, fund.ticker, fund.icon, fund.name, fund.originalName, fund.isActive, fund.nav.navPerShare, fund.nav.currencyNav, quantity, datetime, price, type ?: Converter.fromType(Type.PURCHASE)))
+                                            viewModel.insert(Asset(id, fund.ticker, fund.icon, fund.name, fund.originalName, fund.isActive, quantity, datetime, price, type ?: Converter.fromType(Type.PURCHASE)))
                                             findNavController().popBackStack()
 
                                             if (Converter.toType(type ?: Converter.fromType(Type.PURCHASE)) == Type.PURCHASE) {

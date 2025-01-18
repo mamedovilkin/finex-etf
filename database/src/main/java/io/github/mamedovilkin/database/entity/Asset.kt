@@ -12,8 +12,6 @@ data class Asset(
     val name: String,
     val originalName: String,
     val isActive: Boolean,
-    val navPrice: Double,
-    val currencyNav: String,
     var quantity: Long,
     val datetime: Long,
     var price: Double,
