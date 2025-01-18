@@ -101,7 +101,5 @@ class FundFragment : Fragment() {
         } else {
             findNavController().popBackStack()
         }
-
-
     }
 }

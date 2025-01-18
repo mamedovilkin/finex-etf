@@ -16,13 +16,11 @@ import io.github.mamedovilkin.finexetf.databinding.AssetRecyclerViewItemBinding
 import io.github.mamedovilkin.finexetf.databinding.AssetsRecyclerViewHeaderBinding
 import io.github.mamedovilkin.finexetf.di.GlideApp
 import io.github.mamedovilkin.finexetf.model.Asset
+import io.github.mamedovilkin.finexetf.model.Currency
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
 import io.github.mamedovilkin.finexetf.view.adapter.fund.OnClickListener
-import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthEURFragment
-import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthKZTFragment
-import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthRUBFragment
-import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthUSDFragment
+import io.github.mamedovilkin.finexetf.view.fragment.viewpager.NetWorthFragment
 import java.util.Locale
 
 class AssetRecyclerViewAdapter(
@@ -97,7 +95,12 @@ class AssetRecyclerViewAdapter(
                 }
 
                 viewPager2.adapter = NetWorthFragmentStateAdapter(
-                    listOf(NetWorthRUBFragment(), NetWorthUSDFragment(), NetWorthEURFragment(), NetWorthKZTFragment()),
+                    listOf(
+                        NetWorthFragment(Currency.RUB),
+                        NetWorthFragment(Currency.USD),
+                        NetWorthFragment(Currency.EUR),
+                        NetWorthFragment(Currency.KZT)
+                    ),
                     fragmentManager,
                     lifecycle
                 )

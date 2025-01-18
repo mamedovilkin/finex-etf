@@ -3,14 +3,11 @@ package io.github.mamedovilkin.finexetf.viewmodel.settings
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.mamedovilkin.database.entity.Asset
-import io.github.mamedovilkin.database.util.Converter
-import io.github.mamedovilkin.database.util.Type
 import io.github.mamedovilkin.finexetf.repository.UseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
