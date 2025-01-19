@@ -18,6 +18,8 @@ import io.github.mamedovilkin.finexetf.viewmodel.myassets.NetWorthViewModel
 @AndroidEntryPoint
 class NetWorthFragment(private val currency: Currency) : Fragment() {
 
+    constructor() : this(Currency.RUB)
+
     private var _binding: FragmentNetWorthBinding? = null
     private val binding
         get() = _binding ?: throw IllegalStateException("Binding for FragmentNetWorthBinding must not be null")

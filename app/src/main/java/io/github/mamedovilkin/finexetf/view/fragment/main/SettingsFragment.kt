@@ -31,6 +31,7 @@ import java.io.File
 import javax.inject.Inject
 import io.github.mamedovilkin.finexetf.util.getCacheSize
 import io.github.mamedovilkin.finexetf.util.formatSize
+import io.github.mamedovilkin.finexetf.util.isNetworkAvailable
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -139,33 +140,43 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         account?.setOnPreferenceClickListener {
-            if (user == null) {
-                signInLauncher.launch(googleSignInClient.signInIntent)
-            } else {
-                val alertDialog = AlertDialog.Builder(inflater.context).create()
-                alertDialog.setTitle(resources.getString(R.string.sign_out))
-                alertDialog.setMessage(resources.getString(R.string.sign_out_summary))
-                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, resources.getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
-                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, resources.getString(R.string.yes)) { _, _ ->
-                    user = null
-                    viewModel.signOut()
+            if (isNetworkAvailable(inflater.context)) {
+                if (user == null) {
+                    signInLauncher.launch(googleSignInClient.signInIntent)
+                } else {
+                    val alertDialog = AlertDialog.Builder(inflater.context).create()
+                    alertDialog.setTitle(resources.getString(R.string.sign_out))
+                    alertDialog.setMessage(resources.getString(R.string.sign_out_summary))
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, resources.getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, resources.getString(R.string.yes)) { _, _ ->
+                        user = null
+                        viewModel.signOut()
+                    }
+                    alertDialog.show()
                 }
-                alertDialog.show()
+            } else {
+                Toast.makeText(inflater.context, R.string.no_internet_connection, Toast.LENGTH_LONG).show()
             }
+
             true
         }
 
         backupData?.setOnPreferenceClickListener {
-            if (user != null) {
-                viewModel.assets.observe(viewLifecycleOwner) {
-                    if (it.isNotEmpty()) {
-                        viewModel.backupAssets(user!!.uid, it)
-                    } else {
-                        viewModel.getBackup(user!!.uid)
+            if (isNetworkAvailable(inflater.context)) {
+                if (user != null) {
+                    viewModel.assets.observe(viewLifecycleOwner) {
+                        if (it.isNotEmpty()) {
+                            viewModel.backupAssets(user!!.uid, it)
+                        } else {
+                            viewModel.getBackup(user!!.uid)
+                        }
                     }
                 }
+
+                Toast.makeText(context, context?.resources?.getString(R.string.synced), Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(inflater.context, R.string.no_internet_connection, Toast.LENGTH_LONG).show()
             }
-            Toast.makeText(context, context?.resources?.getString(R.string.synced), Toast.LENGTH_LONG).show()
             true
         }
 
