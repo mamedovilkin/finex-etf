@@ -15,9 +15,6 @@ android {
     defaultConfig {
         minSdk = 24
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-
         val localPropertiesFile = rootProject.file("local.properties")
         val localProperties = Properties()
         localProperties.load(FileInputStream(localPropertiesFile))
@@ -28,29 +25,21 @@ android {
         buildConfigField("String", "BLOG_API_KEY", localProperties["BLOG_API_KEY"].toString())
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         buildConfig = true
     }
 }
 
 dependencies {
-
     // Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.android)
 
@@ -71,9 +60,4 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
-
-    // Testing
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }
