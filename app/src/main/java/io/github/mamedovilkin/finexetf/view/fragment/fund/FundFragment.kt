@@ -18,7 +18,6 @@ import io.github.mamedovilkin.finexetf.databinding.FragmentFundBinding
 import io.github.mamedovilkin.finexetf.di.GlideApp
 import io.github.mamedovilkin.finexetf.util.hide
 import io.github.mamedovilkin.finexetf.util.show
-import io.github.mamedovilkin.finexetf.viewmodel.fund.FundViewModel
 import java.util.Locale
 
 @AndroidEntryPoint

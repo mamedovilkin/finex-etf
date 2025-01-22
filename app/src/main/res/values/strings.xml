@@ -91,4 +91,5 @@
     <string name="history_summary">In the \'History\' tab you can see all transactions (purchases and sales) in chronological order.</string>
     <string name="blog_summary">In the \'Blog\' tab you can see latest posts from FinEx ETF.</string>
     <string name="language">Language</string>
+    <string name="country_flag_of_currency">Country flag of currency</string>
 </resources>

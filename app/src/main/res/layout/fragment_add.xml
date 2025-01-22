@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
-        tools:context=".view.fragment.fund.AddFragment">
+        tools:context=".view.fragment.add.AddFragment">
 
         <ProgressBar
             android:id="@+id/progress_bar"

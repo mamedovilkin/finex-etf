@@ -14,7 +14,7 @@
             android:layout_margin="16dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
-            tools:context=".view.fragment.viewpager.NetWorthRUBFragment">
+            tools:context=".view.fragment.networth.NetWorthRUBFragment">
 
             <LinearLayout
                 android:id="@+id/linear_layout"
@@ -32,6 +32,14 @@
                     android:indeterminate="true"
                     android:indeterminateTintMode="src_atop"
                     android:indeterminateTint="@color/colorWhite" />
+
+                <ImageView
+                    android:id="@+id/flag_image_view"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:contentDescription="@string/country_flag_of_currency" />
 
                 <TextView
                     android:id="@+id/net_worth_text_view"
@@ -61,6 +69,7 @@
                     app:autoSizeMinTextSize="8sp" />
 
             </LinearLayout>
+
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>

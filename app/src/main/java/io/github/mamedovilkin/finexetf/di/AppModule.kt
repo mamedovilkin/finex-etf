@@ -13,13 +13,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Singleton
 import dagger.hilt.components.SingletonComponent
 import io.github.mamedovilkin.network.dao.FundDao
-import io.github.mamedovilkin.core.repository.CoreRepository
+import io.github.mamedovilkin.core.repository.FirebaseRepository
 import io.github.mamedovilkin.database.database.AssetDatabase
-import io.github.mamedovilkin.database.repository.DatabaseRepository
+import io.github.mamedovilkin.core.repository.DatabaseRepository
 import io.github.mamedovilkin.finexetf.R
-import io.github.mamedovilkin.network.repository.NetworkRepository
-import io.github.mamedovilkin.finexetf.repository.Repository
-import io.github.mamedovilkin.finexetf.repository.UseCase
+import io.github.mamedovilkin.core.repository.NetworkRepository
 import io.github.mamedovilkin.network.api.blog.BlogInstance
 import io.github.mamedovilkin.network.api.blog.BlogService
 import io.github.mamedovilkin.network.api.cbr.CBRInstance
@@ -128,23 +126,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCoreRepository(firebaseAuth: FirebaseAuth, firebaseFirestore: FirebaseFirestore, assetDatabase: AssetDatabase): CoreRepository {
-        return CoreRepository(firebaseAuth, firebaseFirestore, assetDatabase)
-    }
-
-    @Provides
-    @Singleton
-    fun provideRepository(
-        networkRepository: NetworkRepository,
-        databaseRepository: DatabaseRepository,
-        coreRepository: CoreRepository,
-    ): Repository {
-        return Repository(networkRepository, databaseRepository, coreRepository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideUseCase(repository: Repository): UseCase {
-        return UseCase(repository)
+    fun provideFirebaseRepository(firebaseAuth: FirebaseAuth, firebaseFirestore: FirebaseFirestore, assetDatabase: AssetDatabase): FirebaseRepository {
+        return FirebaseRepository(firebaseAuth, firebaseFirestore, assetDatabase)
     }
 }

@@ -78,4 +78,5 @@
     <string name="history_summary">Во вкладке «История» вы можете просмотреть все операции (покупки и продажи) в хронологическом порядке.</string>
     <string name="blog_summary">Во вкладке «Блог» вы можете увидеть последние публикации FinEx ETF.</string>
     <string name="language">Язык</string>
+    <string name="country_flag_of_currency">Флаг валюты страны</string>
 </resources>

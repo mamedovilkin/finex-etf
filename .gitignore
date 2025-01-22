@@ -1,8 +1,9 @@
-*.iml
 .gradle
+.kotlin
 .idea
-.DS_Store
 /build
+*.iml
+.DS_Store
 /captures
 .externalNativeBuild
 .cxx

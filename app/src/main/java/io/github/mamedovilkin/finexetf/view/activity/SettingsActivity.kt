@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.mamedovilkin.finexetf.R
 import io.github.mamedovilkin.finexetf.databinding.ActivitySettingsBinding
-import io.github.mamedovilkin.finexetf.view.fragment.main.SettingsFragment
+import io.github.mamedovilkin.finexetf.view.fragment.settings.SettingsFragment
 
 @AndroidEntryPoint
 class SettingsActivity : AppCompatActivity() {

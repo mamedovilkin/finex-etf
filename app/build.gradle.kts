@@ -3,8 +3,9 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.services)
     alias(libs.plugins.crashlytics)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt)
+
+    id("kotlin-kapt")
 }
 
 android {
