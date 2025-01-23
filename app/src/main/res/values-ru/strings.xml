@@ -57,8 +57,8 @@
     <string name="post_image">Опубликовать изображение</string>
     <string name="share_icon">Значок поделиться</string>
     <string name="quantity_pcs">%1$d шт.</string>
-    <string name="positive_quantity_pcs">+%1$d шт.</string>
-    <string name="negative_quantity_pcs">-%1$d шт.</string>
+    <string name="positive_quantity_pcs">+%1$.2f₽ (+%2$d шт.)</string>
+    <string name="negative_quantity_pcs">-%1$.2f₽ (-%2$d шт.)</string>
     <string name="delete_this_purchase">Удалить эту покупку?</string>
     <string name="delete_this_sell">Удалить эту продажа?</string>
     <string name="delete_message">%1$s (%2$d шт.)</string>
@@ -78,4 +78,5 @@
     <string name="history_summary">Во вкладке «История» вы можете просмотреть все операции (покупки и продажи) в хронологическом порядке.</string>
     <string name="blog_summary">Во вкладке «Блог» вы можете увидеть последние публикации FinEx ETF.</string>
     <string name="language">Язык</string>
+    <string name="country_flag_of_currency">Флаг валюты страны</string>
 </resources>

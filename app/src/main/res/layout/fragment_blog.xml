@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
-        tools:context=".view.fragment.main.BlogFragment">
+        tools:context=".view.fragment.blog.BlogFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/posts_recycler_view"

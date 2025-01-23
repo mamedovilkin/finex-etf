@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -13,7 +12,7 @@
         app:cardBackgroundColor="@color/colorCardBackground"
         app:cardUseCompatPadding="false"
         app:cardCornerRadius="16dp"
-        app:cardElevation="4dp">
+        app:cardElevation="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:textColor="@color/colorText"
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:maxLines="1" />
@@ -64,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:textColor="@color/colorText"
                 android:textSize="18sp"
                 android:maxLines="3" />
 
@@ -74,7 +75,9 @@
                 android:layout_margin="8dp"
                 android:textSize="18sp"
                 android:textColor="@color/colorTextSecondary"
-                tools:text="0 minutes ago" />
+                android:drawablePadding="8dp"
+                app:drawableTint="@color/colorTextSecondary"
+                app:drawableStartCompat="@drawable/baseline_date_24" />
 
         </LinearLayout>
 

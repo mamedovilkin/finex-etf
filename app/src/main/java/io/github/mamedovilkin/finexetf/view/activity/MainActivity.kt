@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
             Slide()
                 .withTitle(resources.getString(R.string.welcome))
                 .withDescription(resources.getString(R.string.welcome_summary))
-                .withImage(R.drawable.logo_splash_screen)
+                .withImage(R.drawable.introduction_logo)
                 .withColorResource(R.color.colorPrimarySecondary)
         )
 
@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity() {
             Slide()
                 .withTitle(resources.getString(R.string.add_purchase_button))
                 .withDescription(resources.getString(R.string.add_purchase_button_summary))
-                .withImage(R.drawable.slide_add_purchase_button)
+                .withImage(R.drawable.slide_my_assets)
                 .withColorResource(R.color.colorPrimarySecondary)
         )
 
@@ -144,7 +144,7 @@ class MainActivity : AppCompatActivity() {
             Slide()
                 .withTitle(resources.getString(R.string.add_sell_button))
                 .withDescription(resources.getString(R.string.add_sell_button_summary))
-                .withImage(R.drawable.slide_add_sell_button)
+                .withImage(R.drawable.slide_my_assets)
                 .withColorResource(R.color.colorPrimarySecondary)
         )
 

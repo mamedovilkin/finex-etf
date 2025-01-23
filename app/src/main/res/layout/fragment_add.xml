@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
-        tools:context=".view.fragment.fund.AddFragment">
+        tools:context=".view.fragment.add.AddFragment">
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -161,7 +161,7 @@
                             android:id="@+id/date_time_text_input_layout_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="datetime" />
+                            android:inputType="datetime|text" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 

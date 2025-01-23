@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.fragment.main.MyAssetsFragment">
+        tools:context=".view.fragment.myassets.MyAssetsFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/assets_recycler_view"

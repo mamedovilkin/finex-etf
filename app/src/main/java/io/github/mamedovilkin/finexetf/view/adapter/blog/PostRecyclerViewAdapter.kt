@@ -80,8 +80,13 @@ class PostRecyclerViewAdapter(private val posts: List<Post>) : RecyclerView.Adap
                     constraintLayout.hide()
                 } else {
                     constraintLayout.show()
-                    GlideApp.with(root.context).load(post.featureImage)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL).fitCenter().into(imageView)
+                    GlideApp
+                        .with(root.context)
+                        .load(post.featureImage)
+                        .placeholder(R.drawable.image_placeholder)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .fitCenter()
+                        .into(imageView)
                 }
 
                 titleTextView.text = post.title
