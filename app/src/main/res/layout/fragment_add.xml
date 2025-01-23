@@ -161,7 +161,7 @@
                             android:id="@+id/date_time_text_input_layout_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="datetime" />
+                            android:inputType="datetime|text" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 

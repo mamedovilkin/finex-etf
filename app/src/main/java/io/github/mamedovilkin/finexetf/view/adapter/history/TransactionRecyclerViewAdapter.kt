@@ -82,14 +82,16 @@ class TransactionRecyclerViewAdapter(var assets: List<Asset>) : RecyclerView.Ada
                 tickerTextView.text = asset.ticker
                 priceTextView.text = root.context.resources.getString(R.string.price_rub, asset.price)
 
+                val total = asset.price * asset.quantity
+
                 if (asset.type == Converter.fromType(Type.PURCHASE)) {
                     quantityTextView.setTextColor(root.context.resources.getColor(R.color.colorGreen, null))
-                    quantityTextView.text = root.context.resources.getString(R.string.positive_quantity_pcs, asset.quantity)
+                    quantityTextView.text = root.context.resources.getString(R.string.positive_quantity_pcs, total, asset.quantity)
                 }
 
                 if (asset.type == Converter.fromType(Type.SELL)) {
                     quantityTextView.setTextColor(root.context.resources.getColor(R.color.colorRed, null))
-                    quantityTextView.text = root.context.resources.getString(R.string.negative_quantity_pcs, asset.quantity)
+                    quantityTextView.text = root.context.resources.getString(R.string.negative_quantity_pcs, total, asset.quantity)
                 }
             }
         }
